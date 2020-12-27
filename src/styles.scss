@@ -7,5 +7,29 @@
 /* Importing Bootstrap SCSS file. */
 
 .bg-primary-dark {
-  background-color: $primary-color-dark!important;
+  background-color: $primary-color-dark !important;
+}
+
+.page-head {
+  font-size: 25px;
+  line-height: 29px;
+  padding: 5px;
+  border-bottom: 1px solid $accent-color;
+}
+
+.edit_link {
+  columns: $primary-text-color;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    font-weight: bold;
+  }
+}
+
+.form-head {
+  width: inherit;
+  font-size: 20px;
+  line-height: 22px;
+  padding: 5px;
+  background-color: $divider-color;
 }

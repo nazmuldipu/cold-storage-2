@@ -1,39 +1,21 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-primary-dark" aria-label="Fourth navbar example">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">UNOLO Ltd.</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04"
-            aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" (click)="toggleCollapse()" routerLink="/">UNOLO Ltd.</a>
+        <button class="navbar-toggler" (click)="toggleCollapse()" type="button" data-bs-toggle="collapse"
+            data-bs-target="#homeNabBar" aria-controls="homeNabBar" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarsExample04">
+        <div class="collapse navbar-collapse" id="homeNabBar" [class.show]="show">
             <ul class="navbar-nav mr-auto mb-2 mb-md-0">
-                <!-- <li class="nav-item active">
-                    <a class="nav-link" href="#">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
-                <li ngbDropdown class="nav-item">
-                    <a href (click)="false" class="nav-link" ngbDropdownToggle>Dropdown</a>
-                    <div ngbDropdownMenu>
-                        <button ngbDropdownItem>Action</button>
-                        <button ngbDropdownItem>Another action</button>
-                        <button ngbDropdownItem>Something else here</button>
-                        <div class="dropdown-divider"></div>
-                        <button ngbDropdownItem>Separated link</button>
-                    </div>
-                </li> -->
             </ul>
             <ul class="navbar-nav mb-2 mb-md-0">
-                <li class="nav-item active">
-                    <a class="nav-link" roueterLink="/dashboard">Dashboard</a>
+                <li class="nav-item ">
+                    <a class="nav-link" (click)="toggleCollapse()" routerLink="/dashboard">Dashboard</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" routerLink="/login">Login</a>
+                <li class="nav-item ">
+                    <a class="nav-link" (click)="toggleCollapse()" routerLink="/login">Login</a>
                 </li>
             </ul>
         </div>

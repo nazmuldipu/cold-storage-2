@@ -22,7 +22,6 @@ export const ROUTES: Routes = [
 @NgModule({
   declarations: [HomeComponent, IndexComponent, LoginComponent, RegisterComponent, TopNavComponent],
   imports: [
-    CommonModule,
     SharedModule,
     RouterModule.forChild(ROUTES),
   ]

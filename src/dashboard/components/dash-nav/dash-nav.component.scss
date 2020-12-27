@@ -1,0 +1,14 @@
+@import "../../../assets/theme.scss";
+
+.navbar,
+.nav-link,
+.navbar-brand {
+  display: block;
+  padding: 0;
+}
+
+.dropdown-item {
+  font-size: 14px;
+  padding: 0 8px;
+  border-bottom: 1px solid $divider-color;
+}
