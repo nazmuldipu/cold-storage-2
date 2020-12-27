@@ -1,26 +1,27 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { map } from 'rxjs/internal/operators/map';
-import { Floor } from 'src/shared/model/floor.model';
+import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Role } from 'src/shared/model/role.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class FloorService {
-  serviceUrl = 'floor';
+export class RoleService {
+  serviceUrl = 'role';
 
-  private _floorSource = new BehaviorSubject<Floor[]>([]);
-  floors$ = this._floorSource.asObservable();
-  floors: Floor[] = [];
+  private _roleSource = new BehaviorSubject<Role[]>([]);
+  roles$ = this._roleSource.asObservable();
+  roles: Role[] = [];
 
   constructor(private afs: AngularFirestore) {
     this.getAndStoreAll();
   }
 
-  create(object: Floor) {
+  create(object: Role) {
     delete object['_id'];
     object.createdAt = new Date();
+    object.version = 1;
     return this.afs.collection(this.serviceUrl).add({
       ...object,
     });
@@ -31,13 +32,13 @@ export class FloorService {
       .collection(this.serviceUrl, (ref) => ref.orderBy('slug'))
       .snapshotChanges()
       .subscribe((data) => {
-        this.floors = [];
+        this.roles = [];
         data.forEach((resp) => {
-          let cls = resp.payload.doc.data() as Floor;
+          let cls = resp.payload.doc.data() as Role;
           cls._id = resp.payload.doc.id;
-          this.floors.push(cls);
+          this.roles.push(cls);
         });
-        this._floorSource.next(this.floors);
+        this._roleSource.next(this.roles);
       });
   }
 
@@ -48,7 +49,7 @@ export class FloorService {
       .pipe(
         map((actions) =>
           actions.map((a) => {
-            const data = a.payload.doc.data() as Floor;
+            const data = a.payload.doc.data() as Role;
             const id = a.payload.doc.id;
             return { id, ...data };
           })
@@ -60,8 +61,10 @@ export class FloorService {
     return this.afs.doc(this.serviceUrl + '/' + id).valueChanges();
   }
 
-  update(id, object: Floor) {
+  update(id, object: Role) {
     delete object['_id'];
+    console.log(object);
+    object.version = object.version ? object.version + 1 : 1;
     return this.afs.doc(this.serviceUrl + '/' + id).update({
       ...object,
     });

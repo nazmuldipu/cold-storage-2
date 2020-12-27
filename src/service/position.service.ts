@@ -2,23 +2,23 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { map } from 'rxjs/internal/operators/map';
-import { Floor } from 'src/shared/model/floor.model';
+import { Position } from 'src/shared/model/position.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class FloorService {
-  serviceUrl = 'floor';
+export class PositionService {
+  serviceUrl = 'position';
 
-  private _floorSource = new BehaviorSubject<Floor[]>([]);
-  floors$ = this._floorSource.asObservable();
-  floors: Floor[] = [];
+  private _positionSource = new BehaviorSubject<Position[]>([]);
+  positions$ = this._positionSource.asObservable();
+  positions: Position[] = [];
 
   constructor(private afs: AngularFirestore) {
     this.getAndStoreAll();
   }
 
-  create(object: Floor) {
+  create(object: Position) {
     delete object['_id'];
     object.createdAt = new Date();
     return this.afs.collection(this.serviceUrl).add({
@@ -31,13 +31,13 @@ export class FloorService {
       .collection(this.serviceUrl, (ref) => ref.orderBy('slug'))
       .snapshotChanges()
       .subscribe((data) => {
-        this.floors = [];
+        this.positions = [];
         data.forEach((resp) => {
-          let cls = resp.payload.doc.data() as Floor;
+          let cls = resp.payload.doc.data() as Position;
           cls._id = resp.payload.doc.id;
-          this.floors.push(cls);
+          this.positions.push(cls);
         });
-        this._floorSource.next(this.floors);
+        this._positionSource.next(this.positions);
       });
   }
 
@@ -48,7 +48,7 @@ export class FloorService {
       .pipe(
         map((actions) =>
           actions.map((a) => {
-            const data = a.payload.doc.data() as Floor;
+            const data = a.payload.doc.data() as Position;
             const id = a.payload.doc.id;
             return { id, ...data };
           })
@@ -60,7 +60,7 @@ export class FloorService {
     return this.afs.doc(this.serviceUrl + '/' + id).valueChanges();
   }
 
-  update(id, object: Floor) {
+  update(id, object: Position) {
     delete object['_id'];
     return this.afs.doc(this.serviceUrl + '/' + id).update({
       ...object,

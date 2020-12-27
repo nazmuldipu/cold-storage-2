@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { map } from 'rxjs/internal/operators/map';
-import { Floor } from 'src/shared/model/floor.model';
+import { Loading } from 'src/shared/model/loading.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class FloorService {
-  serviceUrl = 'floor';
+export class LoadingService {
+  serviceUrl = 'loading';
 
-  private _floorSource = new BehaviorSubject<Floor[]>([]);
-  floors$ = this._floorSource.asObservable();
-  floors: Floor[] = [];
+  private _loadingSource = new BehaviorSubject<Loading[]>([]);
+  loadings$ = this._loadingSource.asObservable();
+  loadings: Loading[] = [];
 
   constructor(private afs: AngularFirestore) {
     this.getAndStoreAll();
   }
 
-  create(object: Floor) {
+  create(object: Loading) {
     delete object['_id'];
     object.createdAt = new Date();
     return this.afs.collection(this.serviceUrl).add({
@@ -28,16 +29,16 @@ export class FloorService {
 
   getAndStoreAll() {
     return this.afs
-      .collection(this.serviceUrl, (ref) => ref.orderBy('slug'))
+      .collection(this.serviceUrl, (ref) => ref.orderBy('s_r_date'))
       .snapshotChanges()
       .subscribe((data) => {
-        this.floors = [];
+        this.loadings = [];
         data.forEach((resp) => {
-          let cls = resp.payload.doc.data() as Floor;
+          let cls = resp.payload.doc.data() as Loading;
           cls._id = resp.payload.doc.id;
-          this.floors.push(cls);
+          this.loadings.push(cls);
         });
-        this._floorSource.next(this.floors);
+        this._loadingSource.next(this.loadings);
       });
   }
 
@@ -48,7 +49,7 @@ export class FloorService {
       .pipe(
         map((actions) =>
           actions.map((a) => {
-            const data = a.payload.doc.data() as Floor;
+            const data = a.payload.doc.data() as Loading;
             const id = a.payload.doc.id;
             return { id, ...data };
           })
@@ -56,11 +57,11 @@ export class FloorService {
       );
   }
 
-  get(id) {
+  get(id):Observable<any> {
     return this.afs.doc(this.serviceUrl + '/' + id).valueChanges();
   }
 
-  update(id, object: Floor) {
+  update(id, object: Loading) {
     delete object['_id'];
     return this.afs.doc(this.serviceUrl + '/' + id).update({
       ...object,

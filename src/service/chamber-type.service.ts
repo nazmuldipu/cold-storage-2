@@ -2,23 +2,24 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { map } from 'rxjs/internal/operators/map';
-import { Floor } from 'src/shared/model/floor.model';
+import { ChamberType } from 'src/shared/model/chamber-type.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FloorService {
-  serviceUrl = 'floor';
+export class ChamberTypeService {
 
-  private _floorSource = new BehaviorSubject<Floor[]>([]);
-  floors$ = this._floorSource.asObservable();
-  floors: Floor[] = [];
+  serviceUrl = 'chamber-type';
+
+  private _chamberTypeSource = new BehaviorSubject<ChamberType[]>([]);
+  chamberTypes$ = this._chamberTypeSource.asObservable();
+  chamberTypes: ChamberType[] = [];
 
   constructor(private afs: AngularFirestore) {
     this.getAndStoreAll();
   }
 
-  create(object: Floor) {
+  create(object: ChamberType) {
     delete object['_id'];
     object.createdAt = new Date();
     return this.afs.collection(this.serviceUrl).add({
@@ -31,13 +32,13 @@ export class FloorService {
       .collection(this.serviceUrl, (ref) => ref.orderBy('slug'))
       .snapshotChanges()
       .subscribe((data) => {
-        this.floors = [];
+        this.chamberTypes = [];
         data.forEach((resp) => {
-          let cls = resp.payload.doc.data() as Floor;
+          let cls = resp.payload.doc.data() as ChamberType;
           cls._id = resp.payload.doc.id;
-          this.floors.push(cls);
+          this.chamberTypes.push(cls);
         });
-        this._floorSource.next(this.floors);
+        this._chamberTypeSource.next(this.chamberTypes);
       });
   }
 
@@ -48,7 +49,7 @@ export class FloorService {
       .pipe(
         map((actions) =>
           actions.map((a) => {
-            const data = a.payload.doc.data() as Floor;
+            const data = a.payload.doc.data() as ChamberType;
             const id = a.payload.doc.id;
             return { id, ...data };
           })
@@ -60,7 +61,7 @@ export class FloorService {
     return this.afs.doc(this.serviceUrl + '/' + id).valueChanges();
   }
 
-  update(id, object: Floor) {
+  update(id, object: ChamberType) {
     delete object['_id'];
     return this.afs.doc(this.serviceUrl + '/' + id).update({
       ...object,
