@@ -9,6 +9,8 @@ import { ChamberComponent } from './containers/chamber/chamber.component';
 import { ChamberFormComponent } from './components/chamber-form/chamber-form.component';
 import { FloorComponent } from './containers/floor/floor.component';
 import { FloorFormComponent } from './components/floor-form/floor-form.component';
+import { LineComponent } from './containers/line/line.component';
+import { LineFormComponent } from './components/line-form/line-form.component';
 
 export const ROUTES: Routes = [
   {
@@ -17,7 +19,7 @@ export const ROUTES: Routes = [
     children: [
       { path: 'chamber', component: ChamberComponent },
       { path: 'floor', component: FloorComponent },
-      // { path: 'line', component: LineComponent },
+      { path: 'line', component: LineComponent },
       // { path: 'pocket', component: PocketComponent },
       // { path: 'position', component: PositionComponent },
       // { path: 'chamber-type', component: ChamberTypeComponent },
@@ -35,7 +37,7 @@ export const ROUTES: Routes = [
 ];
 
 @NgModule({
-  declarations: [DashboardComponent, IndexComponent, DashNavComponent, ChamberComponent, ChamberFormComponent, FloorComponent, FloorFormComponent],
+  declarations: [DashboardComponent, IndexComponent, DashNavComponent, ChamberComponent, ChamberFormComponent, FloorComponent, FloorFormComponent, LineComponent, LineFormComponent],
   imports: [
     SharedModule,
     RouterModule.forChild(ROUTES),

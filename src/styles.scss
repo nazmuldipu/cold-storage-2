@@ -25,11 +25,16 @@
     font-weight: bold;
   }
 }
-
+td.form-head,
 .form-head {
   width: inherit;
-  font-size: 20px;
+  font-size: 20px !important;
   line-height: 22px;
   padding: 5px;
   background-color: $divider-color;
+}
+
+th,
+td {
+  font-size: 0.875rem;
 }
