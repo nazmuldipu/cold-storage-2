@@ -1,0 +1,63 @@
+<div class="form-head">
+    {{exists?'Update': 'New'}} Loading Party
+ </div>
+ <div class="alert alert-danger" *ngIf="errorMessage.length>0">
+     {{errorMessage}}
+ </div>
+ <form [formGroup]="form" (ngSubmit)="submit()" (mouseleave)="mouseoverShifting = false" class="p-3">
+     <div class="form-group row">
+         <label for="name" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Name</label>
+         <div class="col-sm-10">
+             <input type="text" class="form-control form-control-sm" id="name" formControlName="name"
+                 placeholder="Loading Party Name">
+             <small class="form-text text-danger" *ngIf="form.controls.name.errors && form.controls.name.touched">Loading Party
+                 Name Required</small>
+         </div>
+     </div>
+     <div class="form-group row">
+         <label for="father" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Father</label>
+         <div class="col-sm-10">
+             <input type="text" class="form-control form-control-sm" id="father" formControlName="father"
+                 placeholder="Loading Party father name">
+             <small class="text-danger" *ngIf=" form.controls.father.errors && form.controls.father.touched">
+                 Father name required
+             </small>
+         </div>
+     </div>
+     <div class="form-group row">
+         <label for="phone" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Phone</label>
+         <div class="col-sm-10">
+             <input type="text" class="form-control form-control-sm" id="phone" maxlength="11" formControlName="phone"
+                 placeholder="Loading Party phone">
+             <small class="text-danger" *ngIf=" form.controls.phone.errors && form.controls.phone.touched">
+                 <div [hidden]="!form.controls['phone'].errors.required">
+                     Phone required
+                 </div>
+                 <div [hidden]="!form.controls['phone'].errors.pattern">
+                     Phone patter should be 01945564841
+                 </div>
+             </small>
+         </div>
+     </div>
+ 
+ 
+     <div class="form-group row">
+         <label for="address" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Address</label>
+         <div class="col-sm-10">
+             <textarea class="form-control" id="address" formControlName="address" rows="3"
+                 placeholder="Address"></textarea>
+             <small class="form-text text-danger"
+                 *ngIf="form.controls.address.errors && form.controls.address.touched">Loading Party address required</small>
+         </div>
+     </div>
+ 
+     <div class="d-flex flex-row-reverse bd-highlight">
+         <button type="submit" (mouseenter)="mouseoverShifting = true" class="btn btn-sm btn-light mx-1">{{exists ?
+             'Update':'Save'}}</button>
+         <button type="button" *ngIf="exists" class="btn btn-sm btn-light mx-1" (click)="onDelete()">Delete</button>
+         <button type="button" class="btn btn-sm btn-light mx-1" (click)="clear()">Clear</button>
+     </div>
+     <div *ngIf="mouseoverShifting" class="text-danger">
+         {{ getFormValidationErrors() }}
+     </div>
+ </form>

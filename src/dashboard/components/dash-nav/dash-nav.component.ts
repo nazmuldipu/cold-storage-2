@@ -56,12 +56,12 @@ export class DashNavComponent implements OnInit {
       icon: 'fa-cubes',
       subnav: [
         {
-          name: 'Add Agent',
+          name: 'Agent',
           icon: 'fa-plus',
           link: '/dashboard/agent',
         },
         {
-          name: 'Add Loading Party',
+          name: 'Loading Party',
           icon: 'fa-plus',
           link: '/dashboard/customer',
         },
