@@ -22,8 +22,6 @@ export class FloorComponent implements OnInit {
   floorPage: Floor[] = [];
   errorMessage = '';
 
-  cols: any[];
-
   constructor(
     private floorService: FloorService,
     private chamberService: ChamberService,

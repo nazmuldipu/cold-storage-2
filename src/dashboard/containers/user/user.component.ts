@@ -1,71 +1,88 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/service/auth.service';
 import { RoleService } from 'src/service/role.service';
+import { UserService } from 'src/service/user.service';
 import { UtilService } from 'src/service/util.service';
 import { Role } from 'src/shared/model/role.model';
+import { User } from 'src/shared/model/user.model';
 
 @Component({
-  selector: 'app-role',
-  templateUrl: './role.component.html',
-  styleUrls: ['./role.component.scss'],
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.scss'],
 })
-export class RoleComponent implements OnInit {
+export class UserComponent implements OnInit {
   sendingData = false;
   loadingData = false;
+  userList: User[] = [];
   roleList: Role[] = [];
-  role: Role;
-
+  user: User;
   page = 1;
   pageSize = 8;
-  rolePage: Role[] = [];
+  userPage: User[] = [];
   errorMessage = '';
 
-  
-  constructor(private roleService: RoleService, private util: UtilService) {}
+  constructor(
+    private userService: UserService,
+    private roleService: RoleService,
+    private auth: AuthService,
+    private util: UtilService
+  ) {}
 
   ngOnInit(): void {
+    this.getUserList();
     this.getRoleList();
-
   }
 
   async getRoleList() {
     this.roleService.roles$.subscribe((data) => {
       this.roleList = data;
       this.roleList.sort(this.util.dynamicSortObject('name'));
-      this.refreshRole();
     });
   }
 
-  refreshRole() {
-    this.rolePage = this.roleList
-      .map((role, i) => ({ id: i + 1, ...role }))
+  async getUserList() {
+    this.userService.users$.subscribe((data) => {
+      this.userList = data;
+      this.userList.sort(this.util.dynamicSortObject('name'));
+      this.refreshUser();
+    });
+  }
+
+  refreshUser() {
+    this.userPage = this.userList
+      .map((user, i) => ({ id: i + 1, ...user }))
       .slice(
         (this.page - 1) * this.pageSize,
         (this.page - 1) * this.pageSize + this.pageSize
       );
+    console.log(this.userPage);
   }
 
-  async onCreate(event: Role) {
+  async onCreate(event: User) {
     this.sendingData = true;
     const value = { ...event, slug: event.name.toLowerCase() };
-    await this.roleService
+    await this.userService
       .create(value)
       .then((ref) => {
         console.log(ref);
+        this.auth
+          .register(event.email, event.password)
+          .then((ref) => console.log('User Registration success'));
       })
       .catch((error) => {
         console.log('error', error);
       });
   }
-
-  async onUpdate(event: Role) {
+  async onUpdate(event: User) {
     this.sendingData = true;
     const value = {
       ...event,
       slug: this.util.string_to_slug(event.name),
-      createdAt: this.role.createdAt,
+      createdAt: this.user.createdAt,
     };
-    await this.roleService
-      .update(this.role._id, value)
+    await this.userService
+      .update(this.user._id, value)
       .then(() => {
         this.sendingData = false;
       })
@@ -79,27 +96,27 @@ export class RoleComponent implements OnInit {
   async onDelete(id) {
     this.sendingData = true;
     if (confirm('Are you sure to delete')) {
-      await this.roleService
+      await this.userService
         .delete(id)
         .then(() => {
           this.sendingData = false;
-          this.role = null;
+          this.user = null;
         })
         .catch((error) => {
           this.sendingData = false;
-          (this.errorMessage = 'Role Deleting ERROR ! '), error;
+          (this.errorMessage = 'User Deleting ERROR ! '), error;
         });
       this.clear();
     }
   }
 
   onEdit(id) {
-    this.role = this.roleList.find((cp) => cp._id === id);
+    this.user = this.userList.find((cp) => cp._id === id);
     console.log('onEdit', id);
   }
 
   clear() {
-    this.role = null;
+    this.user = null;
     this.errorMessage = '';
     this.sendingData = false;
     this.loadingData = false;

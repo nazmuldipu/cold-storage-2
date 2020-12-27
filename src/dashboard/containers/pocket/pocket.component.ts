@@ -1,4 +1,10 @@
-import { AfterContentChecked, AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterViewChecked,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { ChamberService } from 'src/service/chamber.service';
 import { FloorService } from 'src/service/floor.service';
 import { LineService } from 'src/service/line.service';
@@ -28,7 +34,6 @@ export class PocketComponent
   pageSize = 8;
   pocketPage: Pocket[] = [];
   errorMessage = '';
-  cols: any[];
 
   constructor(
     private chamberService: ChamberService,
@@ -37,17 +42,11 @@ export class PocketComponent
     private pocketService: PocketService,
     private util: UtilService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getChamberList();
     this.getPocketList();
-
-    this.cols = [
-      { field: 'name', header: 'Name' },
-      { field: 'capacity', header: 'Capacity' },
-      { field: 'priority', header: 'Priority' },
-    ];
   }
 
   ngAfterContentChecked(): void {
@@ -91,7 +90,10 @@ export class PocketComponent
   refreshPocket() {
     this.pocketPage = this.pocketList
       .map((pocket, i) => ({ id: i + 1, ...pocket }))
-      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+      .slice(
+        (this.page - 1) * this.pageSize,
+        (this.page - 1) * this.pageSize + this.pageSize
+      );
   }
 
   async onCreate(event: Pocket) {

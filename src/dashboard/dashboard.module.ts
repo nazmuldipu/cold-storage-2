@@ -15,6 +15,8 @@ import { PocketComponent } from './containers/pocket/pocket.component';
 import { PocketFormComponent } from './components/pocket-form/pocket-form.component';
 import { RoleComponent } from './containers/role/role.component';
 import { RoleFormComponent } from './components/role-form/role-form.component';
+import { UserComponent } from './containers/user/user.component';
+import { UserFormComponent } from './components/user-form/user-form.component';
 
 export const ROUTES: Routes = [
   {
@@ -32,7 +34,7 @@ export const ROUTES: Routes = [
       // { path: 'loading', component: LoadingComponent },
       // { path: 'add-loading', component: LoadingAddComponent },
       // { path: 'add-loading/:id', component: LoadingAddComponent },
-      // { path: 'user', component: UserComponent },
+      { path: 'user', component: UserComponent },
       { path: 'role', component: RoleComponent },
       // { path: 'company', component: CompanyComponent },
       { path: '', component: IndexComponent },
@@ -55,6 +57,8 @@ export const ROUTES: Routes = [
     PocketFormComponent,
     RoleComponent,
     RoleFormComponent,
+    UserComponent,
+    UserFormComponent,
   ],
   imports: [SharedModule, RouterModule.forChild(ROUTES)],
 })
