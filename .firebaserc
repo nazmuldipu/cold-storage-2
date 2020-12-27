@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "cold-storage-2020-913d1": {
+      "hosting": {
+        "cold-storage-v2": [
+          "cold-storage-2020-913d1"
+        ]
+      }
+    }
+  }
+}
