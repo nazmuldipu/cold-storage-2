@@ -17,6 +17,8 @@ import { RoleComponent } from './containers/role/role.component';
 import { RoleFormComponent } from './components/role-form/role-form.component';
 import { UserComponent } from './containers/user/user.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
+import { AgentFormComponent } from './components/agent-form/agent-form.component';
+import { AgentComponent } from './containers/agent/agent.component';
 
 export const ROUTES: Routes = [
   {
@@ -29,7 +31,7 @@ export const ROUTES: Routes = [
       { path: 'pocket', component: PocketComponent },
       // { path: 'position', component: PositionComponent },
       // { path: 'chamber-type', component: ChamberTypeComponent },
-      // { path: 'agent', component: AgentComponent },
+      { path: 'agent', component: AgentComponent },
       // { path: 'customer', component: CustomerComponent },
       // { path: 'loading', component: LoadingComponent },
       // { path: 'add-loading', component: LoadingAddComponent },
@@ -59,6 +61,8 @@ export const ROUTES: Routes = [
     RoleFormComponent,
     UserComponent,
     UserFormComponent,
+    AgentFormComponent,
+    AgentComponent,
   ],
   imports: [SharedModule, RouterModule.forChild(ROUTES)],
 })

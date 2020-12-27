@@ -1,5 +1,5 @@
 <div class="form-head">
-    New User
+    {{exists?'Update': 'New'}} User
 </div>
 <div class="alert alert-danger" *ngIf="errorMessage.length>0">
     {{errorMessage}}

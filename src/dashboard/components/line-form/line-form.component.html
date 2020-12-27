@@ -1,5 +1,5 @@
 <div class="form-head">
-    New Line
+    {{exists?'Update': 'New'}} Line
 </div>
 <div class="alert alert-danger" *ngIf="errorMessage.length>0">
     {{errorMessage}}

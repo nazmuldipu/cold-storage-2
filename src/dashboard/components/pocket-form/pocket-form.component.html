@@ -1,5 +1,5 @@
 <div class="form-head">
-    New Pocket
+    {{exists?'Update': 'New'}} Pocket
 </div>
 <div class="alert alert-danger" *ngIf="errorMessage.length>0">
     {{errorMessage}}

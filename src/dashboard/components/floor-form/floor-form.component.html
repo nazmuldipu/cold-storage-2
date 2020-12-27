@@ -1,5 +1,5 @@
 <div class="form-head">
-    New Floor
+    {{exists?'Update': 'New'}} Floor
 </div>
 <div class="alert alert-danger" *ngIf="errorMessage.length>0">
     {{errorMessage}}
