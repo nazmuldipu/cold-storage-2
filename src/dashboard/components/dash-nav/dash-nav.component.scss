@@ -5,8 +5,15 @@
 .navbar-brand {
   display: block;
   padding: 0;
+  // font-size: 15px;
 }
-
+.dropdown-toggle::after{
+  display: none;
+}
+.navbar,
+.nav-link{
+  font-size: 14px;
+}
 .dropdown-item {
   font-size: 14px;
   padding: 0 8px;

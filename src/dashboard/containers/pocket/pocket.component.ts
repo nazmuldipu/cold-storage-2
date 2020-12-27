@@ -129,7 +129,7 @@ export class PocketComponent
     this.clear();
   }
 
-  async delete(id) {
+  async onDelete(id) {
     this.sendingData = true;
     if (confirm('Are you sure to delete')) {
       await this.pocketService

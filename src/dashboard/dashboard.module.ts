@@ -13,6 +13,8 @@ import { LineComponent } from './containers/line/line.component';
 import { LineFormComponent } from './components/line-form/line-form.component';
 import { PocketComponent } from './containers/pocket/pocket.component';
 import { PocketFormComponent } from './components/pocket-form/pocket-form.component';
+import { RoleComponent } from './containers/role/role.component';
+import { RoleFormComponent } from './components/role-form/role-form.component';
 
 export const ROUTES: Routes = [
   {
@@ -31,7 +33,7 @@ export const ROUTES: Routes = [
       // { path: 'add-loading', component: LoadingAddComponent },
       // { path: 'add-loading/:id', component: LoadingAddComponent },
       // { path: 'user', component: UserComponent },
-      // { path: 'role', component: RoleComponent },
+      { path: 'role', component: RoleComponent },
       // { path: 'company', component: CompanyComponent },
       { path: '', component: IndexComponent },
     ],
@@ -39,10 +41,21 @@ export const ROUTES: Routes = [
 ];
 
 @NgModule({
-  declarations: [DashboardComponent, IndexComponent, DashNavComponent, ChamberComponent, ChamberFormComponent, FloorComponent, FloorFormComponent, LineComponent, LineFormComponent, PocketComponent, PocketFormComponent],
-  imports: [
-    SharedModule,
-    RouterModule.forChild(ROUTES),
-  ]
+  declarations: [
+    DashboardComponent,
+    IndexComponent,
+    DashNavComponent,
+    ChamberComponent,
+    ChamberFormComponent,
+    FloorComponent,
+    FloorFormComponent,
+    LineComponent,
+    LineFormComponent,
+    PocketComponent,
+    PocketFormComponent,
+    RoleComponent,
+    RoleFormComponent,
+  ],
+  imports: [SharedModule, RouterModule.forChild(ROUTES)],
 })
-export class DashboardModule { }
+export class DashboardModule {}

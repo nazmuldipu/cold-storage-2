@@ -128,5 +128,8 @@
       }
     }
   },
-  "defaultProject": "cold-storage-v2"
+  "defaultProject": "cold-storage-v2",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -39,16 +39,16 @@ export class DashNavComponent implements OnInit {
           icon: 'fa-plus',
           link: '/dashboard/pocket',
         },
-        {
-          name: 'Add Position',
-          icon: 'fa-plus',
-          link: '/dashboard/position',
-        },
-        {
-          name: 'Add Chamber Type',
-          icon: 'fa-plus',
-          link: '/dashboard/chamber-type',
-        },
+        // {
+        //   name: 'Add Position',
+        //   icon: 'fa-plus',
+        //   link: '/dashboard/position',
+        // },
+        // {
+        //   name: 'Add Chamber Type',
+        //   icon: 'fa-plus',
+        //   link: '/dashboard/chamber-type',
+        // },
       ],
     },
     {
