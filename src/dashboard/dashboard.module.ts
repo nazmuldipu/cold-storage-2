@@ -23,6 +23,9 @@ import { CustomerFormComponent } from './components/customer-form/customer-form.
 import { CustomerComponent } from './containers/customer/customer.component';
 import { CompanyComponent } from './containers/company/company.component';
 import { CompanyFormComponent } from './components/company-form/company-form.component';
+import { LoadingComponent } from './containers/loading/loading.component';
+import { LoadingAddComponent } from './containers/loading-add/loading-add.component';
+import { LoadingFormComponent } from './components/loading-form/loading-form.component';
 
 export const ROUTES: Routes = [
   {
@@ -37,9 +40,9 @@ export const ROUTES: Routes = [
       // { path: 'chamber-type', component: ChamberTypeComponent },
       { path: 'agent', component: AgentComponent },
       { path: 'customer', component: CustomerComponent },
-      // { path: 'loading', component: LoadingComponent },
-      // { path: 'add-loading', component: LoadingAddComponent },
-      // { path: 'add-loading/:id', component: LoadingAddComponent },
+      { path: 'loading', component: LoadingComponent },
+      { path: 'add-loading', component: LoadingAddComponent },
+      { path: 'add-loading/:id', component: LoadingAddComponent },
       { path: 'user', component: UserComponent },
       { path: 'role', component: RoleComponent },
       { path: 'company', component: CompanyComponent },
@@ -71,6 +74,9 @@ export const ROUTES: Routes = [
     CustomerComponent,
     CompanyComponent,
     CompanyFormComponent,
+    LoadingComponent,
+    LoadingAddComponent,
+    LoadingFormComponent,
   ],
   imports: [SharedModule, RouterModule.forChild(ROUTES)],
 })
