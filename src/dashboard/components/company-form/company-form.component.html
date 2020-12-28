@@ -1,0 +1,111 @@
+<div class="form-head">
+    {{exists?'Update': 'New'}} Company
+</div>
+<div class="alert alert-danger" *ngIf="errorMessage.length>0">
+    {{errorMessage}}
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()" (mouseleave)="mouseoverShifting = false" class="p-3">
+    <div class="form-group row">
+        <label for="name" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Name*</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control form-control-sm" id="name" formControlName="name"
+                placeholder="Agent Name">
+            <small class="form-text text-danger" *ngIf="form.controls.name.errors && form.controls.name.touched">Agent
+                Name Required</small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="email" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Email*</label>
+        <div class="col-6 col-md-4">
+            <input type="text" class="form-control form-control-sm" id="email" formControlName="email"
+                placeholder="Company email">
+            <small class="text-danger" *ngIf=" form.controls.email.errors && form.controls.email.touched">
+                Email required
+            </small>
+        </div>
+        <label for="phone" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Phone*</label>
+        <div class="col-6 col-md-4">
+            <input type="text" class="form-control form-control-sm" id="phone" maxlength="11" formControlName="phone"
+                placeholder="Agent phone">
+            <small class="text-danger" *ngIf=" form.controls.phone.errors && form.controls.phone.touched">
+                <div [hidden]="!form.controls['phone'].errors.required">
+                    Phone required
+                </div>
+                <div [hidden]="!form.controls['phone'].errors.pattern">
+                    Phone patter should be 01945564841
+                </div>
+            </small>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="vat_no" class="d-none d-sm-block col-md-2 col-form-label col-form-label-sm">Vat no</label>
+        <div class="col-6 col-md-4">
+            <input type="text" class="form-control form-control-sm" id="vat_no" formControlName="vat_no"
+                placeholder="Company VAT number">
+            <small class="text-danger" *ngIf=" form.controls.vat_no.errors && form.controls.vat_no.touched">
+                Company VAT number required
+            </small>
+        </div>
+        <label for="trade_licence" class="d-none d-sm-block col-md-2 col-form-label col-form-label-sm">Trade
+            Licence*</label>
+        <div class="col-6 col-md-4">
+            <input type="text" class="form-control form-control-sm" id="trade_licence" formControlName="trade_licence"
+                placeholder="Trade Licence number">
+            <small class="text-danger"
+                *ngIf=" form.controls.trade_licence.errors && form.controls.trade_licence.touched">
+                Trade Licence required
+            </small>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="tin_no" class="d-none d-sm-block col-md-2 col-form-label col-form-label-sm">Tin no</label>
+        <div class="col-6 col-md-4">
+            <input type="text" class="form-control form-control-sm" id="tin_no" formControlName="tin_no"
+                placeholder="Company TIN number">
+            <small class="text-danger" *ngIf=" form.controls.tin_no.errors && form.controls.tin_no.touched">
+                Company TIN number required
+            </small>
+        </div>
+        <label for="vat" class="d-none d-sm-block col-md-2 col-form-label col-form-label-sm">Vat percent</label>
+        <div class="col-6 col-md-4">
+            <input type="text" class="form-control form-control-sm" id="vat" formControlName="vat" maxlength="2"
+                placeholder="VAT percent">
+            <small class="text-danger" *ngIf=" form.controls.vat.errors && form.controls.vat.touched">
+                Vat percent required
+            </small>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="website" class="d-none d-sm-block col-md-2 col-form-label col-form-label-sm">Website</label>
+        <div class="col-6 col-md-4">
+            <input type="text" class="form-control form-control-sm" id="website" formControlName="website"
+                placeholder="Company website address">
+            <small class="text-danger" *ngIf=" form.controls.website.errors && form.controls.website.touched">
+                Company website required
+            </small>
+        </div>        
+    </div>
+
+    <div class="form-group row">
+        <label for="address" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Address*</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" id="address" formControlName="address" rows="2"
+                placeholder="Address"></textarea>
+            <small class="form-text text-danger"
+                *ngIf="form.controls.address.errors && form.controls.address.touched">Agent address required</small>
+        </div>
+    </div>
+
+    <div class="d-flex flex-row-reverse bd-highlight">
+        <button type="submit" (mouseenter)="mouseoverShifting = true" class="btn btn-sm btn-light mx-1">{{exists ?
+            'Update':'Save'}}</button>
+        <button type="button" *ngIf="exists" class="btn btn-sm btn-light mx-1" (click)="onDelete()">Delete</button>
+        <button type="button" class="btn btn-sm btn-light mx-1" (click)="clear()">Clear</button>
+    </div>
+    <div *ngIf="mouseoverShifting" class="text-danger">
+        {{ getFormValidationErrors() }}
+    </div>
+</form>

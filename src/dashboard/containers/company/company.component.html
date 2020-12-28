@@ -1,0 +1,14 @@
+<div class="page-head">
+    Company
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="offset-md-2 col-12 col-md-8 p-md-0 mt-2">
+            <div class=" border rounded">
+                <company-form (create)="onCreate($event)" (update)="onUpdate($event)" (delete)="onDelete($event)"
+                    [company]="company"></company-form>
+            </div>
+        </div>
+    </div>
+</div>
