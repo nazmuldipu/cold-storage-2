@@ -20,6 +20,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    this.auth.user$.subscribe(data =>{
+      if(data && data.uid){
+        this.router.navigate(['/dashboard'])
+      }
+    })
   }
 
   createForm() {
@@ -29,27 +34,32 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  submit() {
+  async submit() {
     if (this.form.valid) {
       this.errorMessage = "";
       this.loading = true;
-      this.auth.loginWithEmail(this.form.controls.username.value, this.form.controls.password.value)
-        .then(data => {
-          this.userService.get(data.user.uid).subscribe(datar => {
-            this.loading = false;
-            this.router.navigate(['/dashboard']);
-          }, error => {
-            this.loading = false;
-            this.errorMessage = error.message;
-          })
-        })
-        .catch((error) => {
-          this.loading = false;
-          this.errorMessage = error.message;
-        });
-
+      try {
+        const resp = await this.auth.loginWithEmail(this.form.controls.username.value, this.form.controls.password.value);
+        console.log(resp.user);
+        if (resp.user.email) {
+          console.log(resp.user.email);
+          this.getUser(resp);
+        }
+      } catch (error) { console.log(error) }
     } else {
       this.errorMessage = "Form data missing";
     }
+  }
+
+  async getUser(data) {
+    await this.userService.get(data.user.uid).subscribe(data => {
+      this.loading = false;
+      this.router.navigate(['/dashboard']);
+      console.log(data);
+    }, error => {
+      this.loading = false;
+      this.errorMessage = error.message;
+    })
+
   }
 }

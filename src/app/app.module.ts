@@ -7,12 +7,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ServiceModule } from 'src/service/service.module';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
+import { AuthGuard } from 'src/service/auth-guard.service';
 
 export const ROUTES: Routes = [
   {
     path: 'dashboard',
     loadChildren: () =>
-      import('../dashboard/dashboard.module').then((m) => m.DashboardModule),
+      import('../dashboard/dashboard.module').then((m) => m.DashboardModule), canActivate: [AuthGuard]
   },
   {
     path: '',

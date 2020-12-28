@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { User } from 'src/shared/model/user.model';
 import firebase from 'firebase';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class AuthService {
   currentUser$ = this._userSource.asObservable();
   currentUser: User;
 
-  constructor(public afAuth: AngularFireAuth) {
+  constructor(public afAuth: AngularFireAuth, private router: Router) {
     this.user$ = afAuth.authState;
   }
 
@@ -40,6 +41,7 @@ export class AuthService {
       .signOut()
       .then((data) => {
         console.log('SIGNOUT');
+        this.router.navigate(['/login']);
       })
       .catch((error) => {
         console.log('SIGNOUT ERROR', error);

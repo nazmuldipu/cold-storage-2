@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { User } from 'src/shared/model/user.model';
 
 @Injectable({
@@ -66,8 +66,18 @@ export class UserService {
       );
   }
 
-  get(id) {
-    return this.afs.doc(this.serviceUrl + '/' + id).valueChanges();
+  // get(id) {
+  //   return this.afs.doc(this.serviceUrl + '/' + id).valueChanges();
+  // }
+
+  get(sid: string) {
+    return this.afs.doc(this.serviceUrl + '/' + sid)
+      .valueChanges()
+      .pipe(take(1), map(ref => {
+        const value = { id: sid, ...ref as User };
+        return value;
+      })
+      );
   }
 
   update(id, object: User) {

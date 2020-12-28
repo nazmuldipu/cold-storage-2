@@ -9,13 +9,16 @@
 
         <div class="collapse navbar-collapse" id="homeNabBar" [class.show]="show">
             <ul class="navbar-nav mr-auto mb-2 mb-md-0">
-            </ul>
-            <ul class="navbar-nav mb-2 mb-md-0">
-                <li class="nav-item ">
+                <li class="nav-item " *ngIf="isAuthenticated()">
                     <a class="nav-link" (click)="toggleCollapse()" routerLink="/dashboard">Dashboard</a>
                 </li>
-                <li class="nav-item ">
+            </ul>
+            <ul class="navbar-nav mb-2 mb-md-0">
+                <li class="nav-item " *ngIf="!isAuthenticated()">
                     <a class="nav-link" (click)="toggleCollapse()" routerLink="/login">Login</a>
+                </li>
+                <li class="nav-item " *ngIf="isAuthenticated()">
+                    <a class="nav-link" (click)="toggleCollapse(); logout()">Logout</a>
                 </li>
             </ul>
         </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/service/auth.service';
 
 @Component({
   selector: 'dash-nav',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashNavComponent implements OnInit {
   show = false;
-
+  user;
   nav_data = [
     {
       name: 'Dashboard',
@@ -142,13 +143,27 @@ export class DashNavComponent implements OnInit {
     },
   ];
 
-  constructor() { }
+  constructor(private auth: AuthService) { }
 
   ngOnInit(): void {
+    this.auth.user$.subscribe(data => {
+      if (data) {
+        this.user = { _id: data.uid, email: data.email };
+      } else {
+        this.user = null;
+      }
+    })
   }
 
   toggleCollapse() {
     this.show = !this.show;
   }
 
+  isAuthenticated() {
+    return !!this.user;
+  }
+
+  logout() {
+    this.auth.logout()
+  }
 }

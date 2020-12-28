@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/service/auth.service';
 
 @Component({
   selector: 'top-nav',
@@ -7,14 +8,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopNavComponent implements OnInit {
   show = false;
-
-  constructor() { }
+  user;
+  constructor(private auth: AuthService) { }
 
   ngOnInit(): void {
+    this.auth.user$.subscribe(data => {
+      if (data) {
+        this.user = { _id: data.uid, email: data.email };
+      } else {
+        this.user = null;
+      }
+    })
   }
 
   toggleCollapse() {
     this.show = !this.show;
+  }
+
+  isAuthenticated() {
+    return !!this.user;
+  }
+
+  logout() {
+    this.auth.logout()
   }
 
 }

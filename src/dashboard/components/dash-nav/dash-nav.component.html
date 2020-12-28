@@ -22,12 +22,20 @@
                 </ng-container>
             </ul>
             <ul class="navbar-nav mb-2 mb-md-0">
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/login">Login</a>
+                <li ngbDropdown class="nav-item" *ngIf="isAuthenticated()">
+                    <a href (click)="false" class="nav-link" ngbDropdownToggle>{{user.email}}</a>
+                    <div ngbDropdownMenu>
+                        <button ngbDropdownItem routerLink="/changePassword" (click)="toggleCollapse()">Change
+                            Password</button>
+                        <button ngbDropdownItem (click)="toggleCollapse(); logout()">Logout</button>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/login">Logout</a>
+                <li class="nav-item " *ngIf="!isAuthenticated()">
+                    <a class="nav-link" (click)="toggleCollapse()" routerLink="/login">Login</a>
                 </li>
+                <!-- <li class="nav-item " *ngIf="isAuthenticated()">
+                    <a class="nav-link" (click)="toggleCollapse(); logout()">Logout</a>
+                </li> -->
             </ul>
         </div>
     </div>
