@@ -4,7 +4,7 @@ import { AuthService } from 'src/service/auth.service';
 @Component({
   selector: 'dash-nav',
   templateUrl: './dash-nav.component.html',
-  styleUrls: ['./dash-nav.component.scss']
+  styleUrls: ['./dash-nav.component.scss'],
 })
 export class DashNavComponent implements OnInit {
   show = false;
@@ -65,6 +65,11 @@ export class DashNavComponent implements OnInit {
           name: 'Loading Party',
           icon: 'fa-plus',
           link: '/dashboard/customer',
+        },
+        {
+          name: 'Inventory',
+          icon: 'fa-plus',
+          link: '/dashboard/inventory',
         },
         {
           name: 'Loading Registration',
@@ -143,16 +148,16 @@ export class DashNavComponent implements OnInit {
     },
   ];
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService) {}
 
   ngOnInit(): void {
-    this.auth.user$.subscribe(data => {
+    this.auth.user$.subscribe((data) => {
       if (data) {
         this.user = { _id: data.uid, email: data.email };
       } else {
         this.user = null;
       }
-    })
+    });
   }
 
   toggleCollapse() {
@@ -164,6 +169,6 @@ export class DashNavComponent implements OnInit {
   }
 
   logout() {
-    this.auth.logout()
+    this.auth.logout();
   }
 }

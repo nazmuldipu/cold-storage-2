@@ -74,7 +74,6 @@ export class LoadingComponent implements OnInit {
   }
 
   onDetails(id) {
-    console.log('onDetails', id);
     this.loading = this.loadingList.find((ld) => ld._id == id);
   }
 }
