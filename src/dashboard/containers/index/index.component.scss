@@ -1,0 +1,134 @@
+:host {
+  padding: 15px;
+  display: block;
+  background-color: #f8f9fa;
+  min-height: calc(100vh - 60px);
+}
+:host ::ng-deep {
+  .p-listbox {
+    border: none;
+  }
+}
+.card:last-child {
+  margin-bottom: 0;
+}
+
+.widget-overview-box {
+  min-height: 6rem;
+  position: relative;
+  border-left: 4px solid;
+  .overview-icon {
+    display: inline-block;
+    border-radius: 4px;
+    width: 2em;
+    height: 2rem;
+    line-height: 2rem;
+    text-align: center;
+    vertical-align: middle;
+  }
+  &.widget-overview-box-1 {
+    border-left-color: #64b5f6;
+    .overview-icon {
+      background: #64b5f6;
+      color: #1976d2;
+    }
+    .overview-title {
+      color: #64b5f6;
+    }
+  }
+  &.widget-overview-box-2 {
+    border-left-color: #7986cb;
+    .overview-icon {
+      background: #7986cb;
+      color: #303f9f;
+    }
+    .overview-title {
+      color: #7986cb;
+    }
+  }
+  &.widget-overview-box-3 {
+    border-left-color: #4db6ac;
+    .overview-icon {
+      background: #4db6ac;
+      color: #00796b;
+    }
+    .overview-title {
+      color: #4db6ac;
+    }
+  }
+  &.widget-overview-box-4 {
+    border-left-color: #4dd0e1;
+    .overview-icon {
+      background: #4dd0e1;
+      color: #0097a7;
+    }
+    .overview-title {
+      color: #4dd0e1;
+    }
+  }
+}
+
+.card {
+  background: #ffffff;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+}
+
+.widget-overview-box.widget-overview-box-1 .widget-overview-box .overview-icon {
+  display: inline-block;
+  border-radius: 4px;
+  width: 2em;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  vertical-align: middle;
+}
+.widget-overview-box .overview-icon i {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.widget-overview-box .overview-title {
+  font-weight: 600;
+  font-size: 1.125rem;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+}
+
+.widget-overview-box .overview-detail {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.widget-overview-box .col-6:first-child {
+  border-right: 1px solid #dee2e6;
+}
+
+.widget-overview-box .overview-detail .p-col-6 {
+  padding: 0.5rem;
+}
+
+.widget-overview-box .overview-number {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.widget-overview-box .overview-subtext {
+  color: #6c757d;
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+h4:first-child {
+  margin-top: 0;
+}
+
+.list-group-item {
+  padding: 0.25rem 1.25rem;
+}
+.card > .list-group {
+  border: none;
+}

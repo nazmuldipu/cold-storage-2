@@ -36,7 +36,6 @@ export class LoadingComponent implements OnInit {
   async getLoadingList() {
     this.loadingService.loadings$.subscribe((data) => {
       this.loadingList = data;
-      console.log(this.loadingList);
       this.loadingList.sort(this.util.dynamicSortObject('priority'));
       this.refreshLoading();
     });

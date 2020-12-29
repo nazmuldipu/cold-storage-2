@@ -7,15 +7,38 @@
   padding: 0;
   // font-size: 15px;
 }
-.dropdown-toggle::after{
+.dropdown-toggle::after {
   display: none;
 }
 .navbar,
-.nav-link{
+.nav-link {
   font-size: 14px;
+}
+
+.dropdown-menu {
+  padding: 0;
 }
 .dropdown-item {
   font-size: 14px;
-  padding: 0 8px;
+  padding: 3px 8px;
   border-bottom: 1px solid $divider-color;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+@media screen and (max-width: 767px) {
+  .navbar-nav {
+    padding: 8px;
+  }
+  .nav-item,
+  .dropdown-item {
+    font-size: 16px;
+    text-align: right;
+    padding: 4px 0;
+  }
+  .dropdown-item{
+    padding: 4px 12px;
+  }
 }
