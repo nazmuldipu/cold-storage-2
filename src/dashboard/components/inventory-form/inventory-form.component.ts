@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { UtilService } from 'src/service/util.service';
 import { Inventory, InventoryType } from 'src/shared/model/inventory.model';
 
 @Component({
@@ -19,23 +20,28 @@ export class InventoryFormComponent implements OnChanges {
   errorMessage: string = '';
   exists = false;
   mouseoverShifting = false;
+  ngDate;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private util: UtilService) {
+    this.ngDate = this.util.convertJsDateToNgbDate(new Date());
     this.createForm();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.inventory && this.inventory != null) {
       this.form.reset();
+      const date = this.util.convertFireabaseDateToNgbDate(this.inventory.date);
+      console.log(date, date);
+      const value = { ...this.inventory, date }
       this.exists = true;
-      this.form.patchValue(this.inventory);
+      this.form.patchValue(value);
     }
   }
 
   createForm() {
     this.form = this.fb.group({
-      inventoryType: ['', Validators.required],
-      date: ['', Validators.required],
+      inventoryType: ['RECEIVE', Validators.required],
+      date: [this.ngDate, Validators.required],
       sr_no: ['', Validators.required],
       name: ['', Validators.required],
       sub_name: ['', Validators.required],
@@ -53,10 +59,14 @@ export class InventoryFormComponent implements OnChanges {
 
   submit() {
     if (this.form.valid) {
+      const fvalue = this.form.value;
+      const dateValue = this.util.convertNgbDateToJsDate(fvalue.date);
+      console.log(dateValue);
+      const value = { ...fvalue, date: dateValue }
       if (this.exists) {
-        this.update.emit(this.form.value);
+        this.update.emit(value);
       } else {
-        this.create.emit(this.form.value);
+        this.create.emit(value);
       }
       this.clear();
     }

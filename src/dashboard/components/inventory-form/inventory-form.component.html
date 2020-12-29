@@ -5,6 +5,7 @@
 <div class="alert alert-danger" *ngIf="errorMessage.length>0">
     {{errorMessage}}
 </div>
+
 <form [formGroup]="form" (ngSubmit)="submit()" (mouseleave)="mouseoverShifting = false" class="p-3">
     <div class="form-group row">
         <label for="inventoryType" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Type</label>
@@ -17,32 +18,20 @@
             </select>
         </div>
     </div>
-
     <div class="form-group row">
-        <label for="name" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Name</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control form-control-sm" id="name" formControlName="name"
-                placeholder="Inventory Name">
-            <small class="form-text text-danger"
-                *ngIf="form.controls.name.errors && form.controls.name.touched">Inventory
-                Name Required</small>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="sr_no" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">SR_no</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control form-control-sm" id="sr_no" formControlName="sr_no"
-                placeholder="SR Number">
-            <small class="text-danger" *ngIf=" form.controls.sr_no.errors && form.controls.sr_no.touched">
-                SR NO name required
-            </small>
+        <div class="input-group">
+            <label for="date" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Date</label>
+            <div class="col-sm-10">
+                <input class="form-control form-control-sm" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
+                    formControlName="date" #date="ngbDatepicker" (click)="date.toggle()">
+            </div>
         </div>
     </div>
     <div class="form-group row">
         <label for="phone" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Phone</label>
         <div class="col-sm-10">
             <input type="text" class="form-control form-control-sm" id="phone" maxlength="11" formControlName="phone"
-                placeholder="Inventory phone">
+                placeholder="Party phone number">
             <small class="text-danger" *ngIf=" form.controls.phone.errors && form.controls.phone.touched">
                 <div [hidden]="!form.controls['phone'].errors.required">
                     Phone required
@@ -54,6 +43,55 @@
         </div>
     </div>
 
+    <div class="form-group row">
+        <label for="sr_no" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">SR_no</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control form-control-sm" id="sr_no" formControlName="sr_no"
+                placeholder="SR Number">
+            <small class="text-danger" *ngIf=" form.controls.sr_no.errors && form.controls.sr_no.touched">
+                SR NO name required
+            </small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="name" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control form-control-sm" id="name" formControlName="name"
+                placeholder="Product Name">
+            <small class="form-text text-danger" *ngIf="form.controls.name.errors && form.controls.name.touched">Product
+                Name Required</small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="sub_name" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Category</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control form-control-sm" id="sub_name" formControlName="sub_name"
+                placeholder="Product category">
+            <small class="form-text text-danger"
+                *ngIf="form.controls.sub_name.errors && form.controls.sub_name.touched">Product
+                Sub Name Required</small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="quantity" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Quantity</label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control form-control-sm" id="quantity" formControlName="quantity"
+                placeholder="Product Quantity">
+            <small class="text-danger" *ngIf=" form.controls.quantity.errors && form.controls.quantity.touched">
+                Product Quantity required
+            </small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="unit" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Unit</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control form-control-sm" id="unit" formControlName="unit"
+                placeholder="Product unit (Bag/Kg)">
+            <small class="text-danger" *ngIf=" form.controls.unit.errors && form.controls.unit.touched">
+                Product Unit required
+            </small>
+        </div>
+    </div>
     <div class="d-flex flex-row-reverse bd-highlight">
         <button type="submit" (mouseenter)="mouseoverShifting = true" class="btn btn-sm btn-light mx-1">{{exists ?
             'Update':'Save'}}</button>

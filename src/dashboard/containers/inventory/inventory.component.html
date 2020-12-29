@@ -14,14 +14,16 @@
             <table class="table table-striped border table-sm">
                 <thead>
                     <tr>
-                        <td colspan="5" class="form-head">
+                        <td colspan="7" class="form-head">
                             Inventory List
                         </td>
                     </tr>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">SR.NO.</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Father</th>
+                        <th scope="col">Category</th>
                         <th scope="col">Phone</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -29,8 +31,10 @@
                 <tbody>
                     <tr *ngFor="let inventory of inventoryPage;let i = index;">
                         <th scope="row">{{ i+1 }}</th>
+                        <td> {{ inventory.date.toMillis() | date:'dd/MM/yyyy' }} </td>
+                        <td> {{ inventory.sr_no }} </td>
                         <td> {{ inventory.name }} </td>
-                        <td> {{ inventory.father }} </td>
+                        <td> {{ inventory.sub_name }} </td>
                         <td> {{ inventory.phone }} </td>
                         <td><a class="edit_link" (click)="onEdit(inventory._id)">Edit</a></td>
                     </tr>

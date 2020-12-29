@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UtilService {
-  constructor() { }
+  constructor(private firestore: AngularFirestore) { }
 
   dynamicSortObject(property) {
     let prop = property.split('.');
@@ -57,5 +60,25 @@ export class UtilService {
       .replace(/-+/g, '-'); // collapse dashes
 
     return str;
+  }
+
+
+  convertFireabaseDateToJSDate(firebaseObject: any): Date {
+    if (!firebaseObject) return null;
+    return (firebaseObject as firebase.firestore.Timestamp).toDate();
+  }
+
+  convertFireabaseDateToNgbDate(firebaseObject: any): NgbDate {
+    if (!firebaseObject) return null;
+    const date = (firebaseObject as firebase.firestore.Timestamp).toDate();
+    return new NgbDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
+  }
+
+  convertNgbDateToJsDate(ngDate: NgbDate): Date {
+    return new Date(ngDate.year, ngDate.month - 1, ngDate.day)
+  }
+
+  convertJsDateToNgbDate(date: Date): NgbDate {
+    return new NgbDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
   }
 }
