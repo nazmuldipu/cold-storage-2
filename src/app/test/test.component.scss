@@ -1,0 +1,74 @@
+:host {
+  display: block;
+  background: #e0e0e0;
+}
+
+.A4 {
+  padding: 15px;
+}
+
+.sheet {
+  background: white;
+  box-shadow: 0 0.5mm 2mm rgba(0, 0, 0, .3);
+  margin: 0 auto;
+}
+
+.sheet.padding-10mm {
+  padding: 10mm;
+}
+
+.A4 .sheet {
+  width: 210mm;
+  height: 296mm;
+}
+
+.A4.landscape .sheet {
+  width: 297mm;
+  height: 209mm;
+}
+
+@page {
+  size: auto !important
+}
+
+@media print {
+  @page {
+    size: auto !important
+  }
+
+  .A4.landscape .sheet {
+    transform: rotate(270deg) translate(-276mm, 0);
+    transform-origin: 0 0;
+  }
+
+  //   .A3.landscape {
+  //     width: 420mm
+  //   }
+
+  //   .A3,
+  //   .A4.landscape {
+  //     width: 297mm
+  //   }
+
+  //   .A4,
+  //   .A5.landscape {
+  //     width: 210mm
+  //   }
+
+  //   .A5 {
+  //     width: 148mm
+  //   }
+
+  //   .letter,
+  //   .legal {
+  //     width: 216mm
+  //   }
+
+  //   .letter.landscape {
+  //     width: 280mm
+  //   }
+
+  //   .legal.landscape {
+  //     width: 357mm
+  //   }
+}

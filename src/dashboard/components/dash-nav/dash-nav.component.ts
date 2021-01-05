@@ -16,6 +16,7 @@ export class DashNavComponent implements OnInit {
       icon: 'fa-home',
       subnav: [],
     },
+
     {
       name: 'Inventory Setting',
       icon: 'fa-home',
@@ -144,11 +145,17 @@ export class DashNavComponent implements OnInit {
       name: 'Accessories',
       link: '/dashboard/categories/add',
       icon: 'fa-sign-language ',
-      subCagegories: [],
+      subnav: [],
+    },
+    {
+      name: 'Test',
+      link: '/dashboard/test',
+      icon: 'fa-home',
+      subnav: [],
     },
   ];
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService) { }
 
   ngOnInit(): void {
     this.auth.user$.subscribe((data) => {

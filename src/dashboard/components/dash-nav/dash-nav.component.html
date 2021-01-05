@@ -1,42 +1,42 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-primary-dark" aria-label="Fourth navbar example">
-    <div class="container-fluid">
-        <a class="navbar-brand" (click)="toggleCollapse()" routerLink="/">UNOLO Ltd.</a>
-        <button class="navbar-toggler" (click)="toggleCollapse()" type="button" data-bs-toggle="collapse"
-            data-bs-target="#dashNav" aria-controls="dashNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<nav class="navbar navbar-expand-md navbar-dark bg-primary-dark d-print-none" aria-label="Fourth navbar example">
+  <div class="container-fluid">
+    <a class="navbar-brand" (click)="toggleCollapse()" routerLink="/">UNOLO Ltd.</a>
+    <button class="navbar-toggler" (click)="toggleCollapse()" type="button" data-bs-toggle="collapse"
+      data-bs-target="#dashNav" aria-controls="dashNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse" id="dashNav" [class.show]="show">
-            <ul class="navbar-nav mr-auto mb-2 mb-md-0">
-                <ng-container *ngFor="let nav of nav_data">
-                    <li class="nav-item" *ngIf="nav?.subnav?.length == 0">
-                        <a class="nav-link" (click)="toggleCollapse()" [routerLink]="nav.link">{{nav.name}}</a>
-                    </li>
-                    <li ngbDropdown class="nav-item" *ngIf="nav?.subnav?.length > 0">
-                        <a href (click)="false" class="nav-link" ngbDropdownToggle>{{nav.name}}</a>
-                        <div ngbDropdownMenu>
-                            <button ngbDropdownItem *ngFor="let sb of nav.subnav" [routerLink]="sb.link"
-                                (click)="toggleCollapse()">{{sb.name}}</button>
-                        </div>
-                    </li>
-                </ng-container>
-            </ul>
-            <ul class="navbar-nav mb-2 mb-md-0">
-                <li ngbDropdown class="nav-item" *ngIf="isAuthenticated()">
-                    <a href (click)="false" class="nav-link" ngbDropdownToggle>{{user.email}}</a>
-                    <div ngbDropdownMenu>
-                        <button ngbDropdownItem routerLink="/changePassword" (click)="toggleCollapse()">Change
-                            Password</button>
-                        <button ngbDropdownItem (click)="toggleCollapse(); logout()">Logout</button>
-                    </div>
-                </li>
-                <li class="nav-item " *ngIf="!isAuthenticated()">
-                    <a class="nav-link" (click)="toggleCollapse()" routerLink="/login">Login</a>
-                </li>
-                <!-- <li class="nav-item " *ngIf="isAuthenticated()">
+    <div class="collapse navbar-collapse" id="dashNav" [class.show]="show">
+      <ul class="navbar-nav mr-auto mb-2 mb-md-0">
+        <ng-container *ngFor="let nav of nav_data">
+          <li class="nav-item" *ngIf="nav?.subnav?.length == 0">
+            <a class="nav-link" (click)="toggleCollapse()" [routerLink]="nav.link">{{nav.name}}</a>
+          </li>
+          <li ngbDropdown class="nav-item" *ngIf="nav?.subnav?.length > 0">
+            <a href (click)="false" class="nav-link" ngbDropdownToggle>{{nav.name}}</a>
+            <div ngbDropdownMenu>
+              <button ngbDropdownItem *ngFor="let sb of nav.subnav" [routerLink]="sb.link"
+                (click)="toggleCollapse()">{{sb.name}}</button>
+            </div>
+          </li>
+        </ng-container>
+      </ul>
+      <ul class="navbar-nav mb-2 mb-md-0">
+        <li ngbDropdown class="nav-item" *ngIf="isAuthenticated()">
+          <a href (click)="false" class="nav-link" ngbDropdownToggle>{{user.email}}</a>
+          <div ngbDropdownMenu>
+            <button ngbDropdownItem routerLink="/changePassword" (click)="toggleCollapse()">Change
+              Password</button>
+            <button ngbDropdownItem (click)="toggleCollapse(); logout()">Logout</button>
+          </div>
+        </li>
+        <li class="nav-item " *ngIf="!isAuthenticated()">
+          <a class="nav-link" (click)="toggleCollapse()" routerLink="/login">Login</a>
+        </li>
+        <!-- <li class="nav-item " *ngIf="isAuthenticated()">
                     <a class="nav-link" (click)="toggleCollapse(); logout()">Logout</a>
                 </li> -->
-            </ul>
-        </div>
+      </ul>
     </div>
+  </div>
 </nav>

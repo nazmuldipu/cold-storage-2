@@ -1,0 +1,41 @@
+:host {
+  display: block;
+  background: #e0e0e0;
+}
+
+.A4 {
+  padding: 15px;
+}
+
+.sheet {
+  background: white;
+  box-shadow: 0 0.5mm 2mm rgba(0, 0, 0, .3);
+  margin: 0 auto;
+}
+
+.A4 .sheet {
+  width: 210mm;
+  height: 296mm;
+}
+
+.A4.landscape .sheet {
+  width: 297mm;
+  height: 209mm;
+}
+
+.sheet.padding-10mm {
+  padding: 10mm;
+}
+
+/** Fix for Chrome issue #273306 **/
+@media print {
+  @page {
+    size: auto !important;
+  }
+
+  .A4.landscape .sheet {
+    transform: rotate(-90deg);
+    // transform: rotate(270deg) translate(-276mm, 0);
+    // transform-origin: 0 0;
+  }
+}

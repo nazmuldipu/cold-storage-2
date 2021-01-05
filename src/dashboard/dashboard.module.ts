@@ -28,6 +28,8 @@ import { LoadingAddComponent } from './containers/loading-add/loading-add.compon
 import { LoadingFormComponent } from './components/loading-form/loading-form.component';
 import { InventoryComponent } from './containers/inventory/inventory.component';
 import { InventoryFormComponent } from './components/inventory-form/inventory-form.component';
+import { TestComponent } from './components/test/test.component';
+import { InventoryPrintComponent } from './containers/inventory-print/inventory-print.component';
 
 export const ROUTES: Routes = [
   {
@@ -43,12 +45,14 @@ export const ROUTES: Routes = [
       { path: 'agent', component: AgentComponent },
       { path: 'customer', component: CustomerComponent },
       { path: 'inventory', component: InventoryComponent },
+      { path: 'inventory-print/:id', component: InventoryPrintComponent },
       { path: 'loading', component: LoadingComponent },
       { path: 'add-loading', component: LoadingAddComponent },
       { path: 'add-loading/:id', component: LoadingAddComponent },
       { path: 'user', component: UserComponent },
       { path: 'role', component: RoleComponent },
       { path: 'company', component: CompanyComponent },
+      { path: 'test', component: TestComponent },
       { path: '', component: IndexComponent },
     ],
   },
@@ -82,7 +86,9 @@ export const ROUTES: Routes = [
     LoadingFormComponent,
     InventoryComponent,
     InventoryFormComponent,
+    TestComponent,
+    InventoryPrintComponent,
   ],
   imports: [SharedModule, RouterModule.forChild(ROUTES)],
 })
-export class DashboardModule {}
+export class DashboardModule { }

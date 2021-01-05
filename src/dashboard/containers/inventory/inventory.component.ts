@@ -13,13 +13,14 @@ export class InventoryComponent implements OnInit {
   loadingData = false;
   inventoryList: Inventory[] = [];
   inventory: Inventory;
+  printInv: Inventory;
 
   page = 1;
   pageSize = 8;
   inventoryPage: Inventory[] = [];
   errorMessage = '';
 
-  constructor(private inventoryService: InventoryService, private util: UtilService) {}
+  constructor(private inventoryService: InventoryService, private util: UtilService) { }
 
   ngOnInit(): void {
     this.getInventoryList();
@@ -28,8 +29,9 @@ export class InventoryComponent implements OnInit {
   async getInventoryList() {
     this.inventoryService.inventorys$.subscribe((data) => {
       this.inventoryList = data;
-      this.inventoryList.sort(this.util.dynamicSortObject('date'));
+      this.inventoryList.sort(this.util.dynamicSortObject('sr_no'));
       this.refreshInventory();
+      this.printInv = this.inventoryList[0];
     });
   }
 
@@ -96,8 +98,13 @@ export class InventoryComponent implements OnInit {
     this.inventory = this.inventoryList.find((cp) => cp._id === id);
   }
 
+  onPrint(id) {
+    this.printInv = this.inventoryList.find((cp) => cp._id === id);
+  }
+
   clear() {
     this.inventory = null;
+    this.printInv = null;
     this.errorMessage = '';
     this.sendingData = false;
     this.loadingData = false;

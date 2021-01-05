@@ -8,12 +8,19 @@ import { ServiceModule } from 'src/service/service.module';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { AuthGuard } from 'src/service/auth-guard.service';
+import { TestComponent } from './test/test.component';
 
 export const ROUTES: Routes = [
+  { path: 'test', component: TestComponent },
+  // {
+  //   path: 'dashboard',
+  //   loadChildren: () =>
+  //     import('../dashboard/dashboard.module').then((m) => m.DashboardModule), canActivate: [AuthGuard]
+  // },
   {
     path: 'dashboard',
     loadChildren: () =>
-      import('../dashboard/dashboard.module').then((m) => m.DashboardModule), canActivate: [AuthGuard]
+      import('../dashboard/dashboard.module').then((m) => m.DashboardModule)
   },
   {
     path: '',
@@ -23,7 +30,8 @@ export const ROUTES: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,

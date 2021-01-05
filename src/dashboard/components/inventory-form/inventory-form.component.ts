@@ -2,6 +2,11 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { UtilService } from 'src/service/util.service';
 import { Inventory, InventoryType } from 'src/shared/model/inventory.model';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { Agent } from 'src/shared/model/agent.model';
+import { CustomerService } from 'src/service/customer.service';
+import { AgentService } from 'src/service/agent.service';
 
 @Component({
   selector: 'inventory-form',
@@ -22,9 +27,38 @@ export class InventoryFormComponent implements OnChanges {
   mouseoverShifting = false;
   ngDate;
 
-  constructor(private fb: FormBuilder, private util: UtilService) {
+  agentList: Agent[] = [];
+  searchAgent = (text$: Observable<any>) =>
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => {
+        const res = term.length < 2 ? []
+          : this.agentList.filter(v => v.phone.indexOf(term.toLowerCase()) > -1).slice(0, 10)
+        return res;
+      })
+    )
+
+  customerList: Agent[] = [];
+  searchCustomer = (text$: Observable<any>) =>
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => {
+        const res = term.length < 2 ? []
+          : this.customerList.filter(v => v.phone.indexOf(term.toLowerCase()) > -1).slice(0, 10)
+        return res;
+      })
+    )
+
+  formatter = (result: string) => { if (result) return result['name'] + '[' + result['phone'] + ']' };
+
+  constructor(private fb: FormBuilder, private customerService: CustomerService,
+    private agentService: AgentService, private util: UtilService) {
     this.ngDate = this.util.convertJsDateToNgbDate(new Date());
     this.createForm();
+    this.getCustomerList();
+    this.getAgentList();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -38,22 +72,30 @@ export class InventoryFormComponent implements OnChanges {
     }
   }
 
+  async getCustomerList() {
+    this.customerService.customers$.subscribe((data) => {
+      this.customerList = data;
+      this.customerList.sort(this.util.dynamicSortObject('priority'));
+    });
+  }
+
+  async getAgentList() {
+    this.agentService.agents$.subscribe((data) => {
+      this.agentList = data;
+      this.agentList.sort(this.util.dynamicSortObject('priority'));
+    });
+  }
+
   createForm() {
     this.form = this.fb.group({
       inventoryType: ['RECEIVE', Validators.required],
       date: [this.ngDate, Validators.required],
+      year: [this.ngDate.year, Validators.required],
       sr_no: ['', Validators.required],
-      name: ['', Validators.required],
-      sub_name: ['', Validators.required],
-      phone: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern('^01[3-9][ ]?[0-9]{2}[ ]?[0-9]{3}[ ]?[0-9]{3}$'),
-        ],
-      ],
+      name: ['Potato', Validators.required],
+      customer: ['', Validators.required,],
+      agent: [''],
       quantity: ['', Validators.required],
-      unit: ['', Validators.required],
     });
   }
 

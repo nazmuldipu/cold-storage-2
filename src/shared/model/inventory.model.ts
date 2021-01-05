@@ -6,12 +6,12 @@ export interface Inventory {
   sr_no: string;
   name: string;
   slug: string;
-  sub_name: string;
-  phone: string;
+  customer: string;
+  year: number;
   quantity: number;
-  unit: string;
   balance: number;
   version: number;
+  agent: string;
 }
 
 export enum InventoryType {

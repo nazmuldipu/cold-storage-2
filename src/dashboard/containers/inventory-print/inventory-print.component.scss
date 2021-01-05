@@ -1,0 +1,46 @@
+:host {
+  display: block;
+  background: #e0e0e0;
+}
+
+.A4 {
+  padding: 15px;
+}
+
+.sheet {
+  background: white;
+  box-shadow: 0 0.5mm 2mm rgba(0, 0, 0, .3);
+  margin: 0 auto;
+}
+
+.A4 .sheet {
+  width: 210mm;
+  height: 296mm;
+}
+
+@page {
+  width: 297mm;
+  height: 210mm;
+}
+
+.A4.landscape .sheet {
+  width: 297mm;
+  height: 210mm;
+}
+
+.sheet.padding-10mm {
+  padding: 10mm;
+}
+
+@media print {
+  @page {
+    size: auto !important;
+  }
+
+  .A4.landscape .sheet {
+    // transform: rotate(-90deg);
+    margin: 0;
+    transform: rotate(270deg) translate(-90mm, -30mm);
+    // transform-origin: 0 0;
+  }
+}
