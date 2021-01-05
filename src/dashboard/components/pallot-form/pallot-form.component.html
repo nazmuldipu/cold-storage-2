@@ -1,0 +1,83 @@
+<div class="form-head">
+  {{exists?'Update': 'New'}} Pallot
+</div>
+<div class="alert alert-danger" *ngIf="errorMessage.length>0">
+  {{errorMessage}}
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()" (mouseleave)="mouseoverShifting = false" class="p-3">
+  <div class="form-group row">
+    <div class="input-group">
+      <label for="date" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Date*</label>
+      <div class="col-sm-10">
+        <input class="form-control form-control-sm" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
+          formControlName="date" #date="ngbDatepicker" (click)="date.toggle()">
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="sr_no" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">SR No*</label>
+    <div class="col-sm-10">
+      <input id="sr_no" type="text" class="form-control form-control-sm" formControlName="sr_no"
+        [ngbTypeahead]="searchInventory" [editable]='false' />
+      <small class="form-text text-danger" *ngIf="form.controls.sr_no.errors && form.controls.sr_no.touched">SR No
+        Required</small>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="chamber" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Chamber</label>
+    <div class="col-sm-10">
+      <select class="form-control form-control-sm" id="chamber" (change)="onChamberChange($event)">
+        <option value="">Select a chamber</option>
+        <option *ngFor="let chamber of chamberList" [value]="chamber | json">
+          {{ chamber.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="floor" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Floor</label>
+    <div class="col-sm-10">
+      <select class="form-control form-control-sm" id="floor" (change)="onFloorChange($event)">
+        <option value="">Select a floor</option>
+        <option *ngFor="let floor of floorList" [value]="floor | json">
+          {{ floor.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="line" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Line</label>
+    <div class="col-sm-10">
+      <select class="form-control form-control-sm" id="line" (change)="onLineChange($event)">
+        <option value="">Select a line</option>
+        <option *ngFor="let line of lineList" [value]="line | json">
+          {{ line.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="line" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Pocket</label>
+    <div class="col-sm-10">
+      <select class="form-control form-control-sm" id="pocket" formControlName="pocket">
+        <option value="">Select a Pocket</option>
+        <option *ngFor="let pocket of pocketList" [ngValue]="pocket">
+          {{ pocket.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="d-flex flex-row-reverse bd-highlight">
+    <button type="submit" (mouseenter)="mouseoverShifting = true" class="btn btn-sm btn-light mx-1">{{exists ?
+            'Update':'Save'}}</button>
+    <button type="button" *ngIf="exists" class="btn btn-sm btn-light mx-1" (click)="onDelete()">Delete</button>
+    <button type="button" class="btn btn-sm btn-light mx-1" (click)="clean()">Clear</button>
+  </div>
+
+  <div *ngIf="mouseoverShifting" class="text-danger">
+    {{ getFormValidationErrors() }}
+  </div>
+</form>

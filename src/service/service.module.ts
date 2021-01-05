@@ -13,6 +13,8 @@ import { PositionService } from './position.service';
 import { RoleService } from './role.service';
 import { UserService } from './user.service';
 import { UtilService } from './util.service';
+import { PallotService } from './pallot.service';
+import { LedgerService } from './ledger.service';
 
 
 @NgModule({
@@ -24,8 +26,10 @@ import { UtilService } from './util.service';
     CompanyService,
     CustomerService,
     FloorService,
+    LedgerService,
     LineService,
     PocketService,
+    PallotService,
     PositionService,
     RoleService,
     UtilService,

@@ -1,25 +1,24 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Pallot } from 'src/shared/model/pallot.model';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { map } from 'rxjs/internal/operators/map';
-import { Loading } from 'src/shared/model/loading.model';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class LoadingService {
-  serviceUrl = 'loading';
+export class PallotService {
+  serviceUrl = 'pallot';
 
-  private _loadingSource = new BehaviorSubject<Loading[]>([]);
-  loadings$ = this._loadingSource.asObservable();
-  loadings: Loading[] = [];
+  private _pallotSource = new BehaviorSubject<Pallot[]>([]);
+  pallots$ = this._pallotSource.asObservable();
+  pallots: Pallot[] = [];
 
   constructor(private afs: AngularFirestore) {
     this.getAndStoreAll();
   }
 
-  create(object: Loading) {
+  create(object: Pallot) {
     delete object['_id'];
     object.createdAt = new Date();
     return this.afs.collection(this.serviceUrl).add({
@@ -29,16 +28,16 @@ export class LoadingService {
 
   getAndStoreAll() {
     return this.afs
-      .collection(this.serviceUrl, (ref) => ref.orderBy('s_r_date'))
+      .collection(this.serviceUrl, (ref) => ref.orderBy('sr_no'))
       .snapshotChanges()
       .subscribe((data) => {
-        this.loadings = [];
+        this.pallots = [];
         data.forEach((resp) => {
-          let cls = resp.payload.doc.data() as Loading;
+          let cls = resp.payload.doc.data() as Pallot;
           cls._id = resp.payload.doc.id;
-          this.loadings.push(cls);
+          this.pallots.push(cls);
         });
-        this._loadingSource.next(this.loadings);
+        this._pallotSource.next(this.pallots);
       });
   }
 
@@ -49,7 +48,7 @@ export class LoadingService {
       .pipe(
         map((actions) =>
           actions.map((a) => {
-            const data = a.payload.doc.data() as Loading;
+            const data = a.payload.doc.data() as Pallot;
             const id = a.payload.doc.id;
             return { id, ...data };
           })
@@ -57,11 +56,11 @@ export class LoadingService {
       );
   }
 
-  get(id):Observable<any> {
+  get(id): Observable<any> {
     return this.afs.doc(this.serviceUrl + '/' + id).valueChanges();
   }
 
-  update(id, object: Loading) {
+  update(id, object: Pallot) {
     delete object['_id'];
     return this.afs.doc(this.serviceUrl + '/' + id).update({
       ...object,

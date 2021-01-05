@@ -23,13 +23,18 @@ import { CustomerFormComponent } from './components/customer-form/customer-form.
 import { CustomerComponent } from './containers/customer/customer.component';
 import { CompanyComponent } from './containers/company/company.component';
 import { CompanyFormComponent } from './components/company-form/company-form.component';
-import { LoadingComponent } from './containers/loading/loading.component';
-import { LoadingAddComponent } from './containers/loading-add/loading-add.component';
 import { LoadingFormComponent } from './components/loading-form/loading-form.component';
 import { InventoryComponent } from './containers/inventory/inventory.component';
 import { InventoryFormComponent } from './components/inventory-form/inventory-form.component';
 import { TestComponent } from './components/test/test.component';
 import { InventoryPrintComponent } from './containers/inventory-print/inventory-print.component';
+import { PallotComponent } from './containers/pallot/pallot.component';
+import { PallotFormComponent } from './components/pallot-form/pallot-form.component';
+import { LoanComponent } from './containers/loan/loan.component';
+import { LoanFormComponent } from './components/loan-form/loan-form.component';
+import { LedgerComponent } from './containers/ledger/ledger.component';
+import { LedgerAddComponent } from './containers/ledger-add/ledger-add.component';
+import { ContractComponent } from './containers/contract/contract.component';
 
 export const ROUTES: Routes = [
   {
@@ -46,9 +51,12 @@ export const ROUTES: Routes = [
       { path: 'customer', component: CustomerComponent },
       { path: 'inventory', component: InventoryComponent },
       { path: 'inventory-print/:id', component: InventoryPrintComponent },
-      { path: 'loading', component: LoadingComponent },
-      { path: 'add-loading', component: LoadingAddComponent },
-      { path: 'add-loading/:id', component: LoadingAddComponent },
+      { path: 'ledger', component: LedgerComponent },
+      { path: 'ledger-add', component: LedgerAddComponent },
+      { path: 'ledger-add/:id', component: LedgerAddComponent },
+      { path: 'contract/:id', component: ContractComponent },
+      { path: 'pallot', component: PallotComponent },
+      { path: 'loan', component: LoanComponent },
       { path: 'user', component: UserComponent },
       { path: 'role', component: RoleComponent },
       { path: 'company', component: CompanyComponent },
@@ -81,13 +89,18 @@ export const ROUTES: Routes = [
     CustomerComponent,
     CompanyComponent,
     CompanyFormComponent,
-    LoadingComponent,
-    LoadingAddComponent,
     LoadingFormComponent,
     InventoryComponent,
     InventoryFormComponent,
     TestComponent,
     InventoryPrintComponent,
+    PallotComponent,
+    PallotFormComponent,
+    LoanComponent,
+    LoanFormComponent,
+    LedgerComponent,
+    LedgerAddComponent,
+    ContractComponent,
   ],
   imports: [SharedModule, RouterModule.forChild(ROUTES)],
 })

@@ -15,7 +15,9 @@ export const environment = {
     databaseURL: 'https://cold-storage-2020-913d1.firebaseio.com',
   }
 };
-
+/*
+ac : ispbhuigor
+*/
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

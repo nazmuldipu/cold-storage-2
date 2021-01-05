@@ -6,15 +6,26 @@ export interface Inventory {
   sr_no: string;
   name: string;
   slug: string;
-  customer: string;
+  customer: User;
   year: number;
   quantity: number;
   balance: number;
   version: number;
-  agent: string;
+  agent: User;
 }
 
 export enum InventoryType {
   RECEIVE = 'RECEIVE',
   DELIVERY = 'DELIVERY',
 }
+
+interface User {
+  _id: string;
+  createdAt: Date;
+  slug: string;
+  name: string;
+  father: string;
+  phone: string;
+  address: string;
+}
+

@@ -54,7 +54,7 @@ export class DashNavComponent implements OnInit {
       ],
     },
     {
-      name: 'Loading',
+      name: 'Inventory',
       icon: 'fa-cubes',
       subnav: [
         {
@@ -73,9 +73,9 @@ export class DashNavComponent implements OnInit {
           link: '/dashboard/inventory',
         },
         {
-          name: 'Loading Registration',
+          name: 'Palloting',
           icon: 'fa-plus',
-          link: '/dashboard/add-loading',
+          link: '/dashboard/pallot',
         },
         {
           name: 'Loading List',
@@ -121,15 +121,17 @@ export class DashNavComponent implements OnInit {
       ],
     },
     {
-      name: 'Chembering',
+      name: 'Loan',
+      icon: 'fa-archive',
+      link: '/dashboard/loan',
+      subnav: [],
+    },
+    {
+      name: 'Ledger',
       icon: 'fa-archive',
       subnav: [
-        { name: 'Brands', icon: 'fa-tags', link: '/dashboard/products/brands' },
-        {
-          name: 'Shops',
-          icon: 'fa-shopping-bag',
-          link: '/dashboard/products/shops',
-        },
+        { name: 'Add Ledger', icon: 'fa-shopping-bag', link: '/dashboard/ledger-add', },
+        { name: 'Ledger list', icon: 'fa-tags', link: '/dashboard/ledger' },
       ],
     },
     {
