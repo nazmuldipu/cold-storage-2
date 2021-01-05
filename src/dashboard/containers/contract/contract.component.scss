@@ -1,0 +1,43 @@
+:host {
+  display: block;
+  background: #e0e0e0;
+}
+
+h3 {
+  text-align: center;
+}
+
+.receipt {
+  height: 8.5in;
+  width: 100%;
+  float: left;
+  padding: 10px;
+  // border: 1px solid black;
+}
+
+.output {
+  height: 8.5in;
+  width: 11in;
+  // border: 1px solid red;
+  position: absolute;
+  top: 50px;
+  left: 10px;
+}
+
+.col-amount td {
+  height: 100px;
+  vertical-align: middle;
+  font-size: 18px;
+}
+
+@media print {
+  .output {
+    -ms-transform: rotate(270deg);
+    /* IE 9 */
+    -webkit-transform: rotate(270deg);
+    /* Chrome, Safari, Opera */
+    transform: rotate(270deg);
+    top: 2in;
+    left: -1in;
+  }
+}

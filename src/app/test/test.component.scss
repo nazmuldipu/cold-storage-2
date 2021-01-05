@@ -1,74 +1,31 @@
-:host {
-  display: block;
-  background: #e0e0e0;
+h3 {
+  text-align: center;
 }
 
-.A4 {
-  padding: 15px;
+.receipt {
+  height: 8.5in;
+  width: 33%;
+  float: left;
+  border: 1px solid black;
 }
 
-.sheet {
-  background: white;
-  box-shadow: 0 0.5mm 2mm rgba(0, 0, 0, .3);
-  margin: 0 auto;
-}
-
-.sheet.padding-10mm {
-  padding: 10mm;
-}
-
-.A4 .sheet {
-  width: 210mm;
-  height: 296mm;
-}
-
-.A4.landscape .sheet {
-  width: 297mm;
-  height: 209mm;
-}
-
-@page {
-  size: auto !important
+.output {
+  height: 8.5in;
+  width: 11in;
+  border: 1px solid red;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 
 @media print {
-  @page {
-    size: auto !important
+  .output {
+    -ms-transform: rotate(270deg);
+    /* IE 9 */
+    -webkit-transform: rotate(270deg);
+    /* Chrome, Safari, Opera */
+    transform: rotate(270deg);
+    top: 1.5in;
+    left: -1in;
   }
-
-  .A4.landscape .sheet {
-    transform: rotate(270deg) translate(-276mm, 0);
-    transform-origin: 0 0;
-  }
-
-  //   .A3.landscape {
-  //     width: 420mm
-  //   }
-
-  //   .A3,
-  //   .A4.landscape {
-  //     width: 297mm
-  //   }
-
-  //   .A4,
-  //   .A5.landscape {
-  //     width: 210mm
-  //   }
-
-  //   .A5 {
-  //     width: 148mm
-  //   }
-
-  //   .letter,
-  //   .legal {
-  //     width: 216mm
-  //   }
-
-  //   .letter.landscape {
-  //     width: 280mm
-  //   }
-
-  //   .legal.landscape {
-  //     width: 357mm
-  //   }
 }

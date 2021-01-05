@@ -5,6 +5,7 @@
 @import "./assets/theme.scss";
 
 /* Importing Bootstrap SCSS file. */
+$print-page-size: auto !important;
 
 .bg-primary-dark {
   background-color: $primary-color-dark !important;
@@ -25,12 +26,14 @@
   border-radius: 3px;
   color: $primary-color-light;
   border: 1px solid gray;
+
   &:hover {
     text-decoration: none;
     background-color: $secondary-text-color;
     color: $primary-color-text;
   }
 }
+
 td.form-head,
 .form-head {
   width: inherit;
@@ -38,6 +41,7 @@ td.form-head,
   line-height: 22px;
   padding: 5px;
   background-color: $divider-color;
+
   &-link {
     text-decoration: none;
     cursor: pointer;
@@ -53,6 +57,7 @@ td {
 .form-group {
   margin-bottom: 2px;
 }
+
 .form-control-sm {
   height: calc(1em + 0.75rem + 2px);
   padding: 0.125rem 0.5rem;
@@ -60,6 +65,7 @@ td {
   line-height: 1;
   border-radius: 0.25rem;
 }
-.input-group-text{
+
+.input-group-text {
   padding: 0.2rem 0.75rem;
 }

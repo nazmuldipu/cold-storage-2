@@ -1,1 +1,117 @@
-<p>contract works!</p>
+<div class="output">
+  <div class="receipt">
+    <div class="row">
+      <div class="col-12">
+        <div class="head">
+          <h5 class="text-center"><span class="p-2 border border-dark rounded">চুক্তি পত্র</span> </h5>
+          <h3 class="text-center">{{company?.name_bd}}</h3>
+          <h5 class="text-center">{{company?.address_bd}}| মোবাইলঃ {{company?.phone_bd}}</h5>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6"></div>
+      <div class="col-6 text-right">তারিখঃ _ _ _/ _ _ _/ _ _ _ _ </div>
+    </div>
+    <div class="row" style="font-size: 18px;">
+      <div class="col-auto pr-0">মজুতকারীর নামঃ </div>
+      <div class="col"><strong> {{ledger?.customer?.name}}</strong></div>
+      <div class="col-auto p-0">মোবাইল নম্বরঃ </div>
+      <div class="col-2"><strong> {{ledger?.customer?.phone}}</strong></div>
+      <div class="col-auto p-0">পিতার নামঃ </div>
+      <div class="col-3"><strong> {{ledger?.customer?.father}}</strong></div>
+    </div>
+    <div class="row mt-3" style="font-size: 18px;">
+      <div class="col"><strong> {{ledger?.customer?.address}}</strong></div>
+      <div class="col-auto p-0" *ngIf="inventory?.agent">মারফতঃ</div>
+      <div class="col-auto"><strong>{{inventory?.agent?.name}}</strong></div>
+      <div class="col-auto pr-0">লট নং </div>
+      <div class="col-auto"><strong>{{inventory?.sr_no}}</strong></div>
+    </div>
+    <div class="row mb-5 pt-5">
+      <div class="col-12">
+        <table class="table table-bordered table-sm">
+          <tbody>
+            <tr class="text-center">
+              <td>আলুর বস্তার <br> সংখ্যা</td>
+              <td>বস্তা প্রতি ভাড়ার <br> হার (টাকা) </td>
+              <td>মোট ভাড়া <br> (টাকা) </td>
+              <td>খালি বস্তা</td>
+              <td>প্রতিটি খালি <br> বস্তার মূল্য </td>
+              <td>মোট খালি <br> বস্তার মূল্য </td>
+              <td>ঋণ <br> (টাকা)</td>
+              <td>ঋণ খরচ <br> (টাকা) </td>
+              <td>মোট <br> প্রাপ্য টাকা</td>
+              <td style="min-width: 100px;">মন্তব্য</td>
+            </tr>
+            <tr class="text-center col-amount">
+              <td>{{ledger?.quantity}}</td>
+              <td>{{ledger?.rate}}</td>
+              <td>{{ledger?.service_amount}}</td>
+              <td>{{ledger?.emptyBag_quantity}}</td>
+              <td>{{ledger?.emptyBag_rate}}</td>
+              <td>{{ledger?.emptyBag_amount}}</td>
+              <td>{{ledger?.loan?.amount}}</td>
+              <td>{{ledger?.loan?.profit}}</td>
+              <td><strong> {{ledger?.total_amount}}</strong></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td colspan="10">মোট প্রাপ্য টাকা (কথায়) - </td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="table table-bordered table-sm">
+          <tbody>
+            <tr class="text-center">
+              <td rowspan="2">ভাড়া আদায়ের তারিখ </td>
+              <td rowspan="2">রশিদ/ছাড়পত্র নং </td>
+              <td rowspan="2">বস্তার সংখ্যা</td>
+              <td rowspan="2">আদায়কৃত টাকা</td>
+              <td colspan="2">অবশিষ্টের বিবরণ</td>
+              <td rowspan="2">আদায়কারীর সাক্ষর</td>
+              <td rowspan="2" style="min-width: 100px;">মন্তব্য</td>
+            </tr>
+            <tr class="text-center">
+              <td>উদ্বৃত্ত বস্তা</td>
+              <td>প্রাপ্য টাকা</td>
+            </tr>
+            <tr class="text-center col-amount">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        > বিশেষ দ্রষ্টব্যঃ এক বস্তার ওজন ৫০কেজির ঊর্দ্ধে হবে না। <br>
+        > অপর পৃষ্ঠার শর্তাবলী পরিয়া/ জ্ঞাত স্ব-জ্ঞানে ও সুস্থ শরীরে চুক্তি পত্র স্বাক্ষর করিলিয়াম।
+      </div>
+    </div>
+    <div class="row mt-5 py-5">
+      <div class="col-auto">
+        <span class="border-top border-dark">সহকারীর সাক্ষর</span>
+      </div>
+      <div class="col text-center">
+        <span class="border-top border-dark">মজুদকারী/প্রীতিনিধির সাক্ষর</span>
+      </div>
+      <div class="col text-center">
+        <span class="border-top border-dark">সুপারভাইজার/হিসাব রক্ষক</span>
+      </div>
+      <div class="col-auto">
+        <span class="border-top border-dark">ব্যবস্থাপক</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="A4 landscape">
+  <section class="sheet padding-10mm">
+    
+  </section>
+</div> -->
+<!-- {{ledger|json}} -->
