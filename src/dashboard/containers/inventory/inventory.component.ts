@@ -9,6 +9,7 @@ import { Inventory } from 'src/shared/model/inventory.model';
   styleUrls: ['./inventory.component.scss'],
 })
 export class InventoryComponent implements OnInit {
+  year;
   sendingData = false;
   loadingData = false;
   inventoryList: Inventory[] = [];
@@ -20,7 +21,10 @@ export class InventoryComponent implements OnInit {
   inventoryPage: Inventory[] = [];
   errorMessage = '';
 
-  constructor(private inventoryService: InventoryService, private util: UtilService) { }
+  constructor(private inventoryService: InventoryService, private util: UtilService) {
+    let dd = new Date();
+    this.year = dd.getFullYear();
+  }
 
   ngOnInit(): void {
     this.getInventoryList();
@@ -28,7 +32,7 @@ export class InventoryComponent implements OnInit {
 
   async getInventoryList() {
     this.inventoryService.inventorys$.subscribe((data) => {
-      this.inventoryList = data;
+      this.inventoryList = data.filter(f => f.year == this.year);
       this.inventoryList.sort(this.util.dynamicSortObject('sr_no'));
       this.refreshInventory();
       this.printInv = this.inventoryList[0];
@@ -45,19 +49,26 @@ export class InventoryComponent implements OnInit {
   }
 
   async onCreate(event: Inventory) {
-    this.sendingData = true;
-    const value = {
-      ...event,
-      slug: this.util.string_to_slug(event.name),
-    } as Inventory;
-    await this.inventoryService
-      .create(value)
-      .then((ref) => {
-        console.log(ref);
-      })
-      .catch((error) => {
-        console.log('error', error);
-      });
+    const resp = this.inventoryList.find(f => f.year == event.year && f.sr_no == event.sr_no);
+    console.log(resp);
+    if (resp) {
+      this.errorMessage = "এই এস আর নম্বর আগেথেকেই আছে।";
+    } else {
+      this.sendingData = true;
+      Object.keys(event).forEach(key => event[key] === undefined ? delete event[key] : {});
+      const value = {
+        ...event,
+        slug: this.util.string_to_slug(event.name),
+      } as Inventory;
+      await this.inventoryService
+        .create(value)
+        .then((ref) => {
+          console.log(ref);
+        })
+        .catch((error) => {
+          console.log('error', error);
+        });
+    }
   }
   async onUpdate(event: Inventory) {
     this.sendingData = true;

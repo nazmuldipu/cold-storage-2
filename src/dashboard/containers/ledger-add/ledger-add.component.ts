@@ -34,7 +34,7 @@ export class LedgerAddComponent implements OnInit {
       distinctUntilChanged(),
       map(term => {
         const res = term.length < 2 ? []
-          : this.inventoryList.filter(v => v.sr_no.indexOf(term.toLowerCase()) > -1).slice(0, 10)
+          : this.inventoryList.filter(v => v.sr_no.indexOf(term.toLowerCase()) > -1 && v.year == this.year).slice(0, 10)
         const names = res.map(r => r.sr_no);
         return names;
       })
@@ -43,6 +43,8 @@ export class LedgerAddComponent implements OnInit {
   constructor(private fb: FormBuilder, private inventoryService: InventoryService,
     private ledgerService: LedgerService,
     private loanService: LoanService, private util: UtilService) {
+    let dd = new Date();
+    this.year = dd.getFullYear();
     this.getAllLedger();
     this.createForm();
   }
@@ -61,14 +63,14 @@ export class LedgerAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let dd = new Date();
-    this.year = dd.getFullYear();
+
     this.getInventoryList(this.year)
   }
 
   createForm() {
     this.form = this.fb.group({
       sr_no: ['', Validators.required],
+      year: [this.year, Validators.required],
       customer: ['', Validators.required],
       agent: [''],
       loan: [''],
@@ -174,6 +176,7 @@ export class LedgerAddComponent implements OnInit {
   clear() {
     this.id = null;
     this.form.reset();
+    this.form.controls.year.setValue(this.year);
     this.exists = false;
   }
 }

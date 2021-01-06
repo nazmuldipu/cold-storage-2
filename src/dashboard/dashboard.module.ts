@@ -35,6 +35,8 @@ import { LoanFormComponent } from './components/loan-form/loan-form.component';
 import { LedgerComponent } from './containers/ledger/ledger.component';
 import { LedgerAddComponent } from './containers/ledger-add/ledger-add.component';
 import { ContractComponent } from './containers/contract/contract.component';
+import { DeliveryComponent } from './containers/delivery/delivery.component';
+import { DeliveryFormComponent } from './components/delivery-form/delivery-form.component';
 
 export const ROUTES: Routes = [
   {
@@ -55,6 +57,7 @@ export const ROUTES: Routes = [
       { path: 'ledger-add', component: LedgerAddComponent },
       { path: 'ledger-add/:id', component: LedgerAddComponent },
       { path: 'contract/:id', component: ContractComponent },
+      { path: 'delivery', component: DeliveryComponent },
       { path: 'pallot', component: PallotComponent },
       { path: 'loan', component: LoanComponent },
       { path: 'user', component: UserComponent },
@@ -101,6 +104,8 @@ export const ROUTES: Routes = [
     LedgerComponent,
     LedgerAddComponent,
     ContractComponent,
+    DeliveryComponent,
+    DeliveryFormComponent,
   ],
   imports: [SharedModule, RouterModule.forChild(ROUTES)],
 })

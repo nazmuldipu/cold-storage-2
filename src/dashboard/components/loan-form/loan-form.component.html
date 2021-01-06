@@ -16,6 +16,15 @@
     </div>
   </div>
   <div class="form-group row">
+    <label for="year" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Year*</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control form-control-sm" id="year" formControlName="year" placeholder="Year">
+      <small class="text-danger" *ngIf=" form.controls.year.errors && form.controls.year.touched">
+        Year required
+      </small>
+    </div>
+  </div>
+  <div class="form-group row">
     <label for="sr_no" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">SR No*</label>
     <div class="col-sm-10">
       <input id="sr_no" type="text" class="form-control form-control-sm" formControlName="sr_no"

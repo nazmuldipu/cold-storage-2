@@ -8,6 +8,14 @@
 
 <form [formGroup]="form" (ngSubmit)="submit()" (mouseleave)="mouseoverShifting = false" class="p-3">
   <div class="form-group row">
+    <label for="vouchar_no" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">No.*</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control form-control-sm" id="vouchar_no" formControlName="vouchar_no" readonly>
+      <small class="form-text text-danger" *ngIf="form.controls.name.errors && form.controls.name.touched">Vouchar
+        number Required</small>
+    </div>
+  </div>
+  <div class="form-group row">
     <label for="name" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Name*</label>
     <div class="col-sm-10">
       <input type="text" class="form-control form-control-sm" id="name" formControlName="name"

@@ -52,12 +52,15 @@ export class LoanFormComponent implements OnChanges {
   }
 
   async getInventoryList() {
-    this.inventoryService.inventorys$.subscribe(data => { this.inventoryList = data; })
+    this.inventoryService.inventorys$.subscribe(data => {
+      this.inventoryList = data.filter(f => f.year = this.ngDate.year);
+    })
   }
 
   createForm() {
     this.form = this.fb.group({
       date: [this.ngDate, Validators.required],
+      year: [this.ngDate.year, Validators.required],
       sr_no: ['', Validators.required],
       amount: [0, Validators.required],
       rate: [0, Validators.required],
@@ -98,7 +101,6 @@ export class LoanFormComponent implements OnChanges {
     const fvalue = this.form.value;
     const profit = fvalue.rate * fvalue.amount / 100;
     const payable = fvalue.amount + profit;
-    console.log(fvalue.rate, fvalue.amount, profit, payable)
     this.form.controls.profit.setValue(profit);
     this.form.controls.payable.setValue(payable);
   }

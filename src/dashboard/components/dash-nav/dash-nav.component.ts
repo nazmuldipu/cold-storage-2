@@ -129,10 +129,17 @@ export class DashNavComponent implements OnInit {
     {
       name: 'Ledger',
       icon: 'fa-archive',
+      link: '/dashboard/ledger-add',
       subnav: [
-        { name: 'Add Ledger', icon: 'fa-shopping-bag', link: '/dashboard/ledger-add', },
-        { name: 'Ledger list', icon: 'fa-tags', link: '/dashboard/ledger' },
+        // { name: 'Add Ledger', icon: 'fa-shopping-bag', link: '/dashboard/ledger-add', },
+        // { name: 'Ledger list', icon: 'fa-tags', link: '/dashboard/ledger' },
       ],
+    },
+    {
+      name: 'Delivery',
+      icon: 'fa-archive',
+      link: '/dashboard/delivery',
+      subnav: [],
     },
     {
       name: 'General Setting',

@@ -6,8 +6,11 @@
   <div class="row">
     <div class="col-md-4 p-md-0 mt-2">
       <div class=" border rounded">
+        <div class="alert alert-danger" *ngIf="errorMessage.length>0">
+          {{errorMessage}}
+        </div>
         <inventory-form (create)="onCreate($event)" (update)="onUpdate($event)" (delete)="onDelete($event)"
-          [inventory]="inventory"></inventory-form>
+          [inventory]="inventory" [vouchar_no]="inventoryList.length"></inventory-form>
       </div>
     </div>
     <div class="col-md-8 mt-2">

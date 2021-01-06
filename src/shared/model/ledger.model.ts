@@ -2,7 +2,8 @@ export interface Ledger {
   _id: string;
   createdAt: Date;
 
-  sr_no: number;
+  sr_no: string;
+  year: number;
 
   customer: User;
   agent: User;

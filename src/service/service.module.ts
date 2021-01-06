@@ -15,6 +15,7 @@ import { UserService } from './user.service';
 import { UtilService } from './util.service';
 import { PallotService } from './pallot.service';
 import { LedgerService } from './ledger.service';
+import { DeliveryService } from './delivery.service';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { LedgerService } from './ledger.service';
     ChamberTypeService,
     CompanyService,
     CustomerService,
+    DeliveryService,
     FloorService,
     LedgerService,
     LineService,

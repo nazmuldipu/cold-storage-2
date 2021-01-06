@@ -3,6 +3,7 @@ export interface Inventory {
   createdAt: Date;
   date: Date;
   inventoryType: InventoryType;
+  vouchar_no: number;
   sr_no: string;
   name: string;
   slug: string;

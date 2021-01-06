@@ -14,6 +14,7 @@ import { AgentService } from 'src/service/agent.service';
   styleUrls: ['./inventory-form.component.scss'],
 })
 export class InventoryFormComponent implements OnChanges {
+  @Input() vouchar_no: number;
   @Input() inventory: Inventory;
 
   @Output() create = new EventEmitter<Inventory>();
@@ -70,6 +71,9 @@ export class InventoryFormComponent implements OnChanges {
       this.exists = true;
       this.form.patchValue(value);
     }
+    if (changes.vouchar_no && this.vouchar_no != null) {
+      this.form.controls.vouchar_no.setValue(this.vouchar_no + 1);
+    }
   }
 
   async getCustomerList() {
@@ -89,6 +93,7 @@ export class InventoryFormComponent implements OnChanges {
   createForm() {
     this.form = this.fb.group({
       inventoryType: ['RECEIVE', Validators.required],
+      vouchar_no: [0, Validators.required],
       date: [this.ngDate, Validators.required],
       year: [this.ngDate.year, Validators.required],
       sr_no: ['', Validators.required],
@@ -137,5 +142,13 @@ export class InventoryFormComponent implements OnChanges {
     this.inventory = null;
     this.errorMessage = '';
     this.form.reset();
+    const value = {
+      inventoryType: 'RECEIVE',
+      name: 'Potato',
+      vouchar_no: this.vouchar_no + 1,
+      date: this.ngDate,
+      year: this.ngDate.year,
+    }
+    this.form.patchValue(value);
   }
 }

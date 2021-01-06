@@ -13,6 +13,8 @@
             [ngbTypeahead]="searchInventory" [editable]='false' (selectItem)="onSelectSRNo($event)" />
           <small class="form-text text-danger" *ngIf="form.controls.sr_no.errors && form.controls.sr_no.touched">SR No
             Required</small>
+          <label for="sr_no" class="d-none d-sm-block">Year*</label>
+          <input type="number" class="form-control form-control-sm" id="year" formControlName="year" placeholder="Year">
         </div>
 
         <div class="col-auto" *ngIf="form.value.customer">
