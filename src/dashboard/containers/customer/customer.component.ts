@@ -14,36 +14,25 @@ export class CustomerComponent implements OnInit {
   customerList: Agent[] = [];
   customer: Agent;
 
-  page = 1;
-  pageSize = 8;
-  customerPage: Agent[] = [];
   errorMessage = '';
 
   constructor(
     private customerService: CustomerService,
     private util: UtilService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.getCustomerList();   
+    this.getCustomerList();
   }
 
   async getCustomerList() {
     this.customerService.customers$.subscribe((data) => {
       this.customerList = data;
       this.customerList.sort(this.util.dynamicSortObject('priority'));
-      this.refreshCustomer();
     });
   }
 
-  refreshCustomer() {
-    this.customerPage = this.customerList
-      .map((customer, i) => ({ id: i + 1, ...customer }))
-      .slice(
-        (this.page - 1) * this.pageSize,
-        (this.page - 1) * this.pageSize + this.pageSize
-      );
-  }
+
 
   async onCreate(event: Agent) {
     this.sendingData = true;

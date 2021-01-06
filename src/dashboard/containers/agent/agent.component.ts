@@ -14,12 +14,9 @@ export class AgentComponent implements OnInit {
   agentList: Agent[] = [];
   agent: Agent;
 
-  page = 1;
-  pageSize = 8;
-  agentPage: Agent[] = [];
   errorMessage = '';
 
-  constructor(private agentService: AgentService, private util: UtilService) {}
+  constructor(private agentService: AgentService, private util: UtilService) { }
 
   ngOnInit(): void {
     this.getAgentList();
@@ -29,17 +26,7 @@ export class AgentComponent implements OnInit {
     this.agentService.agents$.subscribe((data) => {
       this.agentList = data;
       this.agentList.sort(this.util.dynamicSortObject('priority'));
-      this.refreshAgent();
     });
-  }
-
-  refreshAgent() {
-    this.agentPage = this.agentList
-      .map((chamber, i) => ({ id: i + 1, ...chamber }))
-      .slice(
-        (this.page - 1) * this.pageSize,
-        (this.page - 1) * this.pageSize + this.pageSize
-      );
   }
 
   async onCreate(event: Agent) {

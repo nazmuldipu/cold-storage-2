@@ -38,14 +38,13 @@ export class PallotFormComponent implements OnChanges {
   exists = false;
   mouseoverShifting = false;
   inventoryList: Inventory[];
-  year;
   searchInventory = (text$: Observable<any>) =>
     text$.pipe(
       debounceTime(200),
       distinctUntilChanged(),
       map(term => {
         const res = term.length < 2 ? []
-          : this.inventoryList.filter(v => v.sr_no.indexOf(term.toLowerCase()) > -1).slice(0, 10)
+          : this.inventoryList.filter(v => v.sr_no.indexOf(term.toLowerCase()) > -1 && v.year == this.ngDate.year).slice(0, 10)
         const names = res.map(r => r.sr_no);
         return names;
       })
@@ -54,7 +53,6 @@ export class PallotFormComponent implements OnChanges {
   constructor(private fb: FormBuilder, private inventoryService: InventoryService,
     private util: UtilService) {
     this.ngDate = this.util.convertJsDateToNgbDate(new Date());
-    this.year = this.ngDate.year;
 
     this.createForm();
     this.getInventoryList();
@@ -92,6 +90,7 @@ export class PallotFormComponent implements OnChanges {
   createForm() {
     this.form = this.fb.group({
       date: [this.ngDate, Validators.required],
+      year: [this.ngDate.year, Validators.required],
       chamber: ['', Validators.required],
       floor: ['', Validators.required],
       line: ['', Validators.required],

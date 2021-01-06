@@ -40,17 +40,7 @@ export class DashNavComponent implements OnInit {
           name: 'Add Pocket',
           icon: 'fa-plus',
           link: '/dashboard/pocket',
-        },
-        // {
-        //   name: 'Add Position',
-        //   icon: 'fa-plus',
-        //   link: '/dashboard/position',
-        // },
-        // {
-        //   name: 'Add Chamber Type',
-        //   icon: 'fa-plus',
-        //   link: '/dashboard/chamber-type',
-        // },
+        }
       ],
     },
     {
@@ -76,22 +66,17 @@ export class DashNavComponent implements OnInit {
           name: 'Palloting',
           icon: 'fa-plus',
           link: '/dashboard/pallot',
-        },
-        {
-          name: 'Loading List',
-          icon: 'fa-plus',
-          link: '/dashboard/loading',
-        },
+        }
       ],
     },
     {
-      name: 'Loading Report',
+      name: ' Report',
       icon: 'fa-cubes',
       subnav: [
         {
-          name: 'Daily Load',
+          name: 'Inventory report',
           icon: 'fa-plus',
-          link: '/dashboard/products/brands',
+          link: '/dashboard/inventory-report',
         },
         {
           name: 'SR to SR laod',

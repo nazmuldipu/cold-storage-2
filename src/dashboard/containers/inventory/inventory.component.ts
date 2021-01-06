@@ -14,11 +14,6 @@ export class InventoryComponent implements OnInit {
   loadingData = false;
   inventoryList: Inventory[] = [];
   inventory: Inventory;
-  printInv: Inventory;
-
-  page = 1;
-  pageSize = 8;
-  inventoryPage: Inventory[] = [];
   errorMessage = '';
 
   constructor(private inventoryService: InventoryService, private util: UtilService) {
@@ -34,18 +29,7 @@ export class InventoryComponent implements OnInit {
     this.inventoryService.inventorys$.subscribe((data) => {
       this.inventoryList = data.filter(f => f.year == this.year);
       this.inventoryList.sort(this.util.dynamicSortObject('sr_no'));
-      this.refreshInventory();
-      this.printInv = this.inventoryList[0];
     });
-  }
-
-  refreshInventory() {
-    this.inventoryPage = this.inventoryList
-      .map((chamber, i) => ({ id: i + 1, ...chamber }))
-      .slice(
-        (this.page - 1) * this.pageSize,
-        (this.page - 1) * this.pageSize + this.pageSize
-      );
   }
 
   async onCreate(event: Inventory) {
@@ -109,13 +93,8 @@ export class InventoryComponent implements OnInit {
     this.inventory = this.inventoryList.find((cp) => cp._id === id);
   }
 
-  onPrint(id) {
-    this.printInv = this.inventoryList.find((cp) => cp._id === id);
-  }
-
   clear() {
     this.inventory = null;
-    this.printInv = null;
     this.errorMessage = '';
     this.sendingData = false;
     this.loadingData = false;

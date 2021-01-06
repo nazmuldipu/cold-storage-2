@@ -38,6 +38,11 @@ import { ContractComponent } from './containers/contract/contract.component';
 import { DeliveryComponent } from './containers/delivery/delivery.component';
 import { DeliveryFormComponent } from './components/delivery-form/delivery-form.component';
 import { DeliveryPrintComponent } from './containers/delivery-print/delivery-print.component';
+import { NumberToWordsPipe } from 'src/shared/pipe/number-to-words.pipe';
+import { InventoryReportComponent } from './containers/inventory-report/inventory-report.component';
+import { AgentListComponent } from './components/agent-list/agent-list.component';
+import { CustomerListComponent } from './components/customer-list/customer-list.component';
+import { InventoryListComponent } from './components/inventory-list/inventory-list.component';
 
 export const ROUTES: Routes = [
   {
@@ -54,6 +59,7 @@ export const ROUTES: Routes = [
       { path: 'customer', component: CustomerComponent },
       { path: 'inventory', component: InventoryComponent },
       { path: 'inventory-print/:id', component: InventoryPrintComponent },
+      { path: 'inventory-report', component: InventoryReportComponent },
       { path: 'ledger', component: LedgerComponent },
       { path: 'ledger-add', component: LedgerAddComponent },
       { path: 'ledger-add/:id', component: LedgerAddComponent },
@@ -109,6 +115,11 @@ export const ROUTES: Routes = [
     DeliveryComponent,
     DeliveryFormComponent,
     DeliveryPrintComponent,
+    NumberToWordsPipe,
+    InventoryReportComponent,
+    AgentListComponent,
+    CustomerListComponent,
+    InventoryListComponent
   ],
   imports: [SharedModule, RouterModule.forChild(ROUTES)],
 })

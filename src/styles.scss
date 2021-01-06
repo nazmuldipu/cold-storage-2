@@ -7,6 +7,12 @@
 /* Importing Bootstrap SCSS file. */
 $print-page-size: auto !important;
 
+@font-face {
+  font-family: 'SolaimanLipi';
+  src: url('assets/fonts/SolaimanLipi.ttf');
+}
+
+
 .bg-primary-dark {
   background-color: $primary-color-dark !important;
 }

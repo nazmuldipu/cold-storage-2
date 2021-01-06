@@ -1,53 +1,17 @@
 <div class="page-head">
-    Loading Party
+  Loading Party
 </div>
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-4 p-md-0 mt-2">
-            <div class=" border rounded">
-                <customer-form (create)="onCreate($event)" (update)="onUpdate($event)" (delete)="onDelete($event)"
-                    [customer]="customer"></customer-form>
-            </div>
-        </div>
-        <div class="col-md-8 mt-2">
-            <table class="table table-striped border table-sm">
-                <thead>
-                    <tr>
-                        <td colspan="5" class="form-head">
-                            Loading Party List
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Father</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let customer of customerPage;let i = index;">
-                        <th scope="row">{{ i+1 }}</th>
-                        <td> {{ customer.name }} </td>
-                        <td> {{ customer.father }} </td>
-                        <td> {{ customer.phone }} </td>
-                        <td><a class="edit_link" (click)="onEdit(customer._id)">Edit</a></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="d-flex justify-content-between p-2">
-                <ngb-pagination [collectionSize]="customerList.length" [(page)]="page" [pageSize]="pageSize"
-                    (pageChange)="refreshCustomer()">
-                </ngb-pagination>
-
-                <select class="custom-select" style="width: auto" [(ngModel)]="pageSize"
-                    (ngModelChange)="refreshCustomer()">
-                    <option [ngValue]="4">4/Page</option>
-                    <option [ngValue]="8">8/Page</option>
-                    <option [ngValue]="16">16/Page</option>
-                </select>
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-md-4 p-md-0 mt-2">
+      <div class=" border rounded">
+        <customer-form (create)="onCreate($event)" (update)="onUpdate($event)" (delete)="onDelete($event)"
+          [customer]="customer"></customer-form>
+      </div>
     </div>
+    <div class="col-md-8 mt-2">
+      <customer-list [customerList]="customerList" [short]="false" (edit)="onEdit($event)"></customer-list>
+    </div>
+  </div>
 </div>

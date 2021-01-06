@@ -3,6 +3,7 @@ export interface Pallot {
     createdAt: Date;
     date: Date;
     sr_date: Date;
+    year: number;
     sr_no: number;
     quantity: number;
 

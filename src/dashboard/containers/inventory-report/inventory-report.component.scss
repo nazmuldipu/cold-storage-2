@@ -1,0 +1,10 @@
+td {
+  padding: 15px;
+}
+
+@media print {
+  @page {
+    size: A4;
+    padding: 15px;
+  }
+}

@@ -9,6 +9,7 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { AuthGuard } from 'src/service/auth-guard.service';
 import { TestComponent } from './test/test.component';
+import { NumberToWordsPipe } from 'src/shared/pipe/number-to-words.pipe';
 
 export const ROUTES: Routes = [
   { path: 'test', component: TestComponent },
@@ -31,7 +32,8 @@ export const ROUTES: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent
+    TestComponent,
+
   ],
   imports: [
     BrowserModule,

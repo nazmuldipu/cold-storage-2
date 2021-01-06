@@ -18,18 +18,18 @@ h3 {
 
 .receipt1 {
   width: 50%;
-  height: 50%;
+  height: 48%;
   float: left;
   padding: 10px;
-  border: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .receipt2 {
   width: 50%;
-  height: 16.67%;
+  height: 16%;
   float: left;
   padding: 10px;
-  border: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .output {
@@ -39,10 +39,11 @@ h3 {
   position: absolute;
   top: 50px;
   left: 10px;
+  padding: 5px 15px;
 }
 
 .company-name {
-  font-size: 18px;
+  font-size: 17px;
 }
 
 .table th,
