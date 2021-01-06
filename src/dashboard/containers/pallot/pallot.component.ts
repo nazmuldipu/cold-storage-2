@@ -26,9 +26,6 @@ export class PallotComponent implements OnInit, AfterContentChecked, AfterViewCh
   pallotList: Pallot[];
   pallot: Pallot;
 
-  page = 1;
-  pageSize = 8;
-  pallotPage: Pallot[] = [];
   errorMessage = '';
 
   constructor(
@@ -89,17 +86,7 @@ export class PallotComponent implements OnInit, AfterContentChecked, AfterViewCh
     this.pallotService.pallots$.subscribe((data) => {
       this.pallotList = data;
       this.pallotList.sort(this.util.dynamicSortObject('priority'));
-      this.refreshPallot();
     });
-  }
-
-  refreshPallot() {
-    this.pallotPage = this.pallotList
-      .map((pallot, i) => ({ id: i + 1, ...pallot }))
-      .slice(
-        (this.page - 1) * this.pageSize,
-        (this.page - 1) * this.pageSize + this.pageSize
-      );
   }
 
   async onCreate(event: Pallot) {

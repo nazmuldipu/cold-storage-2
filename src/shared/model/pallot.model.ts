@@ -4,7 +4,7 @@ export interface Pallot {
     date: Date;
     sr_date: Date;
     year: number;
-    sr_no: number;
+    sr_no: string;
     quantity: number;
 
     pocket: Pocket;

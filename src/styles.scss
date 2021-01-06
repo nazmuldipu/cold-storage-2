@@ -75,3 +75,11 @@ td {
 .input-group-text {
   padding: 0.2rem 0.75rem;
 }
+
+
+.custom-select {
+  height: calc(1.5em + 6px);
+  padding: 4px 16px 4px 4px;
+  font-size: 14px;
+  line-height: 1;
+}

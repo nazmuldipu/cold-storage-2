@@ -34,7 +34,6 @@ export class InventoryListComponent implements OnChanges {
   onSearch(event) {
     if (event.length >= 2) {
       this.searching = true;
-      console.log(event, event.length);
       this.inventoryPage = this.search(event);
     } else {
       this.searching = false;

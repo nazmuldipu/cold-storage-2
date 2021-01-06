@@ -181,5 +181,10 @@ export class PallotFormComponent implements OnChanges {
     this.pallot = null;
     this.errorMessage = '';
     this.form.reset();
+    const value = {
+      date: this.ngDate,
+      year: this.ngDate.year,
+    }
+    this.form.reset(value);
   }
 }

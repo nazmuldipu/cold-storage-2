@@ -7,7 +7,10 @@ export interface Ledger {
 
   customer: User;
   agent: User;
-  loan: Loan;
+  loan_amount: number;
+  loan_rate: number;
+  loan_profit: number;
+  loan_payable: number;
 
   quantity: number;
   rate: number;

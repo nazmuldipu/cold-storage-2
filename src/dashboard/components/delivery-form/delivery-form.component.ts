@@ -94,14 +94,14 @@ export class DeliveryFormComponent implements OnChanges {
       quantity: evn.quantity - pre_delivery.quantity,
       rate: evn.rate,
       service_rent: evn.service_amount - pre_delivery.service_rent,
-      loan_amount: evn.loan ? (evn.loan.amount - pre_delivery.loan_amount) : 0,
-      loan_rate: evn.loan ? evn.loan.rate : 0,
-      loan_profit: evn.loan ? (evn.loan.profit - pre_delivery.loan_profit) : 0,
-      loan_payable: evn.loan ? (evn.loan.payable - pre_delivery.loan_payable) : 0,
+      loan_amount: evn.loan_amount ? (evn.loan_amount - pre_delivery.loan_amount) : 0,
+      loan_rate: evn.loan_rate ? evn.loan_rate : 0,
+      loan_profit: evn.loan_profit ? (evn.loan_profit - pre_delivery.loan_profit) : 0,
+      loan_payable: evn.loan_payable ? (evn.loan_payable - pre_delivery.loan_payable) : 0,
       emptyBag_quantity: evn.emptyBag_quantity - pre_delivery.emptyBag_quantity,
       emptyBag_rate: evn.emptyBag_rate,
       emptyBag_amount: evn.emptyBag_amount - pre_delivery.emptyBag_amount,
-      total: evn.service_amount + (evn.loan ? evn.loan.payable : 0) + evn.emptyBag_amount
+      total: evn.service_amount + (evn.loan_payable ? evn.loan_payable : 0) + evn.emptyBag_amount
     }
     this.form.patchValue(value);
   }
@@ -139,8 +139,8 @@ export class DeliveryFormComponent implements OnChanges {
       // this.pre_delivery = { quantity: 0, service_rent: 0, loan_amount: 0, loan_profit: 0, loan_payable: 0, emptyBag_quantity: 0, emptyBag_amount: 0, total: 0 }
       if (fvalue.quantity > (this.ledger.quantity + this.pre_delivery.quantity)) {
         this.errorMessage = 'Quantity value error, should be less then or equl to ' + (this.ledger.quantity + this.pre_delivery.quantity);
-      } else if (fvalue.loan_amount > (this.ledger.loan.amount + this.pre_delivery.loan_amount)) {
-        this.errorMessage = 'Loan error, should be less then or equal to ' + (this.ledger.loan.amount + this.pre_delivery.loan_amount);
+      } else if (fvalue.loan_amount > (this.ledger.loan_amount + this.pre_delivery.loan_amount)) {
+        this.errorMessage = 'Loan error, should be less then or equal to ' + (this.ledger.loan_amount + this.pre_delivery.loan_amount);
       } else if (fvalue.emptyBag_quantity > (this.ledger.emptyBag_quantity + this.pre_delivery.emptyBag_quantity)) {
         this.errorMessage = 'Empty bag error, should be less then or equal to ' + (this.ledger.emptyBag_quantity + this.pre_delivery.emptyBag_quantity);
       } else {

@@ -1,7 +1,7 @@
 <div class="page-head">
   Add Ledger
 </div>
-<!-- {{form.value |json}} -->
+
 <div class="container">
   <div class="col-12">
     <form [formGroup]="form" (ngSubmit)="submit()" (mouseleave)="mouseoverShifting = false" class="p-3">
@@ -24,6 +24,26 @@
           <div class="form-control form-control-sm">C/O: {{form.value?.customer?.father}}</div>
           <div class="form-control form-control-sm" style="max-width:250px; height: auto; min-height: 2rem;">
             {{form.value?.customer?.address}}</div>
+        </div>
+
+        <div class="col-auto" *ngIf="form.value.customer">
+          <label for="loan" class="d-none d-sm-block">Loan</label>
+          <div>
+            <small> Amount </small><input type="number" class="form-control form-control-sm" id="loan_amount"
+              formControlName="loan_amount" (change)="onLoanChange()">
+          </div>
+          <div>
+            <small> Rate </small><input type="number" class="form-control form-control-sm" id="loan_rate"
+              formControlName="loan_rate" (change)="onLoanChange()">
+          </div>
+          <div>
+            <small> Profit </small><input type="number" class="form-control form-control-sm" id="loan_profit"
+              formControlName="loan_profit" readonly>
+          </div>
+          <div>
+            <small>Payable </small><input type="number" class="form-control form-control-sm" id="loan_payable"
+              formControlName="loan_payable" readonly>
+          </div>
         </div>
 
         <div class="col-auto" *ngIf="form.value.loan">
@@ -49,8 +69,6 @@
               formControlName="service_amount" readonly>
           </div>
         </div>
-
-
 
         <div class="col-auto" *ngIf="form.value.customer">
           <label for="rate" class="d-none d-sm-block">Empty bag</label>
@@ -87,6 +105,7 @@
       </div>
     </form>
   </div>
+
   <div class="col-12">
     <table class="table table-striped border table-sm">
       <thead>
@@ -116,10 +135,10 @@
             <div>{{ledger.customer?.address}}</div>
           </td>
           <td>
-            <div *ngIf="ledger.loan">
-              <div>Amount: {{ ledger.loan?.amount }} </div>
-              <div>Rate: {{ ledger.loan?.rate }} </div>
-              <div>Payable: {{ ledger.loan?.payable }} </div>
+            <div>
+              <div>Amount: {{ ledger.loan_amount }} </div>
+              <div>Rate: {{ ledger.loan_rate }} </div>
+              <div>Payable: {{ ledger.loan_payable }} </div>
             </div>
           </td>
           <td>
@@ -141,7 +160,7 @@
       </tbody>
     </table>
     <div class="d-flex justify-content-between p-2">
-      <ngb-pagination [collectionSize]="ledgerList.length" [(page)]="page" [pageSize]="pageSize"
+      <ngb-pagination [collectionSize]="ledgerList.length" [(page)]="page" [pageSize]="pageSize" size="sm"
         (pageChange)="refreshLedger()">
       </ngb-pagination>
 

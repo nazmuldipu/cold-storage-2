@@ -5,7 +5,6 @@ import { InventoryService } from 'src/service/inventory.service';
 import { FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, takeUntil, take } from 'rxjs/operators';
-import { LoanService } from 'src/service/loan.service';
 import { LedgerService } from 'src/service/ledger.service';
 import { Ledger } from 'src/shared/model/ledger.model';
 
@@ -41,8 +40,7 @@ export class LedgerAddComponent implements OnInit {
     )
 
   constructor(private fb: FormBuilder, private inventoryService: InventoryService,
-    private ledgerService: LedgerService,
-    private loanService: LoanService, private util: UtilService) {
+    private ledgerService: LedgerService, private util: UtilService) {
     let dd = new Date();
     this.year = dd.getFullYear();
     this.getAllLedger();
@@ -73,7 +71,10 @@ export class LedgerAddComponent implements OnInit {
       year: [this.year, Validators.required],
       customer: ['', Validators.required],
       agent: [''],
-      loan: [''],
+      loan_amount: [0],
+      loan_rate: [0],
+      loan_profit: [''],
+      loan_payable: [''],
       note: [''],
       quantity: [0, Validators.required],
       rate: [0, Validators.required],
@@ -113,11 +114,11 @@ export class LedgerAddComponent implements OnInit {
         this.form.controls.agent.setValue(inv.agent);
         this.form.controls.quantity.setValue(inv.quantity);
 
-        this.loanService.loans$.subscribe(data => {
-          const value = data.find(f => f.sr_no == event.item);
-          this.form.controls.loan.setValue(value);
-          this.calculateTotal();
-        })
+        // this.loanService.loans$.subscribe(data => {
+        //   const value = data.find(f => f.sr_no == event.item);
+        //   this.form.controls.loan.setValue(value);
+        //   this.calculateTotal();
+        // })
       }
     })
 
@@ -132,6 +133,15 @@ export class LedgerAddComponent implements OnInit {
   onEmptybagChange() {
     const value = this.form.value;
     this.form.controls.emptyBag_amount.setValue(value.emptyBag_quantity * value.emptyBag_rate);
+    this.calculateTotal();
+  }
+
+  onLoanChange() {
+    const value = this.form.value;
+    const loan_profit = value.loan_amount * value.loan_rate / 100;
+    const loan_payable = loan_profit + value.loan_amount;
+    this.form.controls.loan_profit.setValue(loan_profit);
+    this.form.controls.loan_payable.setValue(loan_payable);
     this.calculateTotal();
   }
 

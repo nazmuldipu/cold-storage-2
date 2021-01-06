@@ -105,12 +105,12 @@ export class DashNavComponent implements OnInit {
         },
       ],
     },
-    {
-      name: 'Loan',
-      icon: 'fa-archive',
-      link: '/dashboard/loan',
-      subnav: [],
-    },
+    // {
+    //   name: 'Loan',
+    //   icon: 'fa-archive',
+    //   link: '/dashboard/loan',
+    //   subnav: [],
+    // },
     {
       name: 'Ledger',
       icon: 'fa-archive',

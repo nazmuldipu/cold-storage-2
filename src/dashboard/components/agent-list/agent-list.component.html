@@ -39,7 +39,7 @@
   </tbody>
 </table>
 <div class="d-flex justify-content-between p-2" *ngIf="!searching">
-  <ngb-pagination [collectionSize]="agentList.length" [(page)]="page" [pageSize]="pageSize"
+  <ngb-pagination [collectionSize]="agentList.length" [(page)]="page" [pageSize]="pageSize" size="sm"
     (pageChange)="refreshAgent()">
   </ngb-pagination>
 

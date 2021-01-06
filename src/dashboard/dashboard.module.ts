@@ -43,6 +43,7 @@ import { InventoryReportComponent } from './containers/inventory-report/inventor
 import { AgentListComponent } from './components/agent-list/agent-list.component';
 import { CustomerListComponent } from './components/customer-list/customer-list.component';
 import { InventoryListComponent } from './components/inventory-list/inventory-list.component';
+import { PallotListComponent } from './components/pallot-list/pallot-list.component';
 
 export const ROUTES: Routes = [
   {
@@ -119,7 +120,8 @@ export const ROUTES: Routes = [
     InventoryReportComponent,
     AgentListComponent,
     CustomerListComponent,
-    InventoryListComponent
+    InventoryListComponent,
+    PallotListComponent
   ],
   imports: [SharedModule, RouterModule.forChild(ROUTES)],
 })
