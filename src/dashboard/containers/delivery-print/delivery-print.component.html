@@ -1,0 +1,179 @@
+<div class="output">
+  <div class="receipt1 border-right">
+    <div class="row">
+      <div class="col-12 text-center">
+        <span class="border p-1 strong rounded">ভাড়া আদায় রসিদ</span>
+      </div>
+    </div>
+    <div class="head">
+      <div class="text-center company-name">{{company?.name_bd}}</div>
+      <div class="text-center">{{company?.address_bd}}| মোবাইলঃ {{company?.phone_bd}}</div>
+    </div>
+    <div class="row">
+      <div class="col-6">লট নং - <strong>{{delivery?.sr_no}}</strong></div>
+      <div class="col-6 text-right">তারিখ - {{delivery?.date.toMillis() | date:'dd/MM/yyyy'}}</div>
+    </div>
+    <div class="row">
+      <div class="col-auto">গ্রাহকের নামঃ </div>
+      <div class="col p-0"><strong> {{delivery?.customer?.name}}</strong></div>
+      <div class="col-auto">পিতাঃ </div>
+      <div class="col-auto pl-0"><strong> {{delivery?.customer?.father}}</strong></div>
+    </div>
+    <div class="row">
+      <div class="col-auto">মোবাইলঃ </div>
+      <div class="col p-0"><strong> {{delivery?.customer?.phone}}</strong></div>
+    </div>
+    <div class="row">
+      <div class="col-auto">ঠিকানাঃ </div>
+      <div class="col p-0"><strong> {{delivery?.customer?.address}}</strong></div>
+      <!-- <div class="col-auto">পিতাঃ </div>
+        <div class="col-auto pl-0"><strong> {{delivery?.customer?.father}}</strong></div> -->
+    </div>
+    <table class="table table-bordered my-3 mb-5">
+      <tbody>
+        <tr>
+          <td>বিবরণ</td>
+          <td class="text-center">সংখ্যা</td>
+          <td class="text-center">হার</td>
+          <td class="text-right">মোট</td>
+        </tr>
+        <tr>
+          <td>আলুর বস্তা</td>
+          <td class="text-center">{{delivery?.quantity}}</td>
+          <td class="text-center">{{delivery?.rate}}</td>
+          <td class="text-right">{{delivery?.service_rent}}</td>
+        </tr>
+        <tr>
+          <td>খালি বস্তা</td>
+          <td class="text-center">{{delivery?.emptyBag_quantity}}</td>
+          <td class="text-center">{{delivery?.emptyBag_rate}}</td>
+          <td class="text-right">{{delivery?.emptyBag_amount}}</td>
+        </tr>
+        <tr>
+          <td>ঋণ</td>
+          <td class="text-center">{{delivery?.loan_amount}}</td>
+          <td class="text-center">{{delivery?.loan_rate}}</td>
+          <td class="text-right">{{delivery?.loan_payable}}</td>
+        </tr>
+        <tr>
+          <td colspan="3">সর্বমোট প্রাপ্তঃ </td>
+          <td class="text-right">{{delivery?.total}}</td>
+        </tr>
+        <tr>
+          <td colspan="4">টাকা কথায়ঃ </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row mt-5 pt-5">
+      <div class="col-auto mt-5"><span class="border-top">কর্মাধ্যক্ষ</span></div>
+      <div class="col text-center mt-5"><span class="border-top"> সুপারভাইজার/হিসাব রক্ষক </span></div>
+      <div class="col-auto text-right mt-5"><span class="border-top">আদায়কারী</span></div>
+    </div>
+  </div>
+
+  <div class="receipt2 border-right">
+    <div class="row">
+      <div class="col-12 text-center">
+        <span class="border p-1 strong rounded">ছাড়পত্র রসিদ</span>
+      </div>
+    </div>
+    <div class="head">
+      <div class="text-center company-name">{{company?.name_bd}}</div>
+      <div class="text-center">{{company?.address_bd}}| মোবাইলঃ {{company?.phone_bd}}</div>
+    </div>
+    <div class="row">
+      <div class="col-6">লট নং - <strong>{{delivery?.sr_no}}</strong></div>
+      <div class="col-6 text-right">তারিখ - {{delivery?.date.toMillis() | date:'dd/MM/yyyy'}}</div>
+    </div>
+    <div class="row">
+      <div class="col-auto">গ্রাহকের নামঃ </div>
+      <div class="col p-0"><strong> {{delivery?.customer?.name}}</strong></div>
+      <div class="col-auto">পিতাঃ </div>
+      <div class="col-auto pl-0"><strong> {{delivery?.customer?.father}}</strong></div>
+    </div>
+    <div class="row">
+      <div class="col-auto">ঠিকানাঃ </div>
+      <div class="col p-0"><strong> {{delivery?.customer?.address}}</strong></div>
+    </div>
+    <div class="row">
+      <div class="col-auto">প্রদত্ত বস্তার সংখ্যাঃ </div>
+      <div class="col p-0"><strong> {{delivery?.quantity}}</strong></div>
+    </div>
+    <div class="row mt-4">
+      <div class="col"><span class="border-top"> পরিদর্শক </span></div>
+      <div class="col-auto"><span class="border-top">কর্মাধ্যক্ষ</span></div>
+    </div>
+  </div>
+
+  <div class="receipt2 border-right">
+    <div class="row">
+      <div class="col-12 text-center">
+        <span class="border p-1 strong rounded">লেবার কপি</span>
+      </div>
+    </div>
+    <div class="head">
+      <div class="text-center company-name">{{company?.name_bd}}</div>
+      <div class="text-center">{{company?.address_bd}}| মোবাইলঃ {{company?.phone_bd}}</div>
+    </div>
+    <div class="row">
+      <div class="col-6">লট নং - <strong>{{delivery?.sr_no}}</strong></div>
+      <div class="col-6 text-right">তারিখ - {{delivery?.date.toMillis() | date:'dd/MM/yyyy'}}</div>
+    </div>
+    <div class="row">
+      <div class="col-auto">গ্রাহকের নামঃ </div>
+      <div class="col p-0"><strong> {{delivery?.customer?.name}}</strong></div>
+      <div class="col-auto">পিতাঃ </div>
+      <div class="col-auto pl-0"><strong> {{delivery?.customer?.father}}</strong></div>
+    </div>
+    <div class="row">
+      <div class="col-auto">ঠিকানাঃ </div>
+      <div class="col p-0"><strong> {{delivery?.customer?.address}}</strong></div>
+    </div>
+    <div class="row">
+      <div class="col-auto">প্রদত্ত বস্তার সংখ্যাঃ </div>
+      <div class="col p-0"><strong> {{delivery?.quantity}}</strong></div>
+    </div>
+    <div class="row mt-4">
+      <div class="col"><span class="border-top"> পরিদর্শক </span></div>
+      <div class="col-auto"><span class="border-top">কর্মাধ্যক্ষ</span></div>
+    </div>
+  </div>
+
+  <div class="receipt2 border-right">
+    <div class="row">
+      <div class="col-12 text-center">
+        <span class="border p-1 strong rounded">গেট পাশ</span>
+      </div>
+    </div>
+    <div class="head">
+      <div class="text-center company-name">{{company?.name_bd}}</div>
+      <div class="text-center">{{company?.address_bd}}| মোবাইলঃ {{company?.phone_bd}}</div>
+    </div>
+    <div class="row">
+      <div class="col-6">লট নং - <strong>{{delivery?.sr_no}}</strong></div>
+      <div class="col-6 text-right">তারিখ - {{delivery?.date.toMillis() | date:'dd/MM/yyyy'}}</div>
+    </div>
+    <div class="row">
+      <div class="col-auto">গ্রাহকের নামঃ </div>
+      <div class="col p-0"><strong> {{delivery?.customer?.name}}</strong></div>
+      <div class="col-auto">পিতাঃ </div>
+      <div class="col-auto pl-0"><strong> {{delivery?.customer?.father}}</strong></div>
+    </div>
+    <div class="row">
+      <div class="col-auto">ঠিকানাঃ </div>
+      <div class="col p-0"><strong> {{delivery?.customer?.address}}</strong></div>
+    </div>
+    <div class="row">
+      <div class="col-auto">প্রদত্ত বস্তার সংখ্যাঃ </div>
+      <div class="col p-0"><strong> {{delivery?.quantity}}</strong></div>
+    </div>
+    <div class="row mt-4">
+      <div class="col"><span class="border-top"> পরিদর্শক </span></div>
+      <div class="col-auto"><span class="border-top">কর্মাধ্যক্ষ</span></div>
+    </div>
+  </div>
+  <!-- 
+
+   -->
+
+</div>

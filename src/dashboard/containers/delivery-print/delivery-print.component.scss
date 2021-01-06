@@ -1,0 +1,64 @@
+:host {
+  display: block;
+  background: #e0e0e0;
+  font-size: 12px;
+}
+
+h3 {
+  text-align: center;
+}
+
+.receipt {
+  width: 50%;
+  height: 25%;
+  float: left;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.receipt1 {
+  width: 50%;
+  height: 50%;
+  float: left;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.receipt2 {
+  width: 50%;
+  height: 16.67%;
+  float: left;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.output {
+  height: 297mm;
+  width: 210mm;
+  //   border: 1px solid red;
+  position: absolute;
+  top: 50px;
+  left: 10px;
+}
+
+.company-name {
+  font-size: 18px;
+}
+
+.table th,
+.table td {
+  padding: 0.15rem;
+}
+
+@media print {
+  .output {
+    // -ms-transform: rotate(270deg);
+    /* IE 9 */
+    // -webkit-transform: rotate(270deg);
+    /* Chrome, Safari, Opera */
+    // transform: rotate(270deg);
+    // top: 2in;
+    left: 0;
+    top: 0;
+  }
+}
