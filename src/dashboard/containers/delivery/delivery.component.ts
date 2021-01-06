@@ -16,10 +16,6 @@ export class DeliveryComponent implements OnInit {
   ledgerList: Ledger[] = [];
   deliveryList: Delivery[] = [];
 
-  page = 1;
-  pageSize = 8;
-  deliveryPage: Delivery[] = [];
-
   constructor(private deliveryService: DeliveryService, private ledgerService: LedgerService) {
     this.year = new Date().getFullYear();
   }
@@ -38,14 +34,7 @@ export class DeliveryComponent implements OnInit {
   async getDeliveryListbyYear(year: number) {
     this.deliveryService.deliverys$.subscribe(data => {
       this.deliveryList = data.filter(f => f.year == year);
-      this.refreshDelivery();
     })
-  }
-
-  refreshDelivery() {
-    this.deliveryPage = this.deliveryList
-      .map((delivery, i) => ({ id: i + 1, ...delivery }))
-      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
 
   async onCreate(event: Delivery) {

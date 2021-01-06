@@ -20,9 +20,7 @@ export class LedgerAddComponent implements OnInit {
   form: FormGroup;
   mouseoverShifting = false;
   ledgerList: Ledger[] = [];
-  ledgerPage: Ledger[] = [];
-  page = 1;
-  pageSize = 8;
+
   errorMessage = '';
 
   // loanList: Loan[] = [];
@@ -50,18 +48,10 @@ export class LedgerAddComponent implements OnInit {
   async getAllLedger() {
     this.ledgerService.ledgers$.subscribe(data => {
       this.ledgerList = data;
-      this.refreshLedger();
     })
   }
 
-  refreshLedger() {
-    this.ledgerPage = this.ledgerList
-      .map((line, i) => ({ id: i + 1, ...line }))
-      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
-  }
-
   ngOnInit(): void {
-
     this.getInventoryList(this.year)
   }
 
@@ -99,7 +89,6 @@ export class LedgerAddComponent implements OnInit {
   async onSelectSRNo(event) {
     await this.ledgerService.ledgers$.pipe(take(1)).subscribe(data => {
       const resp = data.find(d => d.sr_no == event.item);
-      console.log('resp', resp, event.item);
       if (resp) {
         this.id = resp._id;
         this.exists = true;
@@ -155,15 +144,12 @@ export class LedgerAddComponent implements OnInit {
     if (this.form.valid) {
       const fvalue = this.form.value;
       Object.keys(fvalue).forEach(key => fvalue[key] === undefined ? delete fvalue[key] : {});
-      console.log(fvalue);
       if (!this.exists) {
         await this.ledgerService.create(fvalue).then(ref => {
-          console.log(ref);
           this.clear();
         }).catch(error => console.log('error', error))
       } else {
         await this.ledgerService.update(this.id, fvalue).then(ref => {
-          console.log(ref);
           this.clear();
         }).catch(error => console.log('error', error))
       }
