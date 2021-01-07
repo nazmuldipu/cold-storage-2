@@ -3,110 +3,116 @@
 </div>
 
 <div class="container">
-  <div class="col-12">
-    <form [formGroup]="form" (ngSubmit)="submit()" (mouseleave)="mouseoverShifting = false" class="p-3">
-      <h4 *ngIf="exists" class="text-danger">Edit Ledger</h4>
-      <div class="form-group row">
-        <div class="col-auto">
-          <label for="sr_no" class="d-none d-sm-block">SR No*</label>
-          <input id="sr_no" type="text" class="form-control form-control-sm" formControlName="sr_no"
-            [ngbTypeahead]="searchInventory" [editable]='false' (selectItem)="onSelectSRNo($event)" />
-          <small class="form-text text-danger" *ngIf="form.controls.sr_no.errors && form.controls.sr_no.touched">SR No
-            Required</small>
-          <label for="sr_no" class="d-none d-sm-block">Year*</label>
-          <input type="number" class="form-control form-control-sm" id="year" formControlName="year" placeholder="Year">
-        </div>
-
-        <div class="col-auto" *ngIf="form.value.customer" style="max-width: 200px;">
-          <label for="customer" class="d-none d-sm-block">Party</label>
-          <div class="form-control form-control-sm" style="height: auto; min-height: 2rem;">
-            {{form.value?.customer?.name}}[{{form.value?.customer?.phone}}]</div>
-          <div class="form-control form-control-sm">C/O: {{form.value?.customer?.father}}</div>
-          <div class="form-control form-control-sm" style="height: auto; min-height: 2rem;">
-            {{form.value?.customer?.address}}</div>
-        </div>
-
-        <div class="col-auto" *ngIf="form.value.customer">
-          <label for="loan" class="d-none d-sm-block">Loan</label>
-          <div>
-            <small> Amount </small><input type="number" class="form-control form-control-sm" id="loan_amount"
-              formControlName="loan_amount" (change)="onLoanChange()">
-          </div>
-          <div>
-            <small> Rate </small><input type="number" class="form-control form-control-sm" id="loan_rate"
-              formControlName="loan_rate" (change)="onLoanChange()">
-          </div>
-          <div>
-            <small> Profit </small><input type="number" class="form-control form-control-sm" id="loan_profit"
-              formControlName="loan_profit" readonly>
-          </div>
-          <div>
-            <small>Payable </small><input type="number" class="form-control form-control-sm" id="loan_payable"
-              formControlName="loan_payable" readonly>
-          </div>
-        </div>
-
-        <div class="col-auto" *ngIf="form.value.loan">
-          <label for="customer" class="d-none d-sm-block">Loan</label>
-          <div class="form-control form-control-sm">
-            Amount {{form.value?.loan?.amount}}</div>
-          <div class="form-control form-control-sm">Rate {{form.value?.loan?.rate}}</div>
-          <div class="form-control form-control-sm">Payable {{form.value?.loan?.payable}}</div>
-        </div>
-
-        <div class="col-auto" *ngIf="form.value.customer">
-          <label for="product" class="d-none d-sm-block">Product</label>
-          <div>
-            <small> Quantity </small><input type="number" class="form-control form-control-sm" id="quantity"
-              formControlName="quantity" readonly>
-          </div>
-          <div>
-            <small> Rate </small><input type="number" class="form-control form-control-sm" id="rate"
-              formControlName="rate" (change)="onQuantityChange()">
-          </div>
-          <div>
-            <small> Amount </small><input type="number" class="form-control form-control-sm" id="service_amount"
-              formControlName="service_amount" readonly>
-          </div>
-        </div>
-
-        <div class="col-auto" *ngIf="form.value.customer">
-          <label for="rate" class="d-none d-sm-block">Empty bag</label>
-          <div>
-            <small> Quantity </small><input type="number" class="form-control form-control-sm" id="emptyBag_quantity"
-              formControlName="emptyBag_quantity" (change)="onEmptybagChange()">
-          </div>
-          <div>
-            <small> Rate </small><input type="number" class="form-control form-control-sm" id="emptyBag_rate"
-              formControlName="emptyBag_rate" (change)="onEmptybagChange()">
-          </div>
-          <div>
-            <small> Amount </small><input type="number" class="form-control form-control-sm" id="emptyBag_amount"
-              formControlName="emptyBag_amount" readonly>
-          </div>
-        </div>
-
-        <div class="col-auto" *ngIf="form.value.customer">
-          <label for="total" class="d-none d-sm-block">Total</label>
-          <div>
-            <input type="number" class="form-control form-control-sm" id="total_amount" formControlName="total_amount"
-              readonly>
-          </div>
-        </div>
-
+  <div class="col-12 p-md-0 mt-2">
+    <div class="border rounded">
+      <div class="form-head">
+        New Ledger
       </div>
+      <form [formGroup]="form" (ngSubmit)="submit()" (mouseleave)="mouseoverShifting = false" class="p-3">
+        <h4 *ngIf="exists" class="text-danger">Edit Ledger</h4>
+        <div class="form-group row">
+          <div class="col-auto">
+            <label for="sr_no" class="d-none d-sm-block">SR No*</label>
+            <input id="sr_no" type="text" class="form-control form-control-sm" formControlName="sr_no"
+              [ngbTypeahead]="searchInventory" [editable]='false' (selectItem)="onSelectSRNo($event)" />
+            <small class="form-text text-danger" *ngIf="form.controls.sr_no.errors && form.controls.sr_no.touched">SR No
+              Required</small>
+            <label for="sr_no" class="d-none d-sm-block">Year*</label>
+            <input type="number" class="form-control form-control-sm" id="year" formControlName="year"
+              placeholder="Year">
+          </div>
 
-      <div class="d-flex flex-row-reverse bd-highlight">
-        <button type="submit" (mouseenter)="mouseoverShifting = true" class="btn btn-sm btn-light mx-1">Save</button>
-        <button type="button" class="btn btn-sm btn-light mx-1" (click)="clear()">Clear</button>
-      </div>
-      <div *ngIf="mouseoverShifting" class="text-danger">
-        {{ getFormValidationErrors() }}
-      </div>
-    </form>
+          <div class="col-auto" *ngIf="form.value.customer" style="max-width: 200px;">
+            <label for="customer" class="d-none d-sm-block">Party</label>
+            <div class="form-control form-control-sm" style="height: auto; min-height: 2rem;">
+              {{form.value?.customer?.name}}[{{form.value?.customer?.phone}}]</div>
+            <div class="form-control form-control-sm">C/O: {{form.value?.customer?.father}}</div>
+            <div class="form-control form-control-sm" style="height: auto; min-height: 2rem;">
+              {{form.value?.customer?.address}}</div>
+          </div>
+
+          <div class="col-auto" *ngIf="form.value.customer">
+            <label for="loan" class="d-none d-sm-block">Loan</label>
+            <div>
+              <small> Amount </small><input type="number" class="form-control form-control-sm" id="loan_amount"
+                formControlName="loan_amount" (change)="onLoanChange()">
+            </div>
+            <div>
+              <small> Rate </small><input type="number" class="form-control form-control-sm" id="loan_rate"
+                formControlName="loan_rate" (change)="onLoanChange()">
+            </div>
+            <div>
+              <small> Profit </small><input type="number" class="form-control form-control-sm" id="loan_profit"
+                formControlName="loan_profit" readonly>
+            </div>
+            <div>
+              <small>Payable </small><input type="number" class="form-control form-control-sm" id="loan_payable"
+                formControlName="loan_payable" readonly>
+            </div>
+          </div>
+
+          <div class="col-auto" *ngIf="form.value.loan">
+            <label for="customer" class="d-none d-sm-block">Loan</label>
+            <div class="form-control form-control-sm">
+              Amount {{form.value?.loan?.amount}}</div>
+            <div class="form-control form-control-sm">Rate {{form.value?.loan?.rate}}</div>
+            <div class="form-control form-control-sm">Payable {{form.value?.loan?.payable}}</div>
+          </div>
+
+          <div class="col-auto" *ngIf="form.value.customer">
+            <label for="product" class="d-none d-sm-block">Product</label>
+            <div>
+              <small> Quantity </small><input type="number" class="form-control form-control-sm" id="quantity"
+                formControlName="quantity" readonly>
+            </div>
+            <div>
+              <small> Rate </small><input type="number" class="form-control form-control-sm" id="rate"
+                formControlName="rate" (change)="onQuantityChange()">
+            </div>
+            <div>
+              <small> Amount </small><input type="number" class="form-control form-control-sm" id="service_amount"
+                formControlName="service_amount" readonly>
+            </div>
+          </div>
+
+          <div class="col-auto" *ngIf="form.value.customer">
+            <label for="rate" class="d-none d-sm-block">Empty bag</label>
+            <div>
+              <small> Quantity </small><input type="number" class="form-control form-control-sm" id="emptyBag_quantity"
+                formControlName="emptyBag_quantity" (change)="onEmptybagChange()">
+            </div>
+            <div>
+              <small> Rate </small><input type="number" class="form-control form-control-sm" id="emptyBag_rate"
+                formControlName="emptyBag_rate" (change)="onEmptybagChange()">
+            </div>
+            <div>
+              <small> Amount </small><input type="number" class="form-control form-control-sm" id="emptyBag_amount"
+                formControlName="emptyBag_amount" readonly>
+            </div>
+          </div>
+
+          <div class="col-auto" *ngIf="form.value.customer">
+            <label for="total" class="d-none d-sm-block">Total</label>
+            <div>
+              <input type="number" class="form-control form-control-sm" id="total_amount" formControlName="total_amount"
+                readonly>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="d-flex flex-row-reverse bd-highlight">
+          <button type="submit" (mouseenter)="mouseoverShifting = true" class="btn btn-sm btn-light mx-1">Save</button>
+          <button type="button" class="btn btn-sm btn-light mx-1" (click)="clear()">Clear</button>
+        </div>
+        <div *ngIf="mouseoverShifting" class="text-danger">
+          {{ getFormValidationErrors() }}
+        </div>
+      </form>
+    </div>
   </div>
 
-  <div class="col-12">
+  <div class="col-12 p-md-0 mt-2">
     <ledger-list [ledgerList]="ledgerList"></ledger-list>
   </div>
 </div>

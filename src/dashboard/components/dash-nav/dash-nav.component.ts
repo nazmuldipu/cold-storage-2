@@ -70,55 +70,21 @@ export class DashNavComponent implements OnInit {
       ],
     },
     {
-      name: ' Report',
+      name: 'Inventory Report',
       icon: 'fa-cubes',
       subnav: [
         {
-          name: 'Inventory report',
+          name: 'Inventory list',
           icon: 'fa-plus',
           link: '/dashboard/inventory-report',
-        },
-        {
-          name: 'SR to SR laod',
-          icon: 'fa-plus',
-          link: '/dashboard/products/brands',
-        },
-        {
-          name: 'Loading Summary',
-          icon: 'fa-plus',
-          link: '/dashboard/products/brands',
-        },
-        {
-          name: 'All Loading',
-          icon: 'fa-plus',
-          link: '/dashboard/products/brands',
-        },
-        {
-          name: 'Party Ledger',
-          icon: 'fa-plus',
-          link: '/dashboard/products/brands',
-        },
-        {
-          name: 'ALl Loding Party',
-          icon: 'fa-plus',
-          link: '/dashboard/products/brands',
-        },
+        }
       ],
     },
-    // {
-    //   name: 'Loan',
-    //   icon: 'fa-archive',
-    //   link: '/dashboard/loan',
-    //   subnav: [],
-    // },
     {
       name: 'Ledger',
       icon: 'fa-archive',
       link: '/dashboard/ledger-add',
-      subnav: [
-        // { name: 'Add Ledger', icon: 'fa-shopping-bag', link: '/dashboard/ledger-add', },
-        // { name: 'Ledger list', icon: 'fa-tags', link: '/dashboard/ledger' },
-      ],
+      subnav: [],
     },
     {
       name: 'Delivery',
@@ -132,21 +98,21 @@ export class DashNavComponent implements OnInit {
       subnav: [
         { name: 'User', icon: 'fa-user', link: '/dashboard/user' },
         { name: 'Role', icon: 'fa-shopping-bag', link: '/dashboard/role' },
-        { name: 'Company', icon: 'fa-building', link: '/dashboard/company' },
+        // { name: 'Company', icon: 'fa-building', link: '/dashboard/company' },
       ],
     },
-    {
-      name: 'Accessories',
-      link: '/dashboard/categories/add',
-      icon: 'fa-sign-language ',
-      subnav: [],
-    },
-    {
-      name: 'Test',
-      link: '/dashboard/test',
-      icon: 'fa-home',
-      subnav: [],
-    },
+    // {
+    //   name: 'Accessories',
+    //   link: '/dashboard/categories/add',
+    //   icon: 'fa-sign-language ',
+    //   subnav: [],
+    // },
+    // {
+    //   name: 'Test',
+    //   link: '/dashboard/test',
+    //   icon: 'fa-home',
+    //   subnav: [],
+    // },
   ];
 
   constructor(private auth: AuthService) { }

@@ -15,8 +15,10 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
     this.quickLinks = [
-      { name: 'Loading Registration', url: '/dashboard/add-loading' },
-      { name: 'Loading List', url: '/dashboard/loading' },
+      { name: 'Add Inventory', url: '/dashboard/inventory' },
+      { name: 'Pallot', url: '/dashboard/pallot' },
+      { name: 'Ledger', url: '/dashboard/ledger-add' },
+      { name: 'Delivery', url: '/dashboard/delivery' },
     ];
 
     this.auth.user$.subscribe(data => {
