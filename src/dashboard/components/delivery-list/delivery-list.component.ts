@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Ledger } from 'src/shared/model/ledger.model';
 import { Delivery } from 'src/shared/model/delivery.model';
 
 @Component({

@@ -4,6 +4,7 @@ import { LedgerService } from 'src/service/ledger.service';
 import { Ledger } from 'src/shared/model/ledger.model';
 import { take } from 'rxjs/operators';
 import { Delivery } from 'src/shared/model/delivery.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-delivery',
@@ -16,7 +17,7 @@ export class DeliveryComponent implements OnInit {
   ledgerList: Ledger[] = [];
   deliveryList: Delivery[] = [];
 
-  constructor(private deliveryService: DeliveryService, private ledgerService: LedgerService) {
+  constructor(private deliveryService: DeliveryService, private ledgerService: LedgerService, private router: Router) {
     this.year = new Date().getFullYear();
   }
 
@@ -42,7 +43,7 @@ export class DeliveryComponent implements OnInit {
     await this.deliveryService
       .create(event)
       .then((ref) => {
-        console.log(ref);
+        this.router.navigate(['dashboard/delivery-print', ref.id])
       })
       .catch((error) => {
         console.log('error', error);

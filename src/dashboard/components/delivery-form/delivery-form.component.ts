@@ -23,6 +23,7 @@ export class DeliveryFormComponent implements OnChanges {
   mouseoverShifting = false;
   ngDate;
   ledger: Ledger;
+  preDel: Delivery[];
   typeEnum = InventoryType;
   pre_delivery;
 
@@ -76,16 +77,17 @@ export class DeliveryFormComponent implements OnChanges {
   onSelectSRNo(event) {
     const evn = this.ledgerList.find(f => f.sr_no == event.item && f.year == this.ngDate.year);
     this.ledger = evn;
-    const preDel = this.deliveryList.filter(f => f.sr_no == event.item && f.year == this.ngDate.year);
+    this.preDel = this.deliveryList.filter(f => f.sr_no == event.item && f.year == this.ngDate.year);
     let pre_delivery = { quantity: 0, service_rent: 0, loan_amount: 0, loan_profit: 0, loan_payable: 0, emptyBag_quantity: 0, emptyBag_amount: 0, total: 0 }
-    if (preDel.length) {
-      preDel.forEach(d => {
+    if (this.preDel) {
+      this.preDel.forEach(d => {
         pre_delivery.quantity += d.quantity;
         pre_delivery.service_rent += d.service_rent;
         pre_delivery.loan_amount += d.loan_amount;
         pre_delivery.loan_payable += d.loan_payable;
         pre_delivery.emptyBag_quantity += d.emptyBag_quantity;
         pre_delivery.emptyBag_amount += d.emptyBag_amount;
+        pre_delivery.total += d.total;
       })
       this.pre_delivery = pre_delivery;
     }
@@ -104,6 +106,7 @@ export class DeliveryFormComponent implements OnChanges {
       total: evn.service_amount + (evn.loan_payable ? evn.loan_payable : 0) + evn.emptyBag_amount
     }
     this.form.patchValue(value);
+    this.updateTotal();
   }
 
   onQuantityChange() {
@@ -135,15 +138,15 @@ export class DeliveryFormComponent implements OnChanges {
   submit() {
     if (this.form.valid) {
       this.errorMessage = '';
+      this.updateTotal();
       const fvalue = this.form.value;
-      // this.pre_delivery = { quantity: 0, service_rent: 0, loan_amount: 0, loan_profit: 0, loan_payable: 0, emptyBag_quantity: 0, emptyBag_amount: 0, total: 0 }
-      if (fvalue.quantity > (this.ledger.quantity + this.pre_delivery.quantity)) {
-        this.errorMessage = 'Quantity value error, should be less then or equl to ' + (this.ledger.quantity + this.pre_delivery.quantity);
-      } else if (fvalue.loan_amount > (this.ledger.loan_amount + this.pre_delivery.loan_amount)) {
-        this.errorMessage = 'Loan error, should be less then or equal to ' + (this.ledger.loan_amount + this.pre_delivery.loan_amount);
-      } else if (fvalue.emptyBag_quantity > (this.ledger.emptyBag_quantity + this.pre_delivery.emptyBag_quantity)) {
-        this.errorMessage = 'Empty bag error, should be less then or equal to ' + (this.ledger.emptyBag_quantity + this.pre_delivery.emptyBag_quantity);
-      } else {
+      if (fvalue.quantity > (this.ledger.quantity - this.pre_delivery.quantity)) {
+        this.errorMessage = 'Quantity value error, should be less then or equl to ' + (this.ledger.quantity - this.pre_delivery.quantity);
+      } else if (fvalue.loan_amount > (this.ledger.loan_amount - this.pre_delivery.loan_amount)) {
+        this.errorMessage = 'Loan error, should be less then or equal to ' + (this.ledger.loan_amount - this.pre_delivery.loan_amount);
+      } else if (fvalue.emptyBag_quantity > (this.ledger.emptyBag_quantity - this.pre_delivery.emptyBag_quantity)) {
+        this.errorMessage = 'Empty bag error, should be less then or equal to ' + (this.ledger.emptyBag_quantity - this.pre_delivery.emptyBag_quantity);
+      } else if (fvalue.total > 0) {
         const dateValue = this.util.convertNgbDateToJsDate(fvalue.date);
         const value = { ...fvalue, date: dateValue }
         this.create.emit(value);
@@ -166,6 +169,9 @@ export class DeliveryFormComponent implements OnChanges {
 
   clear() {
     this.ledger = null;
+    this.preDel = null;
+    this.pre_delivery = { quantity: 0, service_rent: 0, loan_amount: 0, loan_profit: 0, loan_payable: 0, emptyBag_quantity: 0, emptyBag_amount: 0, total: 0 }
+
     this.form.reset();
     const value = {
       vouchar_no: this.vouchar_no + 1,

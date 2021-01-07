@@ -8,139 +8,91 @@
 
 <form [formGroup]="form" (ngSubmit)="submit()" (mouseleave)="mouseoverShifting = false" class="p-3">
   <div class="form-group row">
-    <label for="vouchar_no" class="d-none d-sm-block col-sm-4 col-form-label col-form-label-sm">No.*</label>
-    <div class="col-sm-8">
+    <div class="col-auto">
+      <label for="vouchar_no" class="d-none d-sm-block col-form-label col-form-label-sm">No.*</label>
       <input type="text" class="form-control form-control-sm" id="vouchar_no" formControlName="vouchar_no" readonly>
-    </div>
-  </div>
 
-  <div class="form-group row">
-    <label for="inventoryType" class="d-none d-sm-block col-sm-4 col-form-label col-form-label-sm">Type*</label>
-    <div class="col-sm-8">
+      <label for="inventoryType" class="d-none d-sm-block col-form-label col-form-label-sm">Type*</label>
       <select class="form-control form-control-sm" id="inventoryType" formControlName="inventoryType">
         <option value="">Select a Type</option>
         <option *ngFor="let item of (typeEnum | keyvalue)" [value]="item.key">
           {{ item.value }}
         </option>
       </select>
-    </div>
-  </div>
 
-  <div class="form-group row">
-    <label for="year" class="d-none d-sm-block col-sm-4 col-form-label col-form-label-sm">Year*</label>
-    <div class="col-sm-8">
+      <label for="year" class="d-none d-sm-block col-form-label col-form-label-sm">Year*</label>
       <input type="number" class="form-control form-control-sm" id="year" formControlName="year" placeholder="Year">
-      <small class="text-danger" *ngIf=" form.controls.year.errors && form.controls.year.touched">
-        Year required
-      </small>
-    </div>
-  </div>
 
-  <div class="form-group row">
-    <div class="input-group">
-      <label for="date" class="d-none d-sm-block col-sm-4 col-form-label col-form-label-sm">Date*</label>
-      <div class="col-sm-8">
-        <input class="form-control form-control-sm" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
-          formControlName="date" #date="ngbDatepicker" (click)="date.toggle()">
-      </div>
-    </div>
-  </div>
+      <label for="date" class="d-none d-sm-block col-form-label col-form-label-sm">Date*</label>
+      <input class="form-control form-control-sm" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
+        formControlName="date" #date="ngbDatepicker" (click)="date.toggle()">
 
-  <div class="form-group row">
-    <label for="sr_no" class="d-none d-sm-block col-sm-4 col-form-label col-form-label-sm">SR No*</label>
-    <div class="col-sm-8">
+    </div>
+    <div class="col-auto">
+      <label for="sr_no" class="d-none d-sm-block col-form-label col-form-label-sm">SR No*</label>
       <input id="sr_no" type="text" class="form-control form-control-sm" formControlName="sr_no"
         [ngbTypeahead]="searchLedger" [editable]='false' (selectItem)="onSelectSRNo($event)" />
-      <small class="form-text text-danger" *ngIf="form.controls.sr_no.errors && form.controls.sr_no.touched">SR No
-        Required</small>
-    </div>
-  </div>
 
-  <div class="form-group row" *ngIf="form.value.customer">
-    <label for="customer" class="d-none d-sm-block col-sm-4 col-form-label col-form-label-sm">Party</label>
-    <div class="col-sm-8">
-      <label id="customer" class="form-control form-control-sm">{{form.value?.customer?.name}}
-        [{{form.value?.customer?.phone}}]</label>
+      <ng-container *ngIf="form.value.customer">
+        <label for="customer" class="d-none d-sm-block col-form-label col-form-label-sm">Party name</label>
+        <label id="customer" class="form-control form-control-sm m-0">{{form.value?.customer?.name}}
+        </label>
+        <label for="customer" class="d-none d-sm-block col-form-label col-form-label-sm">Party phone</label>
+        <label id="customer" class="form-control form-control-sm m-0">{{form.value?.customer?.phone}}
+        </label>
+        <label for="customer" class="d-none d-sm-block col-form-label col-form-label-sm">Party father</label>
+        <label id="customer" class="form-control form-control-sm m-0">{{form.value?.customer?.father}}
+        </label>
+      </ng-container>
     </div>
-  </div>
 
-  <div class="form-group row" *ngIf="form.value.customer">
-    <label for="quantity" class="d-none d-sm-block col-sm-4 col-form-label col-form-label-sm">Quantity*</label>
-    <div class="col-sm-8">
-      <input type="number" class="form-control form-control-sm" id="quantity" formControlName="quantity"
-        placeholder="Quantity" (change)="onQuantityChange()">
-      <small class="text-danger" *ngIf=" form.controls.quantity.errors && form.controls.quantity.touched">
-        quantity required
-      </small>
-    </div>
-  </div>
+    <div class="col-auto" *ngIf="form.value.customer">
+      <label for="loan_amount" class="d-none d-sm-block col-form-label col-form-label-sm">Loan*</label>
+      <input type="number" class="form-control form-control-sm" id="loan_amount" formControlName="loan_amount"
+        placeholder="Loan amount" (change)="onLoanChange()">
 
-  <div class="form-group row" *ngIf="form.value.customer">
-    <label for="rate" class="d-none d-sm-block col-sm-4 col-form-label col-form-label-sm">Rate*</label>
-    <div class="col-sm-8">
-      <input type="number" class="form-control form-control-sm" id="rate" formControlName="rate" placeholder="Quantity"
+      <label for="loan_profit" class="d-none d-sm-block col-form-label col-form-label-sm">Loan Profit*</label>
+      <input type="number" class="form-control form-control-sm" id="loan_profit" formControlName="loan_profit" readonly>
+
+      <label for="loan_payable" class="d-none d-sm-block col-form-label col-form-label-sm">Loan Payable*</label>
+      <input type="number" class="form-control form-control-sm" id="loan_payable" formControlName="loan_payable"
         readonly>
     </div>
-  </div>
-  <div class="form-group row" *ngIf="form.value.customer">
-    <label for="service_rent" class="d-none d-sm-block col-sm-4 col-form-label col-form-label-sm">Rent*</label>
-    <div class="col-sm-8">
+
+    <div class="col-auto" *ngIf="form.value.customer">
+      <label for="quantity" class="d-none d-sm-block col-form-label col-form-label-sm">Quantity*</label>
+      <input type="number" class="form-control form-control-sm" id="quantity" formControlName="quantity"
+        placeholder="Quantity" (change)="onQuantityChange()">
+
+      <label for="rate" class="d-none d-sm-block col-form-label col-form-label-sm">Rate*</label>
+      <input type="number" class="form-control form-control-sm" id="rate" formControlName="rate" placeholder="Rate"
+        readonly>
+
+      <label for="service_rent" class="d-none d-sm-block col-form-label col-form-label-sm">Rent*</label>
       <input type="number" class="form-control form-control-sm" id="service_rent" formControlName="service_rent"
         placeholder="Service Rent" readonly>
     </div>
-  </div>
 
-  <div class="form-group row" *ngIf="form.value.customer">
-    <label for="emptyBag_quantity" class="d-none d-sm-block col-sm-4 col-form-label col-form-label-sm">Empty Bag
-      Quantity*</label>
-    <div class="col-sm-8">
+    <div class="col-auto" *ngIf="form.value.customer">
+      <label for="emptyBag_quantity" class="d-none d-sm-block col-form-label col-form-label-sm">Empty Bag
+        Quantity*</label>
       <input type="number" class="form-control form-control-sm" id="emptyBag_quantity"
         formControlName="emptyBag_quantity" placeholder="Empty bag quantity" (change)="onEmptybagQuantityChange()">
-      <small class="text-danger"
-        *ngIf="form.controls.emptyBag_quantity.errors && form.controls.emptyBag_quantity.touched">
-        Empty bag quantity required
-      </small>
-    </div>
-  </div>
 
-  <div class="form-group row" *ngIf="form.value.customer">
-    <label for="emptyBag_rate" class="d-none d-sm-block col-sm-4 col-form-label col-form-label-sm">Empty bag
-      rate*</label>
-    <div class="col-sm-8">
+      <label for="emptyBag_rate" class="d-none d-sm-block col-form-label col-form-label-sm">Empty bag
+        rate*</label>
       <input type="number" class="form-control form-control-sm" id="emptyBag_rate" formControlName="emptyBag_rate"
         readonly>
-    </div>
-  </div>
 
-  <div class="form-group row" *ngIf="form.value.customer">
-    <label for="emptyBag_amount" class="d-none d-sm-block col-sm-4 col-form-label col-form-label-sm">Empty bag
-      amount*</label>
-    <div class="col-sm-8">
+      <label for="emptyBag_amount" class="d-none d-sm-block col-form-label col-form-label-sm">Empty bag
+        amount*</label>
       <input type="number" class="form-control form-control-sm" id="emptyBag_amount" formControlName="emptyBag_amount"
         readonly>
     </div>
-  </div>
 
-  <div class="form-group row" *ngIf="form.value.customer">
-    <label for="loan_amount" class="d-none d-sm-block col-sm-4 col-form-label col-form-label-sm">Loan*</label>
-    <div class="col-sm-8">
-      <input type="number" class="form-control form-control-sm" id="loan_amount" formControlName="loan_amount"
-        placeholder="Loan amount" (change)="onLoanChange()">
-      <small class="text-danger" *ngIf="form.controls.loan_amount.errors && form.controls.loan_amount.touched">
-        Loan amount required
-      </small>
-    </div>
-  </div>
-  <div class="form-group row" *ngIf="form.value.customer">
-    <label for="loan_profit" class="d-none d-sm-block col-sm-4 col-form-label col-form-label-sm">Loan Profit*</label>
-    <div class="col-sm-8">
-      <input type="number" class="form-control form-control-sm" id="loan_profit" formControlName="loan_profit" readonly>
-    </div>
-  </div>
-  <div class="form-group row" *ngIf="form.value.customer">
-    <label for="total" class="d-none d-sm-block col-sm-4 col-form-label col-form-label-sm">Total*</label>
-    <div class="col-sm-8">
-      <input type="number" class="form-control form-control-sm" id="total" formControlName="total" readonly>
+    <div class="col-auto" *ngIf="form.value.customer">
+      <label for="total" class="d-none d-sm-block col-form-label">Total*</label>
+      <input type="number" class="form-control" id="total" formControlName="total" readonly>
     </div>
   </div>
 
@@ -154,3 +106,115 @@
     {{ getFormValidationErrors() }}
   </div>
 </form>
+
+<table class="table table-striped border table-sm" *ngIf="ledger">
+  <thead>
+    <tr>
+      <td colspan="8" class="form-head">
+        Ledger info
+      </td>
+    </tr>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">SR_No</th>
+      <th scope="col">Party</th>
+      <th scope="col">Loan</th>
+      <th scope="col">Product</th>
+      <th scope="col">Empty bag</th>
+      <th scope="col">Total</th>
+      <!-- <th scope="col">Action</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>{{ledger.sr_no}}</td>
+      <td>
+        <div>Name : {{ledger.customer?.name}} [{{ledger.customer?.phone}}]</div>
+        <div>C/O : {{ledger.customer?.father}}</div>
+        <div>{{ledger.customer?.address}}</div>
+      </td>
+      <td>
+        <div>
+          <div>Amount: {{ ledger.loan_amount }} </div>
+          <div>Rate: {{ ledger.loan_rate }} </div>
+          <div>Payable: {{ ledger.loan_payable }} </div>
+        </div>
+      </td>
+      <td>
+        <div>Quanity: {{ ledger.quantity }} </div>
+        <div>Rate: {{ ledger.rate }} </div>
+        <div>Amount: {{ ledger.service_amount}} </div>
+      </td>
+      <td>
+        <div>
+          <div>Quanity: {{ ledger.emptyBag_quantity }} </div>
+          <div>Rate: {{ ledger.emptyBag_rate }} </div>
+          <div>Amount: {{ ledger.emptyBag_amount}} </div>
+        </div>
+      </td>
+      <td>{{ ledger.total_amount}}</td>
+      <!-- <td><a routerLink="/dashboard/contract/{{ledger._id}}">Print</a></td> -->
+
+    </tr>
+  </tbody>
+</table>
+
+<table class="table table-bordered table-sm" *ngIf="preDel && preDel.length>0">
+  <thead>
+    <tr>
+      <td colspan="10" class="form-head">
+        Delivery info
+      </td>
+    </tr>
+    <tr>
+      <th rowspan="2" scope="col">#</th>
+      <th rowspan="2" scope="col">SR_No</th>
+      <th rowspan="2" scope="col">Party</th>
+      <th colspan="2" scope="col">Loan</th>
+      <th colspan="2" scope="col">Product</th>
+      <th colspan="2" scope="col">Empty Bag</th>
+      <th rowspan="2" scope="col">Total</th>
+    </tr>
+    <tr>
+      <th>Amount</th>
+      <th>Payable</th>
+      <th>Quantity</th>
+      <th>Rent</th>
+      <th>Quanity</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let del of preDel;let i = index;">
+      <td scope="row">{{ i+1 }}</td>
+      <td scope="row">{{ del.sr_no }}</td>
+      <td>
+        <div>{{del.customer.name}}</div>
+        <div>{{del.customer.phone}}</div>
+        <div>{{del.customer.address}}</div>
+      </td>
+      <td class="text-center">{{del.loan_amount}}</td>
+      <td class="text-center">{{del.loan_payable}}</td>
+      <td class="text-center">{{del.quantity}}</td>
+      <td class="text-center">{{del.service_rent}}</td>
+      <td class="text-center">{{del.emptyBag_quantity}}</td>
+      <td class="text-center">{{del.emptyBag_amount}}</td>
+      <th class="text-center">{{del.total}}</th>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <th class="text-center">{{pre_delivery.loan_amount}}</th>
+      <th class="text-center">{{pre_delivery.loan_payable}}</th>
+      <th class="text-center">{{pre_delivery.quantity}}</th>
+      <th class="text-center">{{pre_delivery.service_rent}}</th>
+      <th class="text-center">{{pre_delivery.emptyBag_quantity}}</th>
+      <th class="text-center">{{pre_delivery.emptyBag_amount}}</th>
+      <th class="text-center">{{pre_delivery.total}}</th>
+    </tr>
+  </tbody>
+</table>
+
+<!-- this.pre_delivery = { quantity: 0, service_rent: 0, loan_amount: 0, loan_profit: 0, loan_payable: 0, emptyBag_quantity: 0, emptyBag_amount: 0, total: 0 } -->
