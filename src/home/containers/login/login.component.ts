@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/service/auth.service';
 import { UserService } from 'src/service/user.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -20,8 +21,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.auth.user$.subscribe(data =>{
-      if(data && data.uid){
+    this.auth.user$.subscribe(data => {
+      if (data && data.uid) {
         this.router.navigate(['/dashboard'])
       }
     })
@@ -37,22 +38,24 @@ export class LoginComponent implements OnInit {
   async submit() {
     if (this.form.valid) {
       this.errorMessage = "";
-      this.loading = true;
       try {
+        this.loading = true;
         const resp = await this.auth.loginWithEmail(this.form.controls.username.value, this.form.controls.password.value);
+        this.loading = false;
         console.log(resp.user);
         if (resp.user.email) {
           console.log(resp.user.email);
           this.getUser(resp);
         }
-      } catch (error) { console.log(error) }
+      } catch (err) { console.log(err); this.errorMessage = err.message; this.loading = false; }
     } else {
       this.errorMessage = "Form data missing";
     }
   }
 
   async getUser(data) {
-    await this.userService.get(data.user.uid).subscribe(data => {
+    this.loading = true;
+    await this.userService.get(data.user.uid).pipe(take(2)).subscribe(data => {
       this.loading = false;
       this.router.navigate(['/dashboard']);
       console.log(data);
