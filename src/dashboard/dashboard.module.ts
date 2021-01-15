@@ -46,6 +46,7 @@ import { InventoryListComponent } from './components/inventory-list/inventory-li
 import { PallotListComponent } from './components/pallot-list/pallot-list.component';
 import { LedgerListComponent } from './components/ledger-list/ledger-list.component';
 import { DeliveryListComponent } from './components/delivery-list/delivery-list.component';
+import { NumberToBanglaPipe } from 'src/shared/pipe/number-to-bangla.pipe';
 
 export const ROUTES: Routes = [
   {
@@ -119,6 +120,7 @@ export const ROUTES: Routes = [
     DeliveryFormComponent,
     DeliveryPrintComponent,
     NumberToWordsPipe,
+    NumberToBanglaPipe,
     InventoryReportComponent,
     AgentListComponent,
     CustomerListComponent,

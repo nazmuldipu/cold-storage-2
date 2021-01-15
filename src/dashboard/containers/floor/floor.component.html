@@ -31,7 +31,7 @@
             <th scope="row">{{ i+1 }}</th>
             <td>{{floor.chamber.name}}</td>
             <td>{{ floor.name }} </td>
-            <td>{{ floor.capacity}}</td>
+            <td>{{ floor.capacity | numberToBangla}}</td>
             <td><a class="edit_link" (click)="onEdit(floor._id)">Edit</a></td>
           </tr>
         </tbody>

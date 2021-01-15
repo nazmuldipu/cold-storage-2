@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
-@Component({
-  selector: 'app-test',
-  templateUrl: './test.component.html',
-  styleUrls: ['./test.component.scss'],
+@Pipe({
+  name: 'numberToBangla'
 })
-export class TestComponent implements OnInit {
+export class NumberToBanglaPipe implements PipeTransform {
   num_to_bd = {
     '0': { value: '' },
     '1': { value: 'এক' },
@@ -114,44 +112,37 @@ export class TestComponent implements OnInit {
   lakh = ' লক্ষ ';
   crore = ' কোটি ';
 
-  constructor() {}
-
-  ngOnInit(): void {
-    for (let i = 999999995; i < 1000000015; i++) {
-      console.log(this.engToBn(i) + ', ');
-    }
-  }
-
-  engToBn(number) {
+  transform(number: any, args?: any): any {
     if(number >= 1000000000){
       return "সীমার বাইরে";
     }
     if (number >= 10000000) {
       return (
-        this.engToBn(Math.floor(number / 10000000)) +
+        this.transform(Math.floor(number / 10000000)) +
         this.crore +
-        this.engToBn(number % 10000000)
+        this.transform(number % 10000000)
       );
     } else if (number >= 100000) {
       return (
-        this.engToBn(Math.floor(number / 100000)) +
+        this.transform(Math.floor(number / 100000)) +
         this.lakh +
-        this.engToBn(number % 100000)
+        this.transform(number % 100000)
       );
     } else if (number >= 1000) {
       return (
-        this.engToBn(Math.floor(number / 1000)) +
+        this.transform(Math.floor(number / 1000)) +
         this.thousand +
-        this.engToBn(number % 1000)
+        this.transform(number % 1000)
       );
     } else if (number >= 100) {
       return (
-        this.engToBn(Math.floor(number / 100)) +
+        this.transform(Math.floor(number / 100)) +
         this.hundred +
-        this.engToBn(number % 100)
+        this.transform(number % 100)
       );
     } else {
       return this.num_to_bd[number].value;
     }
   }
+
 }
