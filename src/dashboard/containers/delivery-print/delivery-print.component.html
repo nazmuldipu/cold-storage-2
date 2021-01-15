@@ -39,28 +39,28 @@
         </tr>
         <tr>
           <td>আলুর বস্তা</td>
-          <td class="text-center">{{delivery?.quantity}}</td>
-          <td class="text-center">{{delivery?.rate}}</td>
-          <td class="text-right">{{delivery?.service_rent}}</td>
+          <td class="text-center">{{delivery?.quantity| numberToBangla}}</td>
+          <td class="text-center">{{delivery?.rate| numberToBangla}}</td>
+          <td class="text-right">{{delivery?.service_rent| numberToBangla}}</td>
         </tr>
         <tr>
           <td>খালি বস্তা</td>
-          <td class="text-center">{{delivery?.emptyBag_quantity}}</td>
-          <td class="text-center">{{delivery?.emptyBag_rate}}</td>
-          <td class="text-right">{{delivery?.emptyBag_amount}}</td>
+          <td class="text-center">{{delivery?.emptyBag_quantity| numberToBangla}}</td>
+          <td class="text-center">{{delivery?.emptyBag_rate| numberToBangla}}</td>
+          <td class="text-right">{{delivery?.emptyBag_amount| numberToBangla}}</td>
         </tr>
         <tr>
           <td>ঋণ</td>
-          <td class="text-center">{{delivery?.loan_amount}}</td>
-          <td class="text-center">{{delivery?.loan_rate}}</td>
-          <td class="text-right">{{delivery?.loan_payable}}</td>
+          <td class="text-center">{{delivery?.loan_amount| numberToBangla}}</td>
+          <td class="text-center">{{delivery?.loan_rate| numberToBangla}}</td>
+          <td class="text-right">{{delivery?.loan_payable| numberToBangla}}</td>
         </tr>
         <tr>
           <td colspan="3">সর্বমোট প্রাপ্তঃ </td>
-          <td class="text-right">{{delivery?.total}}</td>
+          <td class="text-right">{{delivery?.total| numberToBangla}}</td>
         </tr>
         <tr>
-          <td colspan="4">টাকা কথায়ঃ</td>
+          <td colspan="4">টাকা কথায়ঃ {{delivery?.total| numberToWordBd}} টাকা মাত্র ।</td>
         </tr>
       </tbody>
     </table>
@@ -97,7 +97,8 @@
     </div>
     <div class="row">
       <div class="col-auto">প্রদত্ত বস্তার সংখ্যাঃ </div>
-      <div class="col p-0"><strong> {{delivery?.quantity}}</strong></div>
+      <div class="col p-0"><strong> {{delivery?.quantity| numberToBangla}}({{delivery?.quantity| numberToWordBd}})
+          বস্তা</strong></div>
     </div>
     <div class="row mt-3">
       <div class="col"><span class="border-top"> পরিদর্শক </span></div>
@@ -131,7 +132,8 @@
     </div>
     <div class="row">
       <div class="col-auto">প্রদত্ত বস্তার সংখ্যাঃ </div>
-      <div class="col p-0"><strong> {{delivery?.quantity}}</strong></div>
+      <div class="col p-0"><strong> {{delivery?.quantity| numberToBangla}}({{delivery?.quantity| numberToWordBd}})
+          বস্তা</strong></div>
     </div>
     <div class="row mt-3">
       <div class="col"><span class="border-top"> পরিদর্শক </span></div>
@@ -165,7 +167,8 @@
     </div>
     <div class="row">
       <div class="col-auto">প্রদত্ত বস্তার সংখ্যাঃ </div>
-      <div class="col p-0"><strong> {{delivery?.quantity}}</strong></div>
+      <div class="col p-0"><strong> {{delivery?.quantity| numberToBangla}}
+          ({{delivery?.quantity| numberToWordBd}}) বস্তা</strong></div>
     </div>
     <div class="row mt-3">
       <div class="col"><span class="border-top"> পরিদর্শক </span></div>

@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./test.component.scss'],
 })
 export class TestComponent implements OnInit {
-  num_to_bd = {
+  num_to_bd_word = {
     '0': { value: '' },
     '1': { value: 'এক' },
     '2': { value: 'দুই' },
@@ -108,50 +108,77 @@ export class TestComponent implements OnInit {
     '98': { value: 'আটানব্বই' },
     '99': { value: 'নিরানব্বই' },
   };
-  
+
+  num_to_bd = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯']
+
   hundred = ' শত ';
   thousand = ' হাজার ';
   lakh = ' লক্ষ ';
   crore = ' কোটি ';
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
-    for (let i = 999999995; i < 1000000015; i++) {
-      console.log(this.engToBn(i) + ', ');
-    }
+    // for (let i = -20; i < 20; i++) {
+    //   // console.log(this.engToBnWord(i) + ', ');
+    //   console.log(this.engToBd(i) + ', ');
+    // }
+    console.log(this.engToBdF(-56.84));
   }
 
-  engToBn(number) {
-    if(number >= 1000000000){
-      return "সীমার বাইরে";
+  engToBdF(n: number): string {
+    let v = (n + '').split(".");
+    if (v.length == 1) {
+      return this.engToBd(n);
+    } else if (v.length == 2) {
+      return this.engToBd(parseInt(v[0])) + '.' + this.engToBd(parseInt(v[1]));
     }
-    if (number >= 10000000) {
+    console.log();
+    return '';
+  }
+  engToBd(n: number): string {
+    let res = '';
+    if (n < 0) {
+      res = '-';
+      n = -n;
+    }
+
+    if (n > 9) {
+      let b = n % 10;
+      return res + this.engToBd(Math.floor(n / 10)) + this.num_to_bd[b];
+    }
+    return res + this.num_to_bd[n];
+  }
+
+  engToBnWord(number) {
+    if (number >= 1000000000) {
+      return "সীমার বাইরে";
+    } else if (number >= 10000000) {
       return (
-        this.engToBn(Math.floor(number / 10000000)) +
+        this.engToBnWord(Math.floor(number / 10000000)) +
         this.crore +
-        this.engToBn(number % 10000000)
+        this.engToBnWord(number % 10000000)
       );
     } else if (number >= 100000) {
       return (
-        this.engToBn(Math.floor(number / 100000)) +
+        this.engToBnWord(Math.floor(number / 100000)) +
         this.lakh +
-        this.engToBn(number % 100000)
+        this.engToBnWord(number % 100000)
       );
     } else if (number >= 1000) {
       return (
-        this.engToBn(Math.floor(number / 1000)) +
+        this.engToBnWord(Math.floor(number / 1000)) +
         this.thousand +
-        this.engToBn(number % 1000)
+        this.engToBnWord(number % 1000)
       );
     } else if (number >= 100) {
       return (
-        this.engToBn(Math.floor(number / 100)) +
+        this.engToBnWord(Math.floor(number / 100)) +
         this.hundred +
-        this.engToBn(number % 100)
+        this.engToBnWord(number % 100)
       );
     } else {
-      return this.num_to_bd[number].value;
+      return this.num_to_bd_word[number].value;
     }
   }
 }

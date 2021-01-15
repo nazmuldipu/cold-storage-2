@@ -47,6 +47,7 @@ import { PallotListComponent } from './components/pallot-list/pallot-list.compon
 import { LedgerListComponent } from './components/ledger-list/ledger-list.component';
 import { DeliveryListComponent } from './components/delivery-list/delivery-list.component';
 import { NumberToBanglaPipe } from 'src/shared/pipe/number-to-bangla.pipe';
+import { NumberToWordBdPipe } from 'src/shared/pipe/number-to-word-bd.pipe';
 
 export const ROUTES: Routes = [
   {
@@ -119,8 +120,9 @@ export const ROUTES: Routes = [
     DeliveryComponent,
     DeliveryFormComponent,
     DeliveryPrintComponent,
-    NumberToWordsPipe,
     NumberToBanglaPipe,
+    NumberToWordBdPipe,
+    NumberToWordsPipe,
     InventoryReportComponent,
     AgentListComponent,
     CustomerListComponent,

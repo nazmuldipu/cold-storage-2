@@ -45,19 +45,19 @@
               <td style="min-width: 100px;">মন্তব্য</td>
             </tr>
             <tr class="text-center col-amount">
-              <td>{{ledger?.quantity}}</td>
-              <td>{{ledger?.rate}}</td>
-              <td>{{ledger?.service_amount}}</td>
-              <td>{{ledger?.emptyBag_quantity}}</td>
-              <td>{{ledger?.emptyBag_rate}}</td>
-              <td>{{ledger?.emptyBag_amount}}</td>
-              <td>{{ledger?.loan_amount}}</td>
-              <td>{{ledger?.loan_profit}}</td>
-              <td><strong> {{ledger?.total_amount}}</strong></td>
+              <td>{{ledger?.quantity| numberToBangla}}</td>
+              <td>{{ledger?.rate| numberToBangla}}</td>
+              <td>{{ledger?.service_amount| numberToBangla}}</td>
+              <td>{{ledger?.emptyBag_quantity| numberToBangla}}</td>
+              <td>{{ledger?.emptyBag_rate| numberToBangla}}</td>
+              <td>{{ledger?.emptyBag_amount| numberToBangla}}</td>
+              <td>{{ledger?.loan_amount| numberToBangla}}</td>
+              <td>{{ledger?.loan_profit| numberToBangla}}</td>
+              <td><strong> {{ledger?.total_amount| numberToBangla}}</strong></td>
               <td></td>
             </tr>
             <tr>
-              <td colspan="10">মোট প্রাপ্য টাকা (কথায়) - </td>
+              <td colspan="10">মোট প্রাপ্য টাকা (কথায়) - {{ledger?.total_amount| numberToWordBd}} টাকা মাত্র । </td>
             </tr>
           </tbody>
         </table>
