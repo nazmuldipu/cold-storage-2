@@ -76,6 +76,11 @@ export class DashNavComponent implements OnInit {
         {
           name: 'Inventory list',
           icon: 'fa-plus',
+          link: '/dashboard/inventory-list',
+        },
+        {
+          name: 'Inventory report',
+          icon: 'fa-plus',
           link: '/dashboard/inventory-report',
         }
       ],

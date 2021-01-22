@@ -25,6 +25,7 @@
     "bootstrap": "^4.5.3",
     "firebase": "^8.2.1",
     "font-awesome": "^4.7.0",
+    "ng2-daterangepicker": "^3.0.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

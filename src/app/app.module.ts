@@ -1,15 +1,14 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
+import { AngularFireModule } from '@angular/fire';
+import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ServiceModule } from 'src/service/service.module';
-import { AngularFireModule } from '@angular/fire';
+import { Daterangepicker } from 'ng2-daterangepicker';
 import { environment } from 'src/environments/environment';
-import { AuthGuard } from 'src/service/auth-guard.service';
+import { ServiceModule } from 'src/service/service.module';
+
+import { AppComponent } from './app.component';
 import { TestComponent } from './test/test.component';
-import { NumberToWordsPipe } from 'src/shared/pipe/number-to-words.pipe';
 
 export const ROUTES: Routes = [
   { path: 'test', component: TestComponent },
@@ -39,6 +38,7 @@ export const ROUTES: Routes = [
     BrowserModule,
     NgbModule,
     ServiceModule,
+    Daterangepicker,
     AngularFireModule.initializeApp(environment.firebase),
     RouterModule.forRoot(ROUTES)
   ],

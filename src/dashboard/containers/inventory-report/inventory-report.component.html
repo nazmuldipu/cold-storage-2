@@ -1,65 +1,61 @@
 <div class="page-head d-print-none">
-  Inventory report
+  <div class="d-flex justify-content-between">
+    <div class="">Inventory List</div>
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <a type="button" class="btn btn-sm" [ngClass]="mode=='day'?'btn-primary':'btn-light'"
+        (click)="onModechange('day')">Day</a>
+      <a type="button" class="btn btn-sm" [ngClass]="mode=='range'?'btn-primary':'btn-light'"
+        (click)="onModechange('range')">Range</a>
+    </div>
+    <div class="">
+
+    </div>
+  </div>
 </div>
 <div class="container">
-  <div class="row">
-    <div class="col-md-4 d-print-none">
-      <div class="d-flex justify-content-between">
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-sm" [ngClass]="{'btn-primary': mode === 'agent', 'btn-light':mode === 'party' }"
-            (click)="onModechange('agent')">
-            <input type="radio" name="options" id="option1"> Agent
-          </label>
-          <label class="btn btn-sm" [ngClass]="{'btn-primary': mode === 'party', 'btn-light':mode === 'agent' }"
-            (click)="onModechange('party')">
-            <input type="radio" name="options" id="option2"> Party
-          </label>
-        </div>
-        <button class="btn btn-sm btn-primary ml-5" (click)="onPrint()"><i class="fa fa-print"></i>Print</button>
+  <div class="row d-print-none">
+    <ng-container  *ngIf="mode=='day'">
+      <div class="col-auto">
+        <button class="btn btn-light" (click)="adjustDay(-1)"><i class="fa fa-chevron-left"></i></button>
       </div>
-
-      <ng-container *ngIf="mode == 'party'">
-        <customer-list [customerList]="customerList" [short]="true" (edit)="onCustomerClick($event)"></customer-list>
-      </ng-container>
-      <ng-container *ngIf="mode == 'agent'">
-        <agent-list [agentList]="agentList" [short]="true" (edit)="onAgentClick($event)"></agent-list>
-      </ng-container>
+      <div class="col-auto p-0">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">Date</div>
+          </div>
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" (click)="rDate.toggle()" [(ngModel)]="date"
+            (dateSelect)="adjustDay(0)" ngbDatepicker #rDate="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="rDate.toggle()" type="button">
+              <i class="fa fa-calendar"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-light" (click)="adjustDay(1)"><i class="fa fa-chevron-right"></i></button>
+      </div>
+    </ng-container>
+    <div class="col-auto" *ngIf="mode=='range'">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Date</div>
+        </div>
+        <input type="text" class="form-control" name="daterangeInput" daterangepicker [options]="options"
+          (selected)="selectedDate($event)" />
+      </div>
     </div>
-    <div class="col">
-      <table class="table table-bordered table-sm">
-        <thead>
-          <tr>
-            <td colspan="7" class="text-center pt-3">
-              <h4>{{company_info.name_bd}} ({{company_info.service_bd}})</h4>
-              <h5>খালি বস্তা ও ঋণের হিসাব - {{year}}</h5>
-            </td>
-          </tr>
-          <tr>
-            <th style="width: 4%" scope="col">#</th>
-            <th style="width: 15%" class="text-center" scope="col">লট নং</th>
-            <th style="width: 15%" class="text-center" scope="col">বস্তার সংখ্যা </th>
-            <th class="text-center" scope="col">খালি বস্তা </th>
-            <th class="text-center" scope="col">ঋণের পরিমাণ</th>
-            <th style="width: 20%" class="text-center" scope="col">মন্তব্য</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let inventory of filteredInventoryList;let i = index;">
-            <th scope="row">{{ i+1 }}</th>
-            <td class="text-center"> {{ inventory.sr_no }} </td>
-            <td class="text-center"> {{ inventory.quantity | numberToBangla}} </td>
-            <td></td>
-            <td></td>
-            <td> </td>
-          </tr>
-          <tr>
-            <th></th>
-            <th class="text-center">মোট</th>
-            <th class="text-center">{{total | numberToBangla}} বস্তা</th>
-            <th colspan="3"></th>
-          </tr>
-        </tbody>
-      </table>
+    <div class="col"></div>
+    <div class="ml-auto col-auto">
+      <button class="btn btn-sm btn-primary" (click)="onPrint()">
+        <i class="fa fa-print"></i> Print
+      </button>
+    </div>
+  </div>  
+  <div class="row">
+    <div class="col-12">
+      <h4 class="text-center mt-3">Inventory Report for {{mode == 'day'?'Date: ' +getDateString() : 'Date range: ' + getDateRangeString()}}</h4>
+      <inventory-table [inventoryList]="inventoryList" [list]="true"></inventory-table>
     </div>
   </div>
 </div>

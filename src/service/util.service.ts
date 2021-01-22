@@ -7,7 +7,7 @@ import firebase from 'firebase';
   providedIn: 'root',
 })
 export class UtilService {
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore) {}
 
   dynamicSortObject(property) {
     let prop = property.split('.');
@@ -62,7 +62,6 @@ export class UtilService {
     return str;
   }
 
-
   convertFireabaseDateToJSDate(firebaseObject: any): Date {
     if (!firebaseObject) return null;
     return (firebaseObject as firebase.firestore.Timestamp).toDate();
@@ -75,10 +74,32 @@ export class UtilService {
   }
 
   convertNgbDateToJsDate(ngDate: NgbDate): Date {
-    return new Date(ngDate.year, ngDate.month - 1, ngDate.day)
+    return new Date(ngDate.year, ngDate.month - 1, ngDate.day);
   }
 
   convertJsDateToNgbDate(date: Date): NgbDate {
     return new NgbDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
+  }
+
+  getDateString(date: Date): string {
+    const month = date.getMonth() + 1;
+    return (
+      date.getFullYear() +
+      '-' +
+      (month < 10 ? '0' + month : month) +
+      '-' +
+      (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())
+    );
+  }
+
+  getDateStringLocal(date: Date): string {
+    const month = date.getMonth() + 1;
+    return (
+      (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) +
+      '/' +
+      (month < 10 ? '0' + month : month) +
+      '/' +
+      date.getFullYear()
+    );
   }
 }

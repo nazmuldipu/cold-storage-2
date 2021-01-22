@@ -42,12 +42,14 @@ import { NumberToWordsPipe } from 'src/shared/pipe/number-to-words.pipe';
 import { InventoryReportComponent } from './containers/inventory-report/inventory-report.component';
 import { AgentListComponent } from './components/agent-list/agent-list.component';
 import { CustomerListComponent } from './components/customer-list/customer-list.component';
-import { InventoryListComponent } from './components/inventory-list/inventory-list.component';
 import { PallotListComponent } from './components/pallot-list/pallot-list.component';
 import { LedgerListComponent } from './components/ledger-list/ledger-list.component';
 import { DeliveryListComponent } from './components/delivery-list/delivery-list.component';
 import { NumberToBanglaPipe } from 'src/shared/pipe/number-to-bangla.pipe';
 import { NumberToWordBdPipe } from 'src/shared/pipe/number-to-word-bd.pipe';
+import { InventoryTableComponent } from './components/inventory-table/inventory-table.component';
+import { InventoryListComponent } from './containers/inventory-list/inventory-list.component';
+import { Daterangepicker } from 'ng2-daterangepicker';
 
 export const ROUTES: Routes = [
   {
@@ -64,6 +66,7 @@ export const ROUTES: Routes = [
       { path: 'customer', component: CustomerComponent },
       { path: 'inventory', component: InventoryComponent },
       { path: 'inventory-print/:id', component: InventoryPrintComponent },
+      { path: 'inventory-list', component: InventoryListComponent },
       { path: 'inventory-report', component: InventoryReportComponent },
       { path: 'ledger', component: LedgerComponent },
       { path: 'ledger-add', component: LedgerAddComponent },
@@ -129,8 +132,9 @@ export const ROUTES: Routes = [
     InventoryListComponent,
     PallotListComponent,
     LedgerListComponent,
-    DeliveryListComponent
+    DeliveryListComponent,
+    InventoryTableComponent
   ],
-  imports: [SharedModule, RouterModule.forChild(ROUTES)],
+  imports: [SharedModule, Daterangepicker, RouterModule.forChild(ROUTES)],
 })
 export class DashboardModule { }
