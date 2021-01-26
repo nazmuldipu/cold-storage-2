@@ -1,36 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { take } from 'rxjs/operators';
-import { InventoryService } from 'src/service/inventory.service';
+import { LedgerService } from 'src/service/ledger.service';
 import { UtilService } from 'src/service/util.service';
-import { Inventory } from 'src/shared/model/inventory.model';
+import { Ledger } from 'src/shared/model/ledger.model';
 
 @Component({
-  selector: 'app-inventory-report',
-  templateUrl: './inventory-report.component.html',
-  styleUrls: ['./inventory-report.component.scss'],
+  selector: 'app-ledger-report',
+  templateUrl: './ledger-report.component.html',
+  styleUrls: ['./ledger-report.component.scss'],
 })
-export class InventoryReportComponent implements OnInit {
-  year;
-  total = 0;
-  date: NgbDateStruct;
+export class LedgerReportComponent implements OnInit {
+  year: number;
   mode: string = 'day';
-  inventoryList: Inventory[] = [];
-  filteredInventoryList: Inventory[] = [];
+  date: NgbDateStruct;
   public options: any;
   public daterange: any = {};
+  ledgerList: Ledger[] = [];
 
-  constructor(
-    private inventoryService: InventoryService,
-    private util: UtilService
-  ) {
+  constructor(private ledgerService: LedgerService, private util: UtilService) {
     this.year = new Date().getFullYear();
     this.date = this.util.convertJsDateToNgbDate(new Date());
   }
 
   ngOnInit(): void {
     this.setDateRanges();
-    this.onModechange(this.mode);
   }
 
   setDateRanges() {
@@ -56,21 +50,33 @@ export class InventoryReportComponent implements OnInit {
   public selectedDate(value: any) {
     this.daterange.startDate = value.start._d as Date;
     this.daterange.endDate = value.end._d as Date;
-    this.getInventoryByDateRange(
-      this.daterange.startDate,
-      this.daterange.endDate
-    );
+    this.getLedgerByDateRange(this.daterange.startDate, this.daterange.endDate);
   }
 
-  async getInventoryByDateRange(startDate: Date, endDate: Date) {
-    this.inventoryService.inventorys$.pipe(take(2)).subscribe((data) => {
-      this.inventoryList = data.filter(
+  async getLedgerByDateRange(startDate: Date, endDate: Date) {
+    this.ledgerService.ledgers$.pipe(take(2)).subscribe((data) => {
+      this.ledgerList = data.filter(
         (f) =>
-          f.date['seconds'] >= startDate.getTime() / 1000 &&
-          f.date['seconds'] <= endDate.getTime() / 1000
+          f.createdAt['seconds'] >= startDate.getTime() / 1000 &&
+          f.createdAt['seconds'] <= endDate.getTime() / 1000
       );
-      this.inventoryList.sort(this.util.dynamicSortObject('sr_no'));
+      this.ledgerList.sort(this.util.dynamicSortObject('createdAt'));
     });
+  }
+
+  onModechange(event) {
+    this.mode = event;
+    switch (event) {
+      case 'day':
+        this.adjustDay(0);
+        break;
+      case 'range':
+        this.getLedgerByDateRange(
+          this.daterange.startDate,
+          this.daterange.endDate
+        );
+        break;
+    }
   }
 
   adjustDay(day) {
@@ -84,22 +90,7 @@ export class InventoryReportComponent implements OnInit {
     start.setHours(0, 0, 0, 0);
     const end = new Date(this.date.year, this.date.month - 1, this.date.day);
     end.setHours(23, 59, 59, 999);
-    this.getInventoryByDateRange(start, end);
-  }  
-
-  onModechange(event) {
-    this.mode = event;
-    switch (event) {
-      case 'day':
-        this.adjustDay(0);
-        break;
-      case 'range':
-        this.getInventoryByDateRange(
-          this.daterange.startDate,
-          this.daterange.endDate
-        );
-        break;
-    }
+    this.getLedgerByDateRange(start, end);
   }
 
   getDateString():string{

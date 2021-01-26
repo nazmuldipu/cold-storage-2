@@ -28,7 +28,7 @@ export class InventoryComponent implements OnInit {
   async getInventoryList() {
     this.inventoryService.inventorys$.subscribe((data) => {
       this.inventoryList = data.filter(f => f.year == this.year);
-      this.inventoryList.sort(this.util.dynamicSortObject('sr_no'));
+      this.inventoryList.sort(this.util.dynamicSortObject('date'));
     });
   }
 

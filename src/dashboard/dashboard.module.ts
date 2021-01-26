@@ -50,6 +50,7 @@ import { NumberToWordBdPipe } from 'src/shared/pipe/number-to-word-bd.pipe';
 import { InventoryTableComponent } from './components/inventory-table/inventory-table.component';
 import { InventoryListComponent } from './containers/inventory-list/inventory-list.component';
 import { Daterangepicker } from 'ng2-daterangepicker';
+import { LedgerReportComponent } from './containers/ledger-report/ledger-report.component';
 
 export const ROUTES: Routes = [
   {
@@ -71,6 +72,7 @@ export const ROUTES: Routes = [
       { path: 'ledger', component: LedgerComponent },
       { path: 'ledger-add', component: LedgerAddComponent },
       { path: 'ledger-add/:id', component: LedgerAddComponent },
+      { path: 'ledger-report', component: LedgerReportComponent },
       { path: 'contract/:id', component: ContractComponent },
       { path: 'delivery', component: DeliveryComponent },
       { path: 'delivery-print/:id', component: DeliveryPrintComponent },
@@ -133,7 +135,8 @@ export const ROUTES: Routes = [
     PallotListComponent,
     LedgerListComponent,
     DeliveryListComponent,
-    InventoryTableComponent
+    InventoryTableComponent,
+    LedgerReportComponent
   ],
   imports: [SharedModule, Daterangepicker, RouterModule.forChild(ROUTES)],
 })

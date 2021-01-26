@@ -1,5 +1,5 @@
 <!-- {{ledgerPage|json}} -->
-<form>
+<form class="d-print-none">
   <div class="row">
     <div class="col"></div>
     <div class="col-auto">
@@ -16,8 +16,11 @@
 <table class="table table-striped border table-sm">
   <thead>
     <tr>
-      <td colspan="8" class="form-head">
+      <td colspan="7" class="form-head">
         Ledger List
+      </td>
+      <td class="form-head d-print-none">
+        
       </td>
     </tr>
     <tr>
@@ -28,7 +31,7 @@
       <th scope="col">Product</th>
       <th scope="col">Empty bag</th>
       <th scope="col">Total</th>
-      <th scope="col">Action</th>
+      <th scope="col" class="d-print-none">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -60,12 +63,12 @@
         </div>
       </td>
       <td>{{ ledger.total_amount}}</td>
-      <td><a routerLink="/dashboard/contract/{{ledger._id}}">Print</a></td>
+      <td class="d-print-none"><a routerLink="/dashboard/contract/{{ledger._id}}">Print</a></td>
 
     </tr>
   </tbody>
 </table>
-<div class="d-flex justify-content-between p-2">
+<div class="d-flex justify-content-between p-2 d-print-none">
   <ngb-pagination [collectionSize]="ledgerList.length" [(page)]="page" [pageSize]="pageSize" size="sm"
     (pageChange)="refreshLedger()">
   </ngb-pagination>

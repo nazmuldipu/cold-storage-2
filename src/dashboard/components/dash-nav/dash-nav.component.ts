@@ -98,6 +98,22 @@ export class DashNavComponent implements OnInit {
       subnav: [],
     },
     {
+      name: 'Report',
+      icon: 'fa-cubes',
+      subnav: [
+        {
+          name: 'Ledger report',
+          icon: 'fa-plus',
+          link: '/dashboard/ledger-report',
+        },
+        {
+          name: 'Loan report',
+          icon: 'fa-plus',
+          link: '/dashboard/loan-report',
+        }
+      ],
+    },
+    {
       name: 'General Setting',
       icon: 'fa-cog',
       subnav: [
