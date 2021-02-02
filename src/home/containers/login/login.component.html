@@ -8,7 +8,7 @@
         <img class="company-logo" src="assets/images/logo.png" alt="logo" />
       </a>
 
-      <div class="text-center my-4" style="font-size: 24px;">ACCOUNT LOGIN</div>
+      <div class="text-center mt-4" style="font-size: 24px;">ACCOUNT LOGIN</div>
 
       <div class="alert alert-danger" role="alert" *ngIf="errorMessage.length > 0">
         {{errorMessage}}
@@ -23,9 +23,9 @@
           <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Password"
             formControlName="password">
           <div class="input-group-append mt-3">
-            <button class="btn btn-outline-secondary" type="button" (click)="showPassword = !showPassword">
-              <i class="fa fa-eye fa-2x" [ngClass]="showPassword?'fa-eye-slash':'fa-eye'"></i>
-            </button>
+            <a class="btn btn-outline-secondary" type="button" (click)="showPassword = !showPassword">
+              <i class="fa fa-eye" [ngClass]="showPassword?'fa-eye-slash':'fa-eye'"></i>
+            </a>
           </div>
         </div>
         <small class="text-danger" *ngIf="form.controls.password.errors && form.controls.password.touched">
@@ -36,7 +36,7 @@
             Minimum passwor length required 6
           </div>
         </small>
-        <button type="submit" class="btn btn-block btn-success py-2 mt-3">SIGN IN</button>
+        <button type="submit" class="btn btn-sm btn-block btn-success py-2 mt-3">SIGN IN</button>
       </form>
       <div *ngIf="!loading" class="text-center my-3">Forgot your password ?
         <a routerLink="/">Reset</a>

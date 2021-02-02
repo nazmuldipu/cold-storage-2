@@ -81,7 +81,7 @@ export class DashNavComponent implements OnInit {
         {
           name: 'Inventory report',
           icon: 'fa-plus',
-          link: '/dashboard/inventory-report',
+          link: '/dashboard/report/inventory-report',
         }
       ],
     },
@@ -104,12 +104,12 @@ export class DashNavComponent implements OnInit {
         {
           name: 'Ledger report',
           icon: 'fa-plus',
-          link: '/dashboard/ledger-report',
+          link: '/dashboard/report/ledger-report',
         },
         {
           name: 'Loan report',
           icon: 'fa-plus',
-          link: '/dashboard/loan-report',
+          link: '/dashboard/report/loan-report',
         }
       ],
     },

@@ -1,6 +1,6 @@
 <div class="page-head d-print-none">
     <div class="d-flex justify-content-between">
-        <div class="">Ledger Report</div>
+        <div class="">Loan Report</div>
         <div class="btn-group" role="group" aria-label="Basic example">
             <a type="button" class="btn btn-sm" [ngClass]="mode=='day'?'btn-primary':'btn-light'"
                 (click)="onModechange('day')">Day</a>
@@ -8,7 +8,6 @@
                 (click)="onModechange('range')">Range</a>
         </div>
         <div class="">
-
         </div>
     </div>
 </div>
@@ -50,13 +49,6 @@
             <button class="btn btn-sm btn-primary" (click)="onPrint()">
                 <i class="fa fa-print"></i> Print
             </button>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <h4 class="text-center mt-3">Ledger Report for {{mode == 'day'?'Date: ' +getDateString() : 'Date range: '
-                + getDateRangeString()}}</h4>
-            <ledger-list [ledgerList]="ledgerList"></ledger-list>
         </div>
     </div>
 </div>

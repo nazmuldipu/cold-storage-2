@@ -16,7 +16,7 @@
 <table class="table table-striped border table-sm">
     <thead>
         <tr>
-            <td colspan="6" class="form-head">
+            <td colspan="7" class="form-head">
                 Inventory List
             </td>
             <td class="form-head d-print-none"></td>
@@ -26,6 +26,7 @@
             <th scope="col">Date</th>
             <th scope="col">SR.NO.</th>
             <th scope="col">Party</th>
+            <th scope="col">Phone</th>
             <th scope="col">Agent</th>
             <th scope="col">Quantity</th>
             <th scope="col"  class="d-print-none">Action</th>
@@ -36,9 +37,9 @@
             <th scope="row">{{ i+1 }}</th>
             <td> {{ inventory.date.toMillis() | date:'dd/MM/yyyy' }} </td>
             <td> {{ inventory.sr_no }} </td>
-            <td> {{ inventory?.customer?.name }} </td>
+            <td> {{ inventory?.customer?.name }} </td><td>{{ inventory?.customer?.phone }}</td>
             <td> {{ inventory?.agent?.name }} </td>
-            <td> {{ inventory?.quantity }} </td>
+            <td class="text-right"> {{ inventory?.quantity | numberToBangla }} </td>
             <td class="d-print-none">
                 <a class="edit_link" routerLink="/dashboard/inventory-print/{{inventory._id}}" target="_blank">Print</a>
             </td>
@@ -46,8 +47,8 @@
     </tbody>
     <tfoot>
         <tr>
-            <th colspan="5" class="text-right">Total</th>
-            <th>{{total}}</th>
+            <th colspan="6" class="text-right">Total</th>
+            <th class="text-right">{{total | numberToBangla }}</th>
             <td class="d-print-none"></td>
         </tr>
     </tfoot>
