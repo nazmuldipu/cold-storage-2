@@ -1,0 +1,44 @@
+<table class="table table-striped border table-sm">
+    <thead>
+        <tr>
+            <td colspan="7" class="form-head">
+                Loan List
+            </td>
+            <td class="form-head d-print-none"></td>
+        </tr>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date</th>
+            <th scope="col">SR.NO.</th>
+            <th scope="col">Party</th>
+            <th scope="col">Agent</th>
+            <th scope="col" colspan="3" class="text-center">Product</th>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <th class="text-right">Quantity</th>
+            <th class="text-right">Rate</th>
+            <th class="text-right">Payable</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let prod of productList;let i = index;">
+            <th scope="row">{{ i+1 }}</th>
+            <td> {{ prod.createdAt.toMillis() | date:'dd/MM/yyyy' }} </td>
+            <td> {{ prod.sr_no }} </td>
+            <td> {{ prod?.customer?.name }}[{{ prod?.customer?.phone }}]</td>
+            <td> {{ prod?.agent?.name }} </td>
+            <td class="text-right"> {{ prod?.quantity | numberToBangla }} </td>
+            <td class="text-right"> {{ prod?.rate | numberToBangla }} </td>
+            <td class="text-right"> {{ prod?.service_amount | currencyBd }} </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="5" class="text-right">Total</th>
+            <th class="text-right">{{total.quantity | currencyBd }}</th>
+            <th></th>
+            <th class="text-right">{{total.service_amount | currencyBd }}</th>
+        </tr>
+    </tfoot>
+</table>

@@ -109,25 +109,51 @@ export class TestComponent implements OnInit {
     '99': { value: 'নিরানব্বই' },
   };
 
-  num_to_bd = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯']
+  num_to_bd = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
 
   hundred = ' শত ';
   thousand = ' হাজার ';
   lakh = ' লক্ষ ';
   crore = ' কোটি ';
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     // for (let i = -20; i < 20; i++) {
     //   // console.log(this.engToBnWord(i) + ', ');
     //   console.log(this.engToBd(i) + ', ');
     // }
-    console.log(this.engToBdF(-56.84));
+    var numArray = this.numberToArray(123456789);
+    console.log(numArray);
+    console.log(this.arrayToTaka(numArray));
+  }
+  arrayToTaka(arr: string[]): string {
+    arr = arr.reverse();
+    let res = '';
+    for (let i = 0; i < arr.length; i++) {
+      if (i == 3 || (i > 3 && i%2 == 1)) {
+        res = ',' + res;
+      }
+      res = arr[i] + res;
+    }
+    return res;
+  }
+  numberToArray(n: number): string[] {
+    let res: string[] = [];
+    let i = n;
+    while (i > 0) {
+      res.push((i % 10) + '');
+      i = Math.floor(i / 10);
+    }
+    res = res.reverse();
+    for (i = 0; i < res.length; i++) {
+      res[i] = this.num_to_bd[res[i]];
+    }
+    return res;
   }
 
   engToBdF(n: number): string {
-    let v = (n + '').split(".");
+    let v = (n + '').split('.');
     if (v.length == 1) {
       return this.engToBd(n);
     } else if (v.length == 2) {
@@ -152,7 +178,7 @@ export class TestComponent implements OnInit {
 
   engToBnWord(number) {
     if (number >= 1000000000) {
-      return "সীমার বাইরে";
+      return 'সীমার বাইরে';
     } else if (number >= 10000000) {
       return (
         this.engToBnWord(Math.floor(number / 10000000)) +

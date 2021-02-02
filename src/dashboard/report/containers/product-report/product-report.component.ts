@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { take } from 'rxjs/operators';
 import { LedgerService } from 'src/service/ledger.service';
 import { UtilService } from 'src/service/util.service';
-import { Loan } from 'src/shared/model/loan.model';
+import { Product } from 'src/shared/model/product.model';
 
 @Component({
-  selector: 'app-loan-report',
-  templateUrl: './loan-report.component.html',
-  styleUrls: ['./loan-report.component.scss'],
+  selector: 'app-product-report',
+  templateUrl: './product-report.component.html',
+  styleUrls: ['./product-report.component.scss'],
 })
-export class LoanReportComponent implements OnInit {
+export class ProductReportComponent implements OnInit {
   year: number;
   mode: string = 'day';
-  date: NgbDateStruct;
+  date: NgbDate;
   public options: any;
   public daterange: any = {};
-  loanList: Loan[] = [];
+  productList: Product[] = [];
 
   constructor(private ledgerService: LedgerService, private util: UtilService) {
     this.year = new Date().getFullYear();
@@ -25,7 +25,7 @@ export class LoanReportComponent implements OnInit {
   ngOnInit(): void {
     this.date = this.util.convertJsDateToNgbDate(new Date());
     this.setDateRanges();
-    this.onModechange('day');
+    this.onModechange('range');
   }
 
   setDateRanges() {
@@ -51,23 +51,10 @@ export class LoanReportComponent implements OnInit {
   public selectedDate(value: any) {
     this.daterange.startDate = value.start._d as Date;
     this.daterange.endDate = value.end._d as Date;
-    this.getLoanByDateRange(this.daterange.startDate, this.daterange.endDate);
-  }
-
-  async getLoanByDateRange(startDate: Date, endDate: Date) {
-    this.loanList = [];
-    this.ledgerService.ledgers$.pipe(take(2)).subscribe((data) => {
-      const ledgerList = data.filter(
-        (f) =>
-          f.createdAt['seconds'] >= startDate.getTime() / 1000 &&
-          f.createdAt['seconds'] <= endDate.getTime() / 1000
-      );
-      ledgerList.forEach((ll) => {
-        this.loanList.push(new Loan(ll));
-      });
-      console.log(startDate, endDate, ledgerList.length);
-      this.loanList.sort(this.util.dynamicSortObject('createdAt'));
-    });
+    this.getProductByDateRange(
+      this.daterange.startDate,
+      this.daterange.endDate
+    );
   }
 
   onModechange(event) {
@@ -77,7 +64,7 @@ export class LoanReportComponent implements OnInit {
         this.adjustDay(0);
         break;
       case 'range':
-        this.getLoanByDateRange(
+        this.getProductByDateRange(
           this.daterange.startDate,
           this.daterange.endDate
         );
@@ -96,7 +83,23 @@ export class LoanReportComponent implements OnInit {
     start.setHours(0, 0, 0, 0);
     const end = new Date(this.date.year, this.date.month - 1, this.date.day);
     end.setHours(23, 59, 59, 999);
-    this.getLoanByDateRange(start, end);
+    this.getProductByDateRange(start, end);
+  }
+
+  async getProductByDateRange(startDate: Date, endDate: Date) {
+    this.productList = [];
+    this.ledgerService.ledgers$.pipe(take(2)).subscribe((data) => {
+      const ledgerList = data.filter(
+        (f) =>
+          f.createdAt['seconds'] >= startDate.getTime() / 1000 &&
+          f.createdAt['seconds'] <= endDate.getTime() / 1000
+      );
+      ledgerList.forEach((ll) => {
+        this.productList.push(new Product(ll));
+      });
+      console.log(startDate, endDate, ledgerList.length);
+      this.productList.sort(this.util.dynamicSortObject('createdAt'));
+    });
   }
 
   getDateString(): string {

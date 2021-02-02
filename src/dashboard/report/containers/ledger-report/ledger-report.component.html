@@ -15,28 +15,28 @@
     <div class="row d-print-none">
         <ng-container *ngIf="mode=='day'">
             <div class="col-auto">
-                <button class="btn btn-light" (click)="adjustDay(-1)"><i class="fa fa-chevron-left"></i></button>
+                <button class="btn btn-sm btn-light" (click)="adjustDay(-1)"><i class="fa fa-chevron-left"></i></button>
             </div>
             <div class="col-auto p-0">
-                <div class="input-group">
+                <div class="input-group input-group-sm ">
                     <div class="input-group-prepend">
                         <div class="input-group-text">Date</div>
                     </div>
                     <input class="form-control" placeholder="yyyy-mm-dd" name="dp" (click)="rDate.toggle()"
                         [(ngModel)]="date" (dateSelect)="adjustDay(0)" ngbDatepicker #rDate="ngbDatepicker">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" (click)="rDate.toggle()" type="button">
+                        <a class="btn btn-outline-secondary" (click)="rDate.toggle()" type="button">
                             <i class="fa fa-calendar"></i>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="col-auto">
-                <button class="btn btn-light" (click)="adjustDay(1)"><i class="fa fa-chevron-right"></i></button>
+                <button class="btn btn-sm btn-light" (click)="adjustDay(1)"><i class="fa fa-chevron-right"></i></button>
             </div>
         </ng-container>
         <div class="col-auto" *ngIf="mode=='range'">
-            <div class="input-group mb-2">
+            <div class="input-group input-group-sm mb-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">Date</div>
                 </div>

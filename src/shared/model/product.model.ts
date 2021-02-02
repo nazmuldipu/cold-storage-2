@@ -1,28 +1,29 @@
 import { Ledger } from './ledger.model';
 
-export class Loan {
+export class Product {
   constructor(ledger: Ledger) {
     this.createdAt = ledger.createdAt;
+    this.sr_no = ledger.sr_no;
     this.year = ledger.year;
     this.customer = ledger.customer;
     this.agent = ledger.agent;
-    this.sr_no = ledger.sr_no;
-    this.amount = ledger.loan_amount;
-    this.rate = ledger.loan_rate;
-    this.profit = ledger.loan_profit;
-    this.payable = ledger.loan_payable;
+    this.quantity = ledger.quantity;
+    this.rate = ledger.rate;
+    this.service_amount = ledger.service_amount;
   }
-  
+
   _id: string;
   createdAt: Date;
+  sr_no: string;
   year: number;
   customer: User;
   agent: User;
-  sr_no: string;
-  amount: number;
+
+  quantity: number;
   rate: number;
-  profit: number;
-  payable: number;
+  service_amount: number;
+
+  version: number;
 }
 
 interface User {

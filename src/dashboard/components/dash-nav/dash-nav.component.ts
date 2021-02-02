@@ -110,6 +110,21 @@ export class DashNavComponent implements OnInit {
           name: 'Loan report',
           icon: 'fa-plus',
           link: '/dashboard/report/loan-report',
+        },
+        {
+          name: 'Product report',
+          icon: 'fa-plus',
+          link: '/dashboard/report/product-report',
+        },
+        {
+          name: 'Delivery report by Date',
+          icon: 'fa-plus',
+          link: '/dashboard/report/delivery-report-date',
+        },
+        {
+          name: 'Delivery report by SR',
+          icon: 'fa-plus',
+          link: '/dashboard/report/delivery-report-sr',
         }
       ],
     },

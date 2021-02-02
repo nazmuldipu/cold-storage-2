@@ -9,6 +9,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { NumberToBanglaPipe } from 'src/shared/pipe/number-to-bangla.pipe';
 import { NumberToWordBdPipe } from 'src/shared/pipe/number-to-word-bd.pipe';
 import { NumberToWordsPipe } from 'src/shared/pipe/number-to-words.pipe';
+import { CurrencyBdPipe } from './pipe/currency-bd.pipe';
 
 @NgModule({
   declarations: [
@@ -18,10 +19,12 @@ import { NumberToWordsPipe } from 'src/shared/pipe/number-to-words.pipe';
     NumberToBanglaPipe,
     NumberToWordBdPipe,
     NumberToWordsPipe,
+    CurrencyBdPipe,
   ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbModule],
   exports: [
     CommonModule,
+    CurrencyBdPipe,
     FormsModule,
     InventoryTableComponent,
     LedgerListComponent,
