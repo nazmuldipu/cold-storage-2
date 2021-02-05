@@ -13,6 +13,7 @@ import { ProductReportComponent } from './containers/product-report/product-repo
 import { DeliveryReportDateComponent } from './containers/delivery-report-date/delivery-report-date.component';
 import { DeliveryReportSrNoComponent } from './containers/delivery-report-sr-no/delivery-report-sr-no.component';
 import { ProductTableComponent } from './components/product-table/product-table.component';
+import { DeliveryTableComponent } from './components/delivery-table/delivery-table.component';
 
 export const ROUTES: Routes = [
   { path: 'inventory-report', component: InventoryReportComponent },
@@ -35,6 +36,7 @@ export const ROUTES: Routes = [
     DeliveryReportDateComponent,
     DeliveryReportSrNoComponent,
     ProductTableComponent,
+    DeliveryTableComponent,
   ],
   imports: [SharedModule, Daterangepicker, RouterModule.forChild(ROUTES)],
 })

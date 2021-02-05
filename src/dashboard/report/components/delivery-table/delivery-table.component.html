@@ -1,0 +1,48 @@
+<table class="table table-striped border table-sm">
+    <thead>
+        <tr>
+            <td colspan="9" class="form-head">
+                Delivery List
+            </td>
+            <td class="form-head d-print-none"></td>
+        </tr>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date</th>
+            <th scope="col">SR_No</th>
+            <th scope="col">Party</th>
+            <th scope="col">Phone</th>
+            <th scope="col" class="text-right">Quantity</th>
+            <th scope="col" class="text-right">Rent</th>
+            <th scope="col" class="text-right">Empty bag</th>
+            <th scope="col" class="text-right">Loan</th>
+            <th scope="col" class="text-right">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let delivery of deliveryList;let i = index;">
+            <th scope="row">{{ i+1 }}</th>
+            <td> {{ delivery.createdAt.toMillis() | date:'dd/MM/yyyy' }} </td>
+            <td>{{ delivery.sr_no}}</td>
+            <td> {{ delivery.customer.name }} </td>
+            <td> {{ delivery.customer.phone }} </td>
+            <td class="text-right">{{ delivery.quantity | numberToBangla}}</td>
+            <td class="text-right">{{ delivery.service_rent | currencyBd}}</td>
+            <td class="text-right">{{ delivery.emptyBag_amount | currencyBd}}</td>
+            <td class="text-right">{{ delivery.loan_payable | currencyBd}}</td>
+            <td class="text-right">{{ delivery.total | currencyBd}}</td>
+            <!-- <td><a class="edit_link" routerLink="/dashboard/delivery-print/{{delivery._id}}">Print</a></td> -->
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="5" class="text-right">Total</th>
+            <th class="text-right">{{total.quantity | numberToBangla }}</th>
+            <th class="text-right">{{total.service_rent | currencyBd }}</th>
+            <th class="text-right">{{total.emptyBag_amount | currencyBd }}</th>
+            <th class="text-right">{{total.loan_payable | currencyBd }}</th>
+            <th class="text-right">{{total.total | currencyBd }}</th>
+
+        </tr>
+    </tfoot>
+</table>

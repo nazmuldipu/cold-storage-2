@@ -47,13 +47,13 @@
             <tr class="text-center col-amount">
               <td>{{ledger?.quantity| numberToBangla}}</td>
               <td>{{ledger?.rate| numberToBangla}}</td>
-              <td>{{ledger?.service_amount| numberToBangla}}</td>
+              <td>{{ledger?.service_amount| currencyBd}}</td>
               <td>{{ledger?.emptyBag_quantity| numberToBangla}}</td>
               <td>{{ledger?.emptyBag_rate| numberToBangla}}</td>
-              <td>{{ledger?.emptyBag_amount| numberToBangla}}</td>
-              <td>{{ledger?.loan_amount| numberToBangla}}</td>
-              <td>{{ledger?.loan_profit| numberToBangla}}</td>
-              <td><strong> {{ledger?.total_amount| numberToBangla}}</strong></td>
+              <td>{{ledger?.emptyBag_amount| currencyBd}}</td>
+              <td>{{ledger?.loan_amount| currencyBd}}</td>
+              <td>{{ledger?.loan_profit| currencyBd}}</td>
+              <td><strong> {{ledger?.total_amount| currencyBd}}</strong></td>
               <td></td>
             </tr>
             <tr>

@@ -26,6 +26,18 @@ export class DeliveryService {
     });
   }
 
+  _getBySrAndYear(sr_no: string, year: number): Delivery[]{
+    var resp:Delivery[] = [];
+    this.deliverys$.subscribe(data =>{
+      data.forEach(del =>{
+        if(del.sr_no == sr_no && del.year == del.year){
+          resp.push(del);
+        }
+      })
+    })
+    return resp;
+  }
+
   getAndStoreAll() {
     return this.afs
       .collection(this.serviceUrl, (ref) => ref.orderBy('year'))

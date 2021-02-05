@@ -10,6 +10,7 @@ import { NumberToBanglaPipe } from 'src/shared/pipe/number-to-bangla.pipe';
 import { NumberToWordBdPipe } from 'src/shared/pipe/number-to-word-bd.pipe';
 import { NumberToWordsPipe } from 'src/shared/pipe/number-to-words.pipe';
 import { CurrencyBdPipe } from './pipe/currency-bd.pipe';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,13 @@ import { CurrencyBdPipe } from './pipe/currency-bd.pipe';
     NumberToWordsPipe,
     CurrencyBdPipe,
   ],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    ReactiveFormsModule,
+    NgbModule,
+  ],
   exports: [
     CommonModule,
     CurrencyBdPipe,
