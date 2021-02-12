@@ -13,7 +13,7 @@
           [inventory]="inventory" [vouchar_no]="inventoryList.length"></inventory-form>
       </div>
     </div>
-    <div class="col-md-8 mt-2">
+    <div class="col-md-8 mt-2" *ngIf="inventoryList.length > 0">
       <inventory-table [inventoryList]="inventoryList"></inventory-table>
     </div>
   </div>

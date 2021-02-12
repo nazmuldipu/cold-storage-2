@@ -8,10 +8,9 @@
 $print-page-size: auto !important;
 
 @font-face {
-  font-family: 'SolaimanLipi';
-  src: url('assets/fonts/SolaimanLipi.ttf');
+  font-family: "SolaimanLipi";
+  src: url("assets/fonts/SolaimanLipi.ttf");
 }
-
 
 .bg-primary-dark {
   background-color: $primary-color-dark !important;
@@ -76,10 +75,13 @@ td {
   padding: 0.2rem 0.75rem;
 }
 
-
 .custom-select {
   height: calc(1.5em + 6px);
   padding: 4px 16px 4px 4px;
   font-size: 14px;
   line-height: 1;
+}
+
+.clickable {
+  cursor: pointer;
 }

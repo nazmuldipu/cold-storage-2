@@ -11,6 +11,10 @@ import { NumberToWordBdPipe } from 'src/shared/pipe/number-to-word-bd.pipe';
 import { NumberToWordsPipe } from 'src/shared/pipe/number-to-words.pipe';
 import { CurrencyBdPipe } from './pipe/currency-bd.pipe';
 import { RouterModule } from '@angular/router';
+import { TableComponent } from './table/table/table.component';
+import { TableHeaderComponent } from './table/table-header/table-header.component';
+import { TableBodyComponent } from './table/table-body/table-body.component';
+import { TableFooterComponent } from './table/table-footer/table-footer.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +25,10 @@ import { RouterModule } from '@angular/router';
     NumberToWordBdPipe,
     NumberToWordsPipe,
     CurrencyBdPipe,
+    TableComponent,
+    TableHeaderComponent,
+    TableBodyComponent,
+    TableFooterComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +49,7 @@ import { RouterModule } from '@angular/router';
     NumberToWordBdPipe,
     NumberToWordsPipe,
     ReactiveFormsModule,
+    TableComponent,
   ],
 })
 export class SharedModule {}

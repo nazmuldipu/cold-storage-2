@@ -16,7 +16,7 @@ export class AgentComponent implements OnInit {
 
   errorMessage = '';
 
-  constructor(private agentService: AgentService, private util: UtilService) { }
+  constructor(private agentService: AgentService, private util: UtilService) {}
 
   ngOnInit(): void {
     this.getAgentList();
@@ -81,6 +81,7 @@ export class AgentComponent implements OnInit {
 
   onEdit(id) {
     this.agent = this.agentList.find((cp) => cp._id === id);
+    console.log(this.agent);
   }
 
   clear() {

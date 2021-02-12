@@ -1,63 +1,42 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Agent } from 'src/shared/model/agent.model';
-import { map } from 'rxjs/internal/operators/map';
 
 @Component({
   selector: 'agent-list',
   templateUrl: './agent-list.component.html',
-  styleUrls: ['./agent-list.component.scss']
+  styleUrls: ['./agent-list.component.scss'],
 })
-export class AgentListComponent implements OnChanges {
+export class AgentListComponent {
   @Input() agentList: Agent[];
   @Input() short: boolean;
 
   @Output() edit = new EventEmitter<string>();
 
-  searching = false;
-  page = 1;
-  pageSize = 8;
-  agentPage: Agent[] = [];
-  agentSearch: Agent[] = [];
+  tableName = 'Agent Table';
+  columns = [
+    { path: '#', label: '#', className: 'font-weight-bold' },
+    {
+      path: 'name',
+      label: 'Name',
+      searchable: true,
+    },
+    { path: 'father', label: 'Father' },
+    { path: 'phone', label: 'Phone', searchable: true },
+    {
+      key: '_id',
+      content: (agent) => {
+        return `<a class="edit_link" onclick='Window.agentList.onEdit("${agent._id}")'>Select</a>`;
+      },
+    },
+  ];
 
-  constructor() { }
+  sortColumn = { path: 'name', order: 'asc' };
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.agentList && this.agentList != null && this.agentList.length > 0) {
-      this.refreshAgent();
-    }
+  constructor() {
+    Window['agentList'] = this;
   }
 
   onEdit(id) {
     this.edit.emit(id);
-  }
-
-  refreshAgent() {
-    this.agentPage = this.agentList
-      .map((chamber, i) => ({ id: i + 1, ...chamber }))
-      .slice(
-        (this.page - 1) * this.pageSize,
-        (this.page - 1) * this.pageSize + this.pageSize
-      );
-  }
-
-  onSearch(event) {
-    if (event.length > 2) {
-      this.searching = true;
-      console.log(event, event.length);
-      this.agentPage = this.search(event);
-    } else {
-      this.searching = false;
-      this.refreshAgent();
-    }
-  }
-
-  search(text: string): Agent[] {
-    return this.agentList.filter((loading) => {
-      const term = text.toLowerCase();
-      return (
-        loading.name.toLowerCase().includes(term) ||
-        loading.phone.includes(term)
-      );
-    });
   }
 }

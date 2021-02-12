@@ -16,7 +16,10 @@ export class InventoryComponent implements OnInit {
   inventory: Inventory;
   errorMessage = '';
 
-  constructor(private inventoryService: InventoryService, private util: UtilService) {
+  constructor(
+    private inventoryService: InventoryService,
+    private util: UtilService
+  ) {
     let dd = new Date();
     this.year = dd.getFullYear();
   }
@@ -27,19 +30,28 @@ export class InventoryComponent implements OnInit {
 
   async getInventoryList() {
     this.inventoryService.inventorys$.subscribe((data) => {
-      this.inventoryList = data.filter(f => f.year == this.year);
-      this.inventoryList.sort(this.util.dynamicSortObject('date'));
+      console.log('Changes', data.length);
+      if (this.inventoryList.length != data.length) {
+        const value = data
+          .filter((f) => f.year == this.year)
+          .sort(this.util.dynamicSortObject('date'));
+        this.inventoryList = value;
+      }
     });
   }
 
   async onCreate(event: Inventory) {
-    const resp = this.inventoryList.find(f => f.year == event.year && f.sr_no == event.sr_no);
+    const resp = this.inventoryList.find(
+      (f) => f.year == event.year && f.sr_no == event.sr_no
+    );
     console.log(resp);
     if (resp) {
-      this.errorMessage = "এই এস আর নম্বর আগেথেকেই আছে।";
+      this.errorMessage = 'এই এস আর নম্বর আগেথেকেই আছে।';
     } else {
       this.sendingData = true;
-      Object.keys(event).forEach(key => event[key] === undefined ? delete event[key] : {});
+      Object.keys(event).forEach((key) =>
+        event[key] === undefined ? delete event[key] : {}
+      );
       const value = {
         ...event,
         slug: this.util.string_to_slug(event.name),

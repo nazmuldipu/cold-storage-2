@@ -1,0 +1,10 @@
+<tr *ngFor="let item of data;let i = index;" key={item._id}>
+  <td *ngFor="let column of columns" [ngClass]="column.className?column.className:''">
+    <ng-container *ngIf="!column?.content; else RenderHTML">
+      {{renderCell(item, column, i)}}
+    </ng-container>
+    <ng-template #RenderHTML>
+      <span [innerHtml]="sanitize(column.content(item))"></span>
+    </ng-template>
+  </td>
+</tr>

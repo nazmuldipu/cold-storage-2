@@ -19,7 +19,7 @@ export class CustomerComponent implements OnInit {
   constructor(
     private customerService: CustomerService,
     private util: UtilService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getCustomerList();
@@ -31,8 +31,6 @@ export class CustomerComponent implements OnInit {
       this.customerList.sort(this.util.dynamicSortObject('priority'));
     });
   }
-
-
 
   async onCreate(event: Agent) {
     this.sendingData = true;

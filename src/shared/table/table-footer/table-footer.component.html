@@ -1,0 +1,10 @@
+<tr>
+  <th *ngFor="let column of columns" class="clickable" [ngClass]="column.className?column.className:''">
+    {{getTotal(column.path)}}
+  </th>
+</tr>
+<!-- <tr>
+  <th>
+    {{total | json}}
+  </th>
+</tr> -->

@@ -1,5 +1,17 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Agent } from 'src/shared/model/agent.model';
 
 @Component({
@@ -24,6 +36,7 @@ export class AgentFormComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
     if (changes.agent && this.agent != null) {
       this.form.reset();
       this.exists = true;

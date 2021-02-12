@@ -1,12 +1,23 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Chamber } from 'src/shared/model/chamber.model';
 import { Floor } from 'src/shared/model/floor.model';
 import { Line } from 'src/shared/model/line.model';
 
 @Component({
   selector: 'line-form',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './line-form.component.html',
   styleUrls: ['./line-form.component.scss'],
 })

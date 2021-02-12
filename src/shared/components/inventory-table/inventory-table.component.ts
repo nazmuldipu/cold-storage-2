@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Inventory } from 'src/shared/model/inventory.model';
 
 @Component({
@@ -6,66 +6,42 @@ import { Inventory } from 'src/shared/model/inventory.model';
   templateUrl: './inventory-table.component.html',
   styleUrls: ['./inventory-table.component.scss'],
 })
-export class InventoryTableComponent implements OnChanges {
+export class InventoryTableComponent {
   @Input() inventoryList: Inventory[];
   @Input() list: boolean;
 
-  page = 1;
-  pageSize = 8;
-  searching = false;
-  inventoryPage: Inventory[] = [];
-  total = 0;
+  tableName = 'Inventory Table';
+  columns = [
+    { path: '#', label: '#', className: 'font-weight-bold' },
+    {
+      path: 'date',
+      label: 'Date',
+      pipe: 'date',
+      pipeArgs: 'dd/MM/yyyy',
+      totalLabel: true,
+    },
+    { path: 'sr_no', label: 'SR No.', searchable: true },
+    { path: 'customer.name', label: 'Customer' },
+    { path: 'customer.phone', label: 'Phone', searchable: true },
+    { path: 'agent.name', label: 'Agent' },
+    {
+      path: 'quantity',
+      label: 'Quantity',
+      pipe: 'currencyBd',
+      className: 'text-right',
+      total: true,
+    },
+    {
+      key: '_id',
+      content: (inventory) => {
+        return `<a class="edit_link" href="/dashboard/inventory-print/${inventory._id}" target="_blank">Print</a>`;
+      },
+    },
+  ];
+
+  sortColumn = { path: 'date', order: 'desc' };
+
+  // total = 0;
 
   constructor() {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.inventoryList && this.inventoryList != null) {
-      this.refreshInventory();
-      this.calculateTotalQuantity();
-    }
-    if (changes.list) {
-      this.refreshInventory();
-    }
-  }
-
-  refreshInventory() {
-    if (this.list) {
-      this.inventoryPage = this.inventoryList;
-    } else {
-      this.inventoryPage = this.inventoryList
-        .map((chamber, i) => ({ id: i + 1, ...chamber }))
-        .slice(
-          (this.page - 1) * this.pageSize,
-          (this.page - 1) * this.pageSize + this.pageSize
-        );
-    }
-  }
-
-  onSearch(event) {
-    if (event.length >= 2) {
-      this.searching = true;
-      this.inventoryPage = this.search(event);
-    } else {
-      this.searching = false;
-      this.refreshInventory();
-    }
-  }
-
-  search(text: string): Inventory[] {
-    return this.inventoryList.filter((loading) => {
-      const term = text.toLowerCase();
-      return (
-        loading.sr_no.toLowerCase().includes(term) ||
-        loading.customer.phone.includes(term)
-      );
-    });
-  }
-
-  calculateTotalQuantity() {
-    let t = 0;
-    this.inventoryList.forEach((f) => {
-      t += f.quantity;
-    });
-    this.total = t;
-  }
 }

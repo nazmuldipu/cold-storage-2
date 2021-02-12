@@ -1,0 +1,34 @@
+<form *ngIf="searchableArray.length>0">
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-auto">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fa fa-filter"></i></div>
+        </div>
+        <input type="text" class="form-control form-control-sm" id="search" name="search" [(ngModel)]="searchQuery"
+          (keyup)="refreshData()" [placeholder]="getSearchPlaceHolderText()">
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<table class="table table-striped border table-sm">
+  <thead TableHeader [columns]="columns" [tableName]="tableName" [sortColumn]="sortColumn"
+    (onSort)="handleSort($event)"></thead>
+  <tbody TableBody [data]="dataPage" [columns]="columns"></tbody>
+  <tfoot TableFooter [columns]="columns" [total]="total" *ngIf="total.length"></tfoot>
+</table>
+
+<div class="d-flex justify-content-between p-2" *ngIf="!list">
+  <ngb-pagination [collectionSize]="totalCount" [(page)]="page" [pageSize]="pageSize" size="sm"
+    (pageChange)="refreshData()">
+  </ngb-pagination>
+
+  <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshData()">
+    <option [ngValue]="4">4/Page</option>
+    <option [ngValue]="8">8/Page</option>
+    <option [ngValue]="16">16/Page</option>
+  </select>
+</div>
