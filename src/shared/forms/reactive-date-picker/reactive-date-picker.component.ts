@@ -1,18 +1,15 @@
 import { Component, DoCheck, Input, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-
 import { LABEL_LIST } from '../constants/reactive-form-labels-list';
 
 @Component({
-  selector: 'reactive-input',
-  templateUrl: './reactive-input.component.html',
-  styleUrls: ['./reactive-input.component.scss'],
+  selector: 'reactive-date-picker',
+  templateUrl: './reactive-date-picker.component.html',
+  styleUrls: ['./reactive-date-picker.component.scss']
 })
-export class ReactiveInputComponent implements OnInit, DoCheck {
+export class ReactiveDatePickerComponent implements OnInit, DoCheck {
   @Input() fieldId: string | null = null;
   @Input() control: AbstractControl | null = null;
-  @Input() type: string = 'text';
-  @Input() maxlength: number = null;
   @Input() readonly: boolean = false;
 
   label: string = null;

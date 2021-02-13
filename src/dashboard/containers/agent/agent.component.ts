@@ -81,7 +81,6 @@ export class AgentComponent implements OnInit {
 
   onEdit(id) {
     this.agent = this.agentList.find((cp) => cp._id === id);
-    console.log(this.agent);
   }
 
   clear() {

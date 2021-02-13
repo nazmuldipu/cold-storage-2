@@ -1,73 +1,49 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { UtilService } from 'src/service/util.service';
-import { Inventory, InventoryType } from 'src/shared/model/inventory.model';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { Agent } from 'src/shared/model/agent.model';
-import { CustomerService } from 'src/service/customer.service';
+import { Component, Input, SimpleChanges } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { AgentService } from 'src/service/agent.service';
+import { CustomerService } from 'src/service/customer.service';
+import { UtilService } from 'src/service/util.service';
+import { BaseFormComponent } from 'src/shared/forms/base-form/base-form.component';
+import { Agent } from 'src/shared/model/agent.model';
+import { InventoryType } from 'src/shared/model/inventory.model';
 
 @Component({
   selector: 'inventory-form',
   templateUrl: './inventory-form.component.html',
   styleUrls: ['./inventory-form.component.scss'],
 })
-export class InventoryFormComponent implements OnChanges {
+export class InventoryFormComponent extends BaseFormComponent {
   @Input() vouchar_no: number;
-  @Input() inventory: Inventory;
-
-  @Output() create = new EventEmitter<Inventory>();
-  @Output() update = new EventEmitter<Inventory>();
-  @Output() delete = new EventEmitter<string>();
 
   typeEnum = InventoryType;
-  form: FormGroup;
-  errorMessage: string = '';
-  exists = false;
-  mouseoverShifting = false;
+  typeList = [];
   ngDate;
 
   agentList: Agent[] = [];
-  searchAgent = (text$: Observable<any>) =>
-    text$.pipe(
-      debounceTime(200),
-      distinctUntilChanged(),
-      map(term => {
-        const res = term.length < 2 ? []
-          : this.agentList.filter(v => v.phone.indexOf(term.toLowerCase()) > -1).slice(0, 10)
-        return res;
-      })
-    )
-
   customerList: Agent[] = [];
-  searchCustomer = (text$: Observable<any>) =>
-    text$.pipe(
-      debounceTime(200),
-      distinctUntilChanged(),
-      map(term => {
-        const res = term.length < 2 ? []
-          : this.customerList.filter(v => v.phone.indexOf(term.toLowerCase()) > -1).slice(0, 10)
-        return res;
-      })
-    )
 
-  formatter = (result: string) => { if (result) return result['name'] + '[' + result['phone'] + ']' };
-
-  constructor(private fb: FormBuilder, private customerService: CustomerService,
-    private agentService: AgentService, private util: UtilService) {
+  constructor(
+    private fb: FormBuilder,
+    private customerService: CustomerService,
+    private agentService: AgentService,
+    private util: UtilService
+  ) {
+    super();
     this.ngDate = this.util.convertJsDateToNgbDate(new Date());
+    this.typeList = Object.keys(this.typeEnum).map((o) => {
+      return { _id: o, name: this.typeEnum[o] };
+    });
+
     this.createForm();
     this.getCustomerList();
     this.getAgentList();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.inventory && this.inventory != null) {
+    if (changes.item && this.item != null) {
       this.form.reset();
-      const date = this.util.convertFireabaseDateToNgbDate(this.inventory.date);
-      console.log(date, date);
-      const value = { ...this.inventory, date }
+      const date = this.util.convertFireabaseDateToNgbDate(this.item.date);
+      const value = { ...this.item, date };
       this.exists = true;
       this.form.patchValue(value);
     }
@@ -98,7 +74,7 @@ export class InventoryFormComponent implements OnChanges {
       year: [this.ngDate.year, Validators.required],
       sr_no: ['', Validators.required],
       name: ['Potato', Validators.required],
-      customer: ['', Validators.required,],
+      customer: ['', Validators.required],
       agent: [''],
       quantity: ['', Validators.required],
     });
@@ -109,46 +85,25 @@ export class InventoryFormComponent implements OnChanges {
       const fvalue = this.form.value;
       const dateValue = this.util.convertNgbDateToJsDate(fvalue.date);
       console.log(dateValue);
-      const value = { ...fvalue, date: dateValue }
+      const value = { ...fvalue, date: dateValue };
       if (this.exists) {
         this.update.emit(value);
       } else {
         this.create.emit(value);
       }
-      this.clear();
+      this.clean();
     }
   }
 
-  getFormValidationErrors() {
-    let errors = '';
-    Object.keys(this.form.controls).forEach((key) => {
-      const controlErrors: ValidationErrors = this.form.get(key).errors;
-      if (controlErrors != null) {
-        Object.keys(controlErrors).forEach((keyError) => {
-          errors += key + ' : ' + keyError + '; ';
-        });
-      }
-    });
-    return errors;
-  }
-
-  onDelete() {
-    this.delete.emit(this.inventory._id);
-    this.clear();
-  }
-
-  clear() {
-    this.exists = false;
-    this.inventory = null;
-    this.errorMessage = '';
-    this.form.reset();
+  clean() {
+    super.clean();
     const value = {
       inventoryType: 'RECEIVE',
       name: 'Potato',
       vouchar_no: this.vouchar_no + 1,
       date: this.ngDate,
       year: this.ngDate.year,
-    }
+    };
     this.form.patchValue(value);
   }
 }

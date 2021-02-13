@@ -4,19 +4,16 @@ import { AbstractControl } from '@angular/forms';
 import { LABEL_LIST } from '../constants/reactive-form-labels-list';
 
 @Component({
-  selector: 'reactive-input',
-  templateUrl: './reactive-input.component.html',
-  styleUrls: ['./reactive-input.component.scss'],
+  selector: 'reactive-textarea',
+  templateUrl: './reactive-textarea.component.html',
+  styleUrls: ['./reactive-textarea.component.scss'],
 })
-export class ReactiveInputComponent implements OnInit, DoCheck {
+export class ReactiveTextareaComponent implements OnInit, DoCheck {
   @Input() fieldId: string | null = null;
   @Input() control: AbstractControl | null = null;
-  @Input() type: string = 'text';
-  @Input() maxlength: number = null;
-  @Input() readonly: boolean = false;
-
+  @Input() row:number = 3;
+  
   label: string = null;
-  validator;
   validationErrors: object = null;
 
   ngOnInit() {
@@ -24,8 +21,6 @@ export class ReactiveInputComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-    this.validator = this.control.validator({} as AbstractControl);
-    
     this.validationErrors =
       this.control.touched && this.control.invalid
         ? this.control['errors']

@@ -7,7 +7,7 @@
     <div class="col-md-4 p-md-0 mt-2">
       <div class=" border rounded">
         <pocket-form (create)="onCreate($event)" (update)="onUpdate($event)" (delete)="onDelete($event)"
-          (selectChamber)="getFloorList($event)" (selectFloor)="getLineList($event)" [pocket]="pocket"
+          (selectChamber)="getFloorList($event)" (selectFloor)="getLineList($event)" [item]="pocket"
           [chamberList]="chamberList" [floorList]="floorList" [lineList]="lineList"></pocket-form>
       </div>
     </div>

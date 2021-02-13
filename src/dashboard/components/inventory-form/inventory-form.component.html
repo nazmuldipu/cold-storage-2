@@ -6,98 +6,33 @@
   {{errorMessage}}
 </div>
 
-<form [formGroup]="form" (ngSubmit)="submit()" (mouseleave)="mouseoverShifting = false" class="p-3">
-  <div class="form-group row">
-    <label for="vouchar_no" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">No.*</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control form-control-sm" id="vouchar_no" formControlName="vouchar_no" readonly>
-      <small class="form-text text-danger" *ngIf="form.controls.name.errors && form.controls.name.touched">Vouchar
-        number Required</small>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="name" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Name*</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control form-control-sm" id="name" formControlName="name"
-        placeholder="Product Name" readonly>
-      <small class="form-text text-danger" *ngIf="form.controls.name.errors && form.controls.name.touched">Product
-        Name Required</small>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="inventoryType" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Type*</label>
-    <div class="col-sm-10">
-      <select class="form-control form-control-sm" id="inventoryType" formControlName="inventoryType">
-        <option value="">Select a Type</option>
-        <option *ngFor="let item of (typeEnum | keyvalue)" [value]="item.key">
-          {{ item.value }}
-        </option>
-      </select>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="year" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Year*</label>
-    <div class="col-sm-10">
-      <input type="number" class="form-control form-control-sm" id="year" formControlName="year" placeholder="Year">
-      <small class="text-danger" *ngIf=" form.controls.year.errors && form.controls.year.touched">
-        Year required
-      </small>
-    </div>
-  </div>
-  <div class="form-group row">
-    <div class="input-group">
-      <label for="date" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Date*</label>
-      <div class="col-sm-10">
-        <input class="form-control form-control-sm" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
-          formControlName="date" #date="ngbDatepicker" (click)="date.toggle()">
-      </div>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="sr_no" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">SR_no*</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control form-control-sm" id="sr_no" formControlName="sr_no"
-        placeholder="SR Number">
-      <small class="text-danger" *ngIf=" form.controls.sr_no.errors && form.controls.sr_no.touched">
-        SR NO name required
-      </small>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="customer" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Party*</label>
-    <div class="col-sm-10">
-      <input id="customer" type="text" class="form-control form-control-sm" formControlName="customer"
-        [ngbTypeahead]="searchCustomer" [editable]='false' [resultFormatter]="formatter" [inputFormatter]="formatter" />
-      <small class="form-text text-danger" *ngIf="form.controls.customer.errors && form.controls.customer.touched">Party
-        name required </small>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="agent" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Agent</label>
-    <div class="col-sm-10">
-      <input id="agent" type="text" class="form-control form-control-sm" formControlName="agent"
-        [ngbTypeahead]="searchAgent" [editable]='false' [resultFormatter]="formatter" [inputFormatter]="formatter" />
-      <small class="form-text text-danger" *ngIf="form.controls.agent.errors && form.controls.agent.touched">Agent
-        name required </small>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="quantity" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">Quantity*</label>
-    <div class="col-sm-10">
-      <input type="number" class="form-control form-control-sm" id="quantity" formControlName="quantity"
-        placeholder="Product Quantity">
-      <small class="text-danger" *ngIf=" form.controls.quantity.errors && form.controls.quantity.touched">
-        Product Quantity required
-      </small>
-    </div>
-  </div>
+<form [formGroup]="form" (ngSubmit)="submit()" class="p-3">
+  <!-- Form Elements -->
+  <reactive-input [fieldId]="'vouchar_no'" [control]="form.get('vouchar_no')" [readonly]="true"> </reactive-input>
+  <reactive-input [fieldId]="'name'" [control]="form.get('name')" [readonly]="true"> </reactive-input>
+  <reactive-select [fieldId]="'inventoryType'" [control]="form.get('inventoryType')" [options]="typeList">
+  </reactive-select>
+  <reactive-input [fieldId]="'year'" [control]="form.get('year')" [type]="'number'"> </reactive-input>
+  <reactive-date-picker [fieldId]="'date'" [control]="form.get('date')"></reactive-date-picker>
+  <reactive-input [fieldId]="'sr_no'" [control]="form.get('sr_no')"> </reactive-input>
+  <reactive-input-typeahed [fieldId]="'customer'" [control]="form.get('customer')" [itemList]="customerList">
+  </reactive-input-typeahed>
+  <reactive-input-typeahed [fieldId]="'agent'" [control]="form.get('agent')" [itemList]="agentList">
+  </reactive-input-typeahed>
+  <reactive-input [fieldId]="'quantity'" [control]="form.get('quantity')" [type]="'number'"> </reactive-input>
+
+  <!-- Buttons -->
   <div class="d-flex flex-row-reverse bd-highlight">
-    <button type="submit" (mouseenter)="mouseoverShifting = true" class="btn btn-sm btn-light mx-1">{{exists ?
-            'Update':'Save'}}</button>
+    <span (mouseenter)="mouseoverShifting = true" (mouseleave)="mouseoverShifting = false" >
+      <button type="submit" class="btn btn-sm btn-light mx-1" [disabled]="!form.valid">{{exists ?
+        'Update':'Save'}}</button>
+    </span>
     <!-- <button type="button" *ngIf="exists" class="btn btn-sm btn-light mx-1" (click)="onDelete()">Delete</button> -->
-    <button type="button" class="btn btn-sm btn-light mx-1" (click)="clear()">Clear</button>
+    <button type="button" class="btn btn-sm btn-light mx-1" (click)="clean()">Clear</button>
   </div>
+
+  <!-- Form validation error list -->
   <div *ngIf="mouseoverShifting" class="text-danger">
-    {{ getFormValidationErrors() }}
-  </div>
+    <reactive-form-validation [form]="form"></reactive-form-validation>
+  </div>  
 </form>

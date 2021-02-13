@@ -7,7 +7,7 @@
     <div class="col-md-4 p-md-0 mt-2">
       <div class=" border rounded">
         <line-form (create)="onCreate($event)" (update)="onUpdate($event)" (delete)="onDelete($event)"
-          (selectChamber)="getFloorList($event)" [line]="line" [chamberList]="chamberList" [floorList]="floorList">
+          (selectChamber)="getFloorList($event)" [item]="line" [chamberList]="chamberList" [floorList]="floorList">
         </line-form>
       </div>
     </div>

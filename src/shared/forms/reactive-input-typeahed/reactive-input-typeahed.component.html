@@ -1,9 +1,9 @@
 <div class="form-group row">
     <label [for]="fieldId" class="d-none d-sm-block col-sm-3 col-form-label col-form-label-sm">{{label}}<span
-            *ngIf="validator?.required">*</span> </label>
+            *ngIf="validator?.required">*</span></label>
     <div class="col-sm-9">
-        <input [type]="type" class="form-control form-control-sm" [id]="fieldId" [formControl]="control"
-            autocomplete="off" [placeholder]="label" [maxlength]="maxlength" [readonly]="readonly">
+        <input [id]="fieldId" class="form-control form-control-sm" [formControl]="control" [ngbTypeahead]="search"
+            [editable]='false' [resultFormatter]="formatter" [inputFormatter]="formatter" />
         <app-reactive-validation [validationErrors]="validationErrors" [name]="label"></app-reactive-validation>
     </div>
 </div>

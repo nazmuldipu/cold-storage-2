@@ -11,7 +11,7 @@ import { CompanyInfo } from 'src/shared/data/company.data';
 @Component({
   selector: 'app-inventory-list',
   templateUrl: './inventory-list.component.html',
-  styleUrls: ['./inventory-list.component.scss']
+  styleUrls: ['./inventory-list.component.scss'],
 })
 export class InventoryListComponent implements OnInit {
   year;
@@ -24,8 +24,12 @@ export class InventoryListComponent implements OnInit {
 
   total = 0;
 
-  constructor(private inventoryService: InventoryService, private util: UtilService,
-    private agentService: AgentService, private customerService: CustomerService) {
+  constructor(
+    private inventoryService: InventoryService,
+    private util: UtilService,
+    private agentService: AgentService,
+    private customerService: CustomerService
+  ) {
     this.year = new Date().getFullYear();
     this.getAgentList();
     this.getCustomerList();
@@ -36,9 +40,9 @@ export class InventoryListComponent implements OnInit {
   }
 
   async getInventoryByYear(year: number) {
-    this.inventoryService.inventorys$.pipe(take(2)).subscribe(data => {
-      this.inventoryList = data.filter(f => f.year == year);
-    })
+    this.inventoryService.inventorys$.pipe(take(2)).subscribe((data) => {
+      this.inventoryList = data.filter((f) => f.year == year);
+    });
   }
 
   async getCustomerList() {
@@ -60,20 +64,24 @@ export class InventoryListComponent implements OnInit {
   }
 
   onCustomerClick(customerId) {
-    this.filteredInventoryList = this.inventoryList.filter(f => f.customer._id == customerId);
+    this.filteredInventoryList = this.inventoryList.filter(
+      (f) => f.customer._id == customerId
+    );
     this.calculateTotalQuantity();
   }
 
   onAgentClick(agentId) {
-    this.filteredInventoryList = this.inventoryList.filter(f => f.agent != null && f.agent._id == agentId);
+    this.filteredInventoryList = this.inventoryList.filter(
+      (f) => f.agent != null && f.agent._id == agentId
+    );
     this.calculateTotalQuantity();
   }
 
   calculateTotalQuantity() {
     let t = 0;
-    this.filteredInventoryList.forEach(f => {
-      t += f.quantity;
-    })
+    this.filteredInventoryList.forEach((f) => {
+      t += parseInt(f.quantity + '');
+    });
     this.total = t;
   }
   onPrint() {

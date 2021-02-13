@@ -10,7 +10,7 @@
           {{errorMessage}}
         </div>
         <inventory-form (create)="onCreate($event)" (update)="onUpdate($event)" (delete)="onDelete($event)"
-          [inventory]="inventory" [vouchar_no]="inventoryList.length"></inventory-form>
+          [item]="inventory" [vouchar_no]="inventoryList.length"></inventory-form>
       </div>
     </div>
     <div class="col-md-8 mt-2" *ngIf="inventoryList.length > 0">

@@ -1,48 +1,28 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { BaseFormComponent } from 'src/shared/forms/base-form/base-form.component';
 import { Chamber } from 'src/shared/model/chamber.model';
-import { Floor } from 'src/shared/model/floor.model';
 
 @Component({
   selector: 'floor-form',
   templateUrl: './floor-form.component.html',
   styleUrls: ['./floor-form.component.scss'],
 })
-export class FloorFormComponent implements OnChanges {
-  @Input() floor: Floor;
+export class FloorFormComponent extends BaseFormComponent {
   @Input() chamberList: Chamber[];
 
-  @Output() create = new EventEmitter<Floor>();
-  @Output() update = new EventEmitter<Floor>();
-  @Output() delete = new EventEmitter<any>();
   @Output() clear = new EventEmitter<any>();
 
-  form: FormGroup;
-  errorMessage: string = '';
-  exists = false;
-  mouseoverShifting = false;
-
   constructor(private fb: FormBuilder) {
+    super();
     this.createForm();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.floor && this.floor != null) {
+    if (changes.item && this.item != null) {
       this.form.reset();
-      const ch = this.chamberList.find((c) => c._id == this.floor.chamber._id);
-      const value = { ...this.floor, chamberId: ch._id };
+      const ch = this.chamberList.find((c) => c._id == this.item.chamber._id);
+      const value = { ...this.item, chamberId: ch._id };
       this.exists = true;
       this.form.patchValue(value);
     }
@@ -59,15 +39,9 @@ export class FloorFormComponent implements OnChanges {
   submit() {
     if (this.form.valid) {
       const fvlaue = this.form.value;
-      const chamber = this.chamberList.find(
-        (ch) => ch._id === fvlaue.chamberId
-      );
-      const ch = {
-        _id: chamber._id,
-        name: chamber.name,
-        slug: chamber.slug,
-      };
-      const value = { ...this.form.value, chamber: ch };
+      const ch = this.chamberList.find((ch) => ch._id === fvlaue.chamberId);
+      const chamber = { _id: ch._id, name: ch.name, slug: ch.slug };
+      const value = { ...this.form.value, chamber };
       if (this.exists) {
         this.update.emit(value);
       } else {
@@ -75,17 +49,5 @@ export class FloorFormComponent implements OnChanges {
       }
       this.clean();
     }
-  }
-
-  onDelete() {
-    this.delete.emit(this.floor._id);
-    this.clean();
-  }
-
-  clean() {
-    this.exists = false;
-    this.floor = null;
-    this.errorMessage = '';
-    this.form.reset();
   }
 }

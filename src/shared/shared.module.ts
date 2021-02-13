@@ -20,6 +20,10 @@ import { ReactiveValidationComponent } from './forms/reactive-validation/reactiv
 import { ReactiveInputComponent } from './forms/reactive-input/reactive-input.component';
 import { ReactiveFormValidationComponent } from './forms/reactive-form-validation/reactive-form-validation.component';
 import { ReactiveSelectComponent } from './forms/reactive-select/reactive-select.component';
+import { ReactiveTextareaComponent } from './forms/reactive-textarea/reactive-textarea.component';
+import { BaseFormComponent } from './forms/base-form/base-form.component';
+import { ReactiveDatePickerComponent } from './forms/reactive-date-picker/reactive-date-picker.component';
+import { ReactiveInputTypeahedComponent } from './forms/reactive-input-typeahed/reactive-input-typeahed.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +43,10 @@ import { ReactiveSelectComponent } from './forms/reactive-select/reactive-select
     ReactiveInputComponent,
     ReactiveFormValidationComponent,
     ReactiveSelectComponent,
+    ReactiveTextareaComponent,
+    BaseFormComponent,
+    ReactiveDatePickerComponent,
+    ReactiveInputTypeahedComponent,
   ],
   imports: [
     CommonModule,
@@ -63,7 +71,11 @@ import { ReactiveSelectComponent } from './forms/reactive-select/reactive-select
     ReactiveInputComponent,
     TableComponent,
     ReactiveFormValidationComponent,
-    ReactiveSelectComponent
+    ReactiveSelectComponent,
+    ReactiveTextareaComponent,
+    BaseFormComponent,
+    ReactiveDatePickerComponent,
+    ReactiveInputTypeahedComponent
   ],
 })
 export class SharedModule {}

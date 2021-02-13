@@ -19,8 +19,8 @@
             <button type="submit" class="btn btn-sm btn-light mx-1" [disabled]="!form.valid">{{exists ?
                 'Update':'Save'}}</button>
         </span>
-        <button type="button" *ngIf="exists" class="btn btn-sm btn-light mx-1" (click)="onDelete()">Delete</button>        
-        <button type="button" class="btn btn-sm btn-light mx-1" (click)="clear()">Clear</button>
+        <button type="button" *ngIf="exists" class="btn btn-sm btn-light mx-1" (click)="onDelete()">Delete</button>
+        <button type="button" class="btn btn-sm btn-light mx-1" (click)="clean()">Clear</button>
     </div>
 
     <!-- Form validation error list -->
