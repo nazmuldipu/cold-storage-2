@@ -1,5 +1,17 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Chamber } from 'src/shared/model/chamber.model';
 import { Floor } from 'src/shared/model/floor.model';
 
@@ -30,7 +42,7 @@ export class FloorFormComponent implements OnChanges {
     if (changes.floor && this.floor != null) {
       this.form.reset();
       const ch = this.chamberList.find((c) => c._id == this.floor.chamber._id);
-      const value = { ...this.floor, chamber: ch };
+      const value = { ...this.floor, chamberId: ch._id };
       this.exists = true;
       this.form.patchValue(value);
     }
@@ -38,20 +50,22 @@ export class FloorFormComponent implements OnChanges {
 
   createForm() {
     this.form = this.fb.group({
-      chamber: ['', Validators.required],
+      chamberId: ['', Validators.required],
       name: ['', Validators.required],
       capacity: ['', Validators.required],
     });
   }
 
   submit() {
-
     if (this.form.valid) {
       const fvlaue = this.form.value;
+      const chamber = this.chamberList.find(
+        (ch) => ch._id === fvlaue.chamberId
+      );
       const ch = {
-        _id: fvlaue.chamber._id,
-        name: fvlaue.chamber.name,
-        slug: fvlaue.chamber.slug,
+        _id: chamber._id,
+        name: chamber.name,
+        slug: chamber.slug,
       };
       const value = { ...this.form.value, chamber: ch };
       if (this.exists) {
@@ -66,19 +80,6 @@ export class FloorFormComponent implements OnChanges {
   onDelete() {
     this.delete.emit(this.floor._id);
     this.clean();
-  }
-
-  getFormValidationErrors() {
-    let errors = '';
-    Object.keys(this.form.controls).forEach((key) => {
-      const controlErrors: ValidationErrors = this.form.get(key).errors;
-      if (controlErrors != null) {
-        Object.keys(controlErrors).forEach((keyError) => {
-          errors += key + ' : ' + keyError + '; ';
-        });
-      }
-    });
-    return errors;
   }
 
   clean() {

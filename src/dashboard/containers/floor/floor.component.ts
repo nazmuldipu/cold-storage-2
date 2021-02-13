@@ -130,7 +130,6 @@ export class FloorComponent implements OnInit {
     switch (event['key']) {
       case 'edit':
         this.floor = this.floorList.find((fl) => fl._id === event['id']);
-        console.log(this.floor);
         break;
     }
   }

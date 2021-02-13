@@ -15,6 +15,11 @@ import { TableComponent } from './table/table/table.component';
 import { TableHeaderComponent } from './table/table-header/table-header.component';
 import { TableBodyComponent } from './table/table-body/table-body.component';
 import { TableFooterComponent } from './table/table-footer/table-footer.component';
+import { RenderInputComponent } from './forms/render-input/render-input.component';
+import { ReactiveValidationComponent } from './forms/reactive-validation/reactive-validation.component';
+import { ReactiveInputComponent } from './forms/reactive-input/reactive-input.component';
+import { ReactiveFormValidationComponent } from './forms/reactive-form-validation/reactive-form-validation.component';
+import { ReactiveSelectComponent } from './forms/reactive-select/reactive-select.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +34,11 @@ import { TableFooterComponent } from './table/table-footer/table-footer.componen
     TableHeaderComponent,
     TableBodyComponent,
     TableFooterComponent,
+    RenderInputComponent,
+    ReactiveValidationComponent,
+    ReactiveInputComponent,
+    ReactiveFormValidationComponent,
+    ReactiveSelectComponent,
   ],
   imports: [
     CommonModule,
@@ -49,7 +59,11 @@ import { TableFooterComponent } from './table/table-footer/table-footer.componen
     NumberToWordBdPipe,
     NumberToWordsPipe,
     ReactiveFormsModule,
+    RenderInputComponent,
+    ReactiveInputComponent,
     TableComponent,
+    ReactiveFormValidationComponent,
+    ReactiveSelectComponent
   ],
 })
 export class SharedModule {}

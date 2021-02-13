@@ -82,7 +82,6 @@ export class PocketComponent
 
   ngAfterContentChecked(): void {
     this.cdr.detectChanges();
-    // console.log(this.cdr.detectChanges())
   }
   ngAfterViewChecked() {
     //your code to update the model
@@ -103,10 +102,8 @@ export class PocketComponent
   }
 
   async getLineList(floorId) {
-    console.log(floorId);
     this.lineService.lines$.subscribe((data) => {
       this.lineList = data.filter((ln) => ln.floor._id == floorId);
-      console.log(this.lineList);
       this.lineList.sort(this.util.dynamicSortObject('priority'));
     });
   }
@@ -124,7 +121,7 @@ export class PocketComponent
       ...event,
       slug: this.util.string_to_slug(event.name),
     } as Pocket;
-    console.log(value);
+    
     await this.pocketService
       .create(value)
       .then((ref) => {
@@ -177,7 +174,6 @@ export class PocketComponent
     switch (event['key']) {
       case 'edit':
         this.pocket = this.pocketList.find((ln) => ln._id === event['id']);
-        console.log(this.pocket);
         break;
     }
   }

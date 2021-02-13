@@ -1,5 +1,17 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Chamber } from 'src/shared/model/chamber.model';
 import { Floor } from 'src/shared/model/floor.model';
 import { Line } from 'src/shared/model/line.model';
@@ -25,7 +37,7 @@ export class PocketFormComponent implements OnChanges {
 
   form: FormGroup;
   errorMessage: string = '';
-  showForm = false;
+  // showForm = false;
   exists = false;
   mouseoverShifting = false;
 
@@ -37,70 +49,67 @@ export class PocketFormComponent implements OnChanges {
     if (changes.pocket && this.pocket != null) {
       this.form.reset();
       const ch = this.chamberList.find((c) => c._id == this.pocket.chamber._id);
-      const value = { chamber: ch };
+      const value = { chamberId: ch._id };
       this.form.patchValue(value);
       this.selectChamber.emit(ch._id);
     }
     if (changes.floorList && this.pocket && this.pocket._id != null) {
       const fl = this.floorList.find((f) => f._id == this.pocket.floor._id);
-      const value = { floor: fl };
+      const value = { floorId: fl._id };
       this.form.patchValue(value);
       this.selectFloor.emit(fl._id);
     }
     if (changes.lineList && this.pocket && this.pocket._id != null) {
       const ls = this.lineList.find((ln) => ln._id == this.pocket.line._id);
-      const value = { ...this.pocket, line: ls };
+      const value = { ...this.pocket, lineId: ls._id };
       delete value['chamber'];
       delete value['floor'];
       this.exists = true;
-      this.showForm = true;
+      // this.showForm = true;
       this.form.patchValue(value);
     }
   }
 
   createForm() {
     this.form = this.fb.group({
-      chamber: ['', Validators.required],
-      floor: ['', Validators.required],
-      line: ['', Validators.required],
+      chamberId: ['', Validators.required],
+      floorId: ['', Validators.required],
+      lineId: ['', Validators.required],
       name: ['', Validators.required],
-      capacity: ['', Validators.required]
+      capacity: ['', Validators.required],
     });
   }
 
   onChamberChange(event) {
-    const value = JSON.parse(event.target.value) as Chamber;
-    this.form.controls.chamber.setValue(value);
-    this.selectChamber.emit(value._id);
+    // const value = JSON.parse(event.target.value) as Chamber;
+    // this.form.controls.chamber.setValue(value);
+    this.selectChamber.emit(event);
   }
 
-  onFloorChange(event){
-    const value = JSON.parse(event.target.value) as Floor;
-    this.form.controls.floor.setValue(value);
-    console.log(value);
-    this.selectFloor.emit(value._id);
+  onFloorChange(event) {
+    this.selectFloor.emit(event);
   }
 
-  onSelectLine(event) {
-    if (event.value._id) {
-      this.showForm = true;
-    }
-  }
+  // onSelectLine(event) {
+  //   this.showForm = true;
+  // }
 
   submit() {
     if (this.form.valid) {
       const fvlaue = this.form.value;
-      const ch = {
-        _id: fvlaue.chamber._id,
-        name: fvlaue.chamber.name,
-        slug: fvlaue.chamber.slug,
-      };
-      const fl = {
-        _id: fvlaue.floor._id,
-        name: fvlaue.floor.name,
-        slug: fvlaue.floor.slug,
-      };
-      const value = { ...this.form.value, chamber: ch, floor: fl };
+      const chamber = this.chamberList.find(
+        (ch) => ch._id === fvlaue.chamberId
+      );
+      const floor = this.floorList.find((fl) => fl._id === fvlaue.floorId);
+      const line = this.lineList.find((ln) => ln._id === fvlaue.lineId);
+      const ch = { _id: chamber._id, name: chamber.name, slug: chamber.slug };
+      const fl = { _id: floor._id, name: floor.name, slug: floor.slug };
+      const ln = { _id: line._id, name: line.name, slug: line.slug };
+      const value = { ...this.form.value, chamber: ch, floor: fl, line: ln };
+      delete value['chamberId'];
+      delete value['floorId'];
+      delete value['lineId'];
+
       if (this.exists) {
         this.update.emit(value);
       } else {
@@ -130,7 +139,7 @@ export class PocketFormComponent implements OnChanges {
 
   clean() {
     this.exists = false;
-    this.showForm = false;
+    // this.showForm = false;
     this.floorList = null;
     this.lineList = null;
     this.pocket = null;

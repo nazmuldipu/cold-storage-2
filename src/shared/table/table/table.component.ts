@@ -90,7 +90,7 @@ export class TableComponent implements OnChanges {
       if (col.total) {
         let colTotal = 0;
         this.dataPage.forEach((d) => {
-          colTotal += d[col.path];
+          colTotal += parseInt(d[col.path]);
         });
         total.push({ path: col.path, total: colTotal, pipe: col.pipe });
       } else if (col.totalLabel) {

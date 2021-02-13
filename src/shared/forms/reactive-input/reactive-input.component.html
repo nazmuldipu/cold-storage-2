@@ -1,0 +1,8 @@
+<div class="form-group row">
+    <label [for]="fieldId" class="d-none d-sm-block col-sm-2 col-form-label col-form-label-sm">{{label}} </label>
+    <div class="col-sm-10">
+        <input [type]="type" class="form-control form-control-sm" [id]="fieldId" [formControl]="control" autocomplete="off"
+            [placeholder]="label">
+        <app-reactive-validation [validationErrors]="validationErrors" [name]="label"></app-reactive-validation>
+    </div>
+</div>

@@ -1,5 +1,17 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Chamber } from 'src/shared/model/chamber.model';
 
 @Component({
@@ -34,11 +46,12 @@ export class ChamberFormComponent implements OnChanges {
   createForm() {
     this.form = this.fb.group({
       name: ['', Validators.required],
-      capacity: ['', Validators.required],
+      capacity: [0, Validators.required],
     });
   }
 
   submit() {
+    console.log(this.form.value);
     if (this.form.valid) {
       if (this.exists) {
         this.update.emit(this.form.value);
@@ -47,19 +60,6 @@ export class ChamberFormComponent implements OnChanges {
       }
       this.clear();
     }
-  }
-
-  getFormValidationErrors() {
-    let errors = '';
-    Object.keys(this.form.controls).forEach((key) => {
-      const controlErrors: ValidationErrors = this.form.get(key).errors;
-      if (controlErrors != null) {
-        Object.keys(controlErrors).forEach((keyError) => {
-          errors += key + ' : ' + keyError + '; ';
-        });
-      }
-    });
-    return errors;
   }
 
   onDelete() {
@@ -72,5 +72,7 @@ export class ChamberFormComponent implements OnChanges {
     this.chamber = null;
     this.errorMessage = '';
     this.form.reset();
+    const value = { capacity: 0 };
+    this.form.patchValue(value);
   }
 }

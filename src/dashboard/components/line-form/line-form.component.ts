@@ -46,13 +46,13 @@ export class LineFormComponent implements OnChanges {
     if (changes.line && this.line != null) {
       this.form.reset();
       const ch = this.chamberList.find((c) => c._id == this.line.chamber._id);
-      const value = { chamber: ch };
+      const value = { chamberId: ch._id };
       this.form.patchValue(value);
       this.selectChamber.emit(ch._id);
     }
     if (changes.floorList && this.line && this.line._id != null) {
       const fl = this.floorList.find((f) => f._id == this.line.floor._id);
-      const value = { ...this.line, floor: fl };
+      const value = { ...this.line, floorId: fl._id };
       delete value['chamber'];
       this.exists = true;
       this.showForm = true;
@@ -62,17 +62,15 @@ export class LineFormComponent implements OnChanges {
 
   createForm() {
     this.form = this.fb.group({
-      chamber: ['', Validators.required],
-      floor: ['', Validators.required],
+      chamberId: ['', Validators.required],
+      floorId: ['', Validators.required],
       name: ['', Validators.required],
       capacity: ['', Validators.required],
     });
   }
 
   onChamberChange(event) {
-    const value = JSON.parse(event.target.value) as Chamber;
-    this.form.controls.chamber.setValue(value);
-    this.selectChamber.emit(value._id);
+    this.selectChamber.emit(event);
   }
 
   onSelectFlorr(event) {
@@ -83,19 +81,24 @@ export class LineFormComponent implements OnChanges {
 
   submit() {
     if (this.form.valid) {
-      const fvlaue = this.form.value;
-      console.log(fvlaue);
+      const fvalue = this.form.value;
+      const chamber = this.chamberList.find(
+        (ch) => ch._id === fvalue.chamberId
+      );
+      const floor = this.floorList.find((fl) => fl._id === fvalue.floorId);
+
       const ch = {
-        _id: fvlaue.chamber._id,
-        name: fvlaue.chamber.name,
-        slug: fvlaue.chamber.slug,
+        _id: chamber._id,
+        name: chamber.name,
+        slug: chamber.slug,
       };
       const fl = {
-        _id: fvlaue.floor._id,
-        name: fvlaue.floor.name,
-        slug: fvlaue.floor.slug,
+        _id: floor._id,
+        name: floor.name,
+        slug: floor.slug,
       };
       const value = { ...this.form.value, chamber: ch, floor: fl };
+
       if (this.exists) {
         this.update.emit(value);
       } else {
@@ -108,19 +111,6 @@ export class LineFormComponent implements OnChanges {
   onDelete() {
     this.delete.emit(this.line._id);
     this.clean();
-  }
-
-  getFormValidationErrors() {
-    let errors = '';
-    Object.keys(this.form.controls).forEach((key) => {
-      const controlErrors: ValidationErrors = this.form.get(key).errors;
-      if (controlErrors != null) {
-        Object.keys(controlErrors).forEach((keyError) => {
-          errors += key + ' : ' + keyError + '; ';
-        });
-      }
-    });
-    return errors;
   }
 
   clean() {
