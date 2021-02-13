@@ -55,7 +55,7 @@
         <div class="col-12" *ngIf="productList?.length > 0">
             <h4 class="text-center">Product Report for {{mode == 'day'?'Date: ' +getDateString() : 'Date range: '
                 + getDateRangeString()}}</h4>
-                <product-table [productList]="productList"></product-table>
+                <product-table [productList]="productList" [list]="true"></product-table>
         </div>
     </div>
 </div>

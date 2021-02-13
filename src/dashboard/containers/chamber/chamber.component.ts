@@ -10,19 +10,45 @@ import { Chamber } from 'src/shared/model/chamber.model';
 })
 export class ChamberComponent implements OnInit {
   sendingData = false;
-  loadingData = false;
-  page = 1;
-  pageSize = 8;
-  chamberPage: Chamber[] = [];
 
   chamberList: Chamber[] = [];
   chamber: Chamber;
   errorMessage = '';
 
+  tableName = 'Floor Table';
+  columns = [
+    { path: '#', label: '#', className: 'font-weight-bold' },
+    {
+      path: 'name',
+      label: 'Name',
+      searchable: true,
+      totalLabel: true,
+    },
+    {
+      path: 'capacity',
+      label: 'Capacity',
+      total: true,
+      pipe: 'currencyBd',
+      className: 'text-right',
+    },
+    {
+      key: '_id',
+      type: 'button',
+      content: (chamber) => {
+        return {
+          classname: 'edit_link',
+          text: 'Edit',
+          event: { key: 'edit', id: chamber._id },
+        };
+      },
+    },
+  ];
+  sortColumn = { path: 'name', order: 'asc' };
+
   constructor(
     private chamberService: ChamberService,
     private util: UtilService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getChamberList();
@@ -31,15 +57,8 @@ export class ChamberComponent implements OnInit {
   async getChamberList() {
     this.chamberService.chambers$.subscribe((data) => {
       this.chamberList = data;
-      this.refreshChamber();
       this.chamberList.sort(this.util.dynamicSortObject('name'));
     });
-  }
-
-  refreshChamber() {
-    this.chamberPage = this.chamberList
-      .map((chamber, i) => ({ id: i + 1, ...chamber }))
-      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
 
   async onCreate(event: Chamber) {
@@ -54,6 +73,7 @@ export class ChamberComponent implements OnInit {
         console.log('error', error);
       });
   }
+
   async onUpdate(event: Chamber) {
     this.sendingData = true;
     const value = {
@@ -90,16 +110,18 @@ export class ChamberComponent implements OnInit {
     }
   }
 
-  onEdit(id) {
-    this.chamber = this.chamberList.find((cp) => cp._id === id);
-    console.log('onEdit', id);
+  buttonEvent(event) {
+    switch (event['key']) {
+      case 'edit':
+        this.chamber = this.chamberList.find((cp) => cp._id === event['id']);
+        console.log(this.chamber);
+        break;
+    }
   }
 
   clear() {
     this.chamber = null;
     this.errorMessage = '';
     this.sendingData = false;
-    this.loadingData = false;
   }
-  
 }

@@ -1,4 +1,4 @@
-<form *ngIf="searchableArray.length>0">
+<form *ngIf="searchableArray.length>0" class="d-print-none">
   <div class="row">
     <div class="col"></div>
     <div class="col-auto">
@@ -17,11 +17,11 @@
 <table class="table table-striped border table-sm">
   <thead TableHeader [columns]="columns" [tableName]="tableName" [sortColumn]="sortColumn"
     (onSort)="handleSort($event)"></thead>
-  <tbody TableBody [data]="dataPage" [columns]="columns"></tbody>
+  <tbody TableBody [data]="dataPage" [columns]="columns" (btnEvent)="handleEvent($event)"></tbody>
   <tfoot TableFooter [columns]="columns" [total]="total" *ngIf="total.length"></tfoot>
 </table>
 
-<div class="d-flex justify-content-between p-2" *ngIf="!list">
+<div class="d-flex justify-content-between p-2 d-print-none" *ngIf="!list">
   <ngb-pagination [collectionSize]="totalCount" [(page)]="page" [pageSize]="pageSize" size="sm"
     (pageChange)="refreshData()">
   </ngb-pagination>

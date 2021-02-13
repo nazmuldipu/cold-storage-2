@@ -12,44 +12,8 @@
       </div>
     </div>
     <div class="col-md-8 mt-2">
-      <table class="table table-striped border table-sm">
-        <thead>
-          <tr>
-            <td colspan="6" class="form-head">
-              Line List
-            </td>
-          </tr>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Chamber</th>
-            <th scope="col">Floor</th>
-            <th scope="col">Name</th>
-            <th scope="col">Capacity</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let line of linePage;let i = index;">
-            <th scope="row">{{ i+1 }}</th>
-            <td>{{line.chamber.name}}</td>
-            <td>{{line.floor.name}}</td>
-            <td>{{ line.name }} </td>
-            <td>{{ line.capacity}}</td>
-            <td><a class="edit_link" (click)="onEdit(line._id)">Edit</a></td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="d-flex justify-content-between p-2">
-        <ngb-pagination [collectionSize]="lineList.length" [(page)]="page" [pageSize]="pageSize" size="sm"
-          (pageChange)="refreshLine()">
-        </ngb-pagination>
-
-        <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshLine()">
-          <option [ngValue]="4">4/Page</option>
-          <option [ngValue]="8">8/Page</option>
-          <option [ngValue]="16">16/Page</option>
-        </select>
-      </div>
+      <AppTable [columns]="columns" [data]="lineList" [tableName]="tableName" [sortColumn]="sortColumn"
+        (btnEvent)="buttonEvent($event)"></AppTable>
     </div>
   </div>
 </div>

@@ -24,10 +24,15 @@ export class AgentListComponent {
     { path: 'phone', label: 'Phone', searchable: true },
     {
       key: '_id',
+      type: 'button',
       content: (agent) => {
-        return `<a class="edit_link" onclick='Window.agentList.onEdit("${agent._id}")'>Select</a>`;
+        return {
+          classname: 'edit_link',
+          text: 'Edit',
+          event: { key: 'edit', id: agent._id },
+        };
       },
-    },
+    },    
   ];
 
   sortColumn = { path: 'name', order: 'asc' };
@@ -38,5 +43,13 @@ export class AgentListComponent {
 
   onEdit(id) {
     this.edit.emit(id);
+  }
+
+  buttonEvent(event) {
+    switch (event['key']) {
+      case 'edit':
+        this.edit.emit(event['id']);
+        break;
+    }
   }
 }

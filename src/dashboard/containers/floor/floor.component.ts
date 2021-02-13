@@ -12,21 +12,49 @@ import { Floor } from 'src/shared/model/floor.model';
 })
 export class FloorComponent implements OnInit {
   sendingData = false;
-  loadingData = false;
   chamberList: Chamber[] = [];
   floorList: Floor[] = [];
   floor: Floor;
 
-  page = 1;
-  pageSize = 8;
-  floorPage: Floor[] = [];
   errorMessage = '';
+  tableName = 'Chamber Table';
+  columns = [
+    { path: '#', label: '#', className: 'font-weight-bold' },
+    {
+      path: 'chamber.name',
+      label: 'Chamber',
+    },
+    {
+      path: 'name',
+      label: 'Name',
+      searchable: true,
+    },
+    {
+      path: 'capacity',
+      label: 'Capacity',
+      total: true,
+      pipe: 'currencyBd',
+      className: 'text-right',
+    },
+    {
+      key: '_id',
+      type: 'button',
+      content: (chamber) => {
+        return {
+          classname: 'edit_link',
+          text: 'Edit',
+          event: { key: 'edit', id: chamber._id },
+        };
+      },
+    },
+  ];
+  sortColumn = { path: 'name', order: 'asc' };
 
   constructor(
     private floorService: FloorService,
     private chamberService: ChamberService,
     private util: UtilService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getChamberList();
@@ -44,14 +72,7 @@ export class FloorComponent implements OnInit {
     this.floorService.floors$.subscribe((data) => {
       this.floorList = data;
       this.floorList.sort(this.util.dynamicSortObject('chamber.name'));
-      this.refreshFloor();
     });
-  }
-
-  refreshFloor() {
-    this.floorPage = this.floorList
-      .map((floor, i) => ({ id: i + 1, ...floor }))
-      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
 
   async onCreate(event: Floor) {
@@ -69,6 +90,7 @@ export class FloorComponent implements OnInit {
         console.log('error', error);
       });
   }
+
   async onUpdate(event: Floor) {
     this.sendingData = true;
     const value = {
@@ -104,14 +126,18 @@ export class FloorComponent implements OnInit {
     }
   }
 
-  onEdit(id) {
-    this.floor = this.floorList.find((cp) => cp._id === id);
+  buttonEvent(event) {
+    switch (event['key']) {
+      case 'edit':
+        this.floor = this.floorList.find((fl) => fl._id === event['id']);
+        console.log(this.floor);
+        break;
+    }
   }
 
   clear() {
     this.floor = null;
     this.errorMessage = '';
     this.sendingData = false;
-    this.loadingData = false;
   }
 }

@@ -24,8 +24,13 @@ export class CustomerListComponent {
     { path: 'phone', label: 'Phone', searchable: true },
     {
       key: '_id',
+      type: 'button',
       content: (customer) => {
-        return `<a class="edit_link" onclick='Window.customerList.onEdit("${customer._id}")'>Select</a>`;
+        return {
+          classname: 'edit_link',
+          text: 'Edit',
+          event: { key: 'edit', id: customer._id },
+        };
       },
     },
   ];
@@ -38,5 +43,13 @@ export class CustomerListComponent {
 
   onEdit(id) {
     this.edit.emit(id);
+  }
+
+  buttonEvent(event) {
+    switch (event['key']) {
+      case 'edit':
+        this.edit.emit(event['id']);
+        break;
+    }
   }
 }

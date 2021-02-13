@@ -33,8 +33,13 @@ export class InventoryTableComponent {
     },
     {
       key: '_id',
+      type: 'link',
       content: (inventory) => {
-        return `<a class="edit_link" href="/dashboard/inventory-print/${inventory._id}" target="_blank">Print</a>`;
+        return {
+          classname: 'edit_link d-print-none',
+          text: 'Print',
+          link: `/dashboard/inventory-print/${inventory._id}`,
+        };
       },
     },
   ];

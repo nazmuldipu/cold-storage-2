@@ -14,15 +14,48 @@ import { Line } from 'src/shared/model/line.model';
 })
 export class LineComponent implements OnInit, AfterContentChecked {
   sendingData = false;
-  loadingData = false;
   chamberList: Chamber[];
   floorList: Floor[];
   lineList: Line[];
   line: Line;
 
-  page = 1;
-  pageSize = 8;
-  linePage: Line[] = [];
+  tableName = 'Line Table';
+  columns = [
+    { path: '#', label: '#', className: 'font-weight-bold' },
+    {
+      path: 'chamber.name',
+      label: 'Chamber',
+    },
+    {
+      path: 'floor.name',
+      label: 'Floor',
+    },
+    {
+      path: 'name',
+      label: 'Name',
+      searchable: true,
+    },
+    {
+      path: 'capacity',
+      label: 'Capacity',
+      total: true,
+      pipe: 'currencyBd',
+      className: 'text-right',
+    },
+    {
+      key: '_id',
+      type: 'button',
+      content: (line) => {
+        return {
+          classname: 'edit_link',
+          text: 'Edit',
+          event: { key: 'edit', id: line._id },
+        };
+      },
+    },
+  ];
+  sortColumn = { path: 'name', order: 'asc' };
+
   errorMessage = '';
 
   constructor(
@@ -62,15 +95,8 @@ export class LineComponent implements OnInit, AfterContentChecked {
     this.lineService.lines$.subscribe((data) => {
       this.lineList = data;
       this.lineList.sort(this.util.dynamicSortObject('priority'));
-      this.refreshLine();
     });
-  }
-
-  refreshLine() {
-    this.linePage = this.lineList
-      .map((line, i) => ({ id: i + 1, ...line }))
-      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
-  }
+  }  
 
   async onCreate(event: Line) {
     this.sendingData = true;
@@ -126,10 +152,18 @@ export class LineComponent implements OnInit, AfterContentChecked {
     this.line = this.lineList.find((ln) => ln._id === id);
   }
 
+  buttonEvent(event) {
+    switch (event['key']) {
+      case 'edit':
+        this.line = this.lineList.find((ln) => ln._id === event['id']);
+        console.log(this.line);
+        break;
+    }
+  }
+
   clear() {
     this.line = null;
     this.errorMessage = '';
     this.sendingData = false;
-    this.loadingData = false;
   }
 }

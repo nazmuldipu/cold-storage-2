@@ -14,6 +14,8 @@ export class TableBodyComponent implements OnInit {
   @Input() columns;
   @Input() data;
 
+  @Output() btnEvent = new EventEmitter<any>();
+
   constructor(private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {}
@@ -45,5 +47,9 @@ export class TableBodyComponent implements OnInit {
 
   public sanitize(html: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
+
+  handleClick(event){
+    this.btnEvent.emit(event);
   }
 }

@@ -65,7 +65,6 @@ export class LoanReportComponent implements OnInit {
       ledgerList.forEach((ll) => {
         this.loanList.push(new Loan(ll));
       });
-      console.log(startDate, endDate, ledgerList.length);
       this.loanList.sort(this.util.dynamicSortObject('createdAt'));
     });
   }

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, Output, SimpleChanges, EventEmitter } from '@angular/core';
 import _ from 'lodash';
 
 @Component({
@@ -12,6 +12,8 @@ export class TableComponent implements OnChanges {
   @Input() list: boolean = false; // List or Paginate view
   @Input() sortColumn; // Sort By column info ({ path: 'date', order: 'desc' })
   @Input() data; // Table data
+
+  @Output() btnEvent = new EventEmitter<any>();
 
   page = 1;
   pageSize = 8; // Default page size
@@ -39,6 +41,7 @@ export class TableComponent implements OnChanges {
 
   refreshData() {
     let filtered = this.data;
+    //Apply Search query
     if (this.searchQuery)
       filtered = this.data.filter((m) => {
         let found = false;
@@ -75,6 +78,10 @@ export class TableComponent implements OnChanges {
   handleSort(event) {
     this.sortColumn = event;
     this.refreshData();
+  }
+
+  handleEvent(event){
+    this.btnEvent.emit(event);
   }
 
   calculateColumnTotal() {

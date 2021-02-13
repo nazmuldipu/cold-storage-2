@@ -1,10 +1,4 @@
-import {
-  AfterContentChecked,
-  AfterViewChecked,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { AfterContentChecked, AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ChamberService } from 'src/service/chamber.service';
 import { FloorService } from 'src/service/floor.service';
 import { LineService } from 'src/service/line.service';
@@ -23,16 +17,53 @@ import { Pocket } from 'src/shared/model/pocket.model';
 export class PocketComponent
   implements OnInit, AfterContentChecked, AfterViewChecked {
   sendingData = false;
-  loadingData = false;
   chamberList: Chamber[];
   floorList: Floor[];
   lineList: Line[];
   pocketList: Pocket[];
   pocket: Pocket;
 
-  page = 1;
-  pageSize = 8;
-  pocketPage: Pocket[] = [];
+  tableName = 'Pocket Table';
+  columns = [
+    { path: '#', label: '#', className: 'font-weight-bold' },
+    {
+      path: 'chamber.name',
+      label: 'Chamber',
+    },
+    {
+      path: 'floor.name',
+      label: 'Floor',
+    },
+    {
+      path: 'line.name',
+      label: 'Line',
+    },
+    {
+      path: 'name',
+      label: 'Name',
+      searchable: true,
+    },
+    {
+      path: 'capacity',
+      label: 'Capacity',
+      total: true,
+      pipe: 'currencyBd',
+      className: 'text-right',
+    },
+    {
+      key: '_id',
+      type: 'button',
+      content: (pocket) => {
+        return {
+          classname: 'edit_link',
+          text: 'Edit',
+          event: { key: 'edit', id: pocket._id },
+        };
+      },
+    },
+  ];
+  sortColumn = { path: 'name', order: 'asc' };
+
   errorMessage = '';
 
   constructor(
@@ -84,18 +115,9 @@ export class PocketComponent
     this.pocketService.pockets$.subscribe((data) => {
       this.pocketList = data;
       this.pocketList.sort(this.util.dynamicSortObject('priority'));
-      this.refreshPocket();
     });
   }
-  refreshPocket() {
-    this.pocketPage = this.pocketList
-      .map((pocket, i) => ({ id: i + 1, ...pocket }))
-      .slice(
-        (this.page - 1) * this.pageSize,
-        (this.page - 1) * this.pageSize + this.pageSize
-      );
-  }
-
+  
   async onCreate(event: Pocket) {
     this.sendingData = true;
     const value = {
@@ -151,10 +173,18 @@ export class PocketComponent
     this.pocket = this.pocketList.find((ln) => ln._id === id);
   }
 
+  buttonEvent(event) {
+    switch (event['key']) {
+      case 'edit':
+        this.pocket = this.pocketList.find((ln) => ln._id === event['id']);
+        console.log(this.pocket);
+        break;
+    }
+  }
+
   clear() {
     this.pocket = null;
     this.errorMessage = '';
     this.sendingData = false;
-    this.loadingData = false;
   }
 }
