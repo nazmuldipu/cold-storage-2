@@ -1,9 +1,10 @@
-<div class="form-group row">
-    <label [for]="fieldId" class="d-none d-sm-block col-sm-3 col-form-label col-form-label-sm">{{label}}<span
-            *ngIf="validator?.required">*</span> </label>
-    <div class="col-sm-9">
+<div class="form-group" [class]="col?'':'row'">
+    <label [for]="fieldId" class="d-none d-sm-block col-form-label col-form-label-sm" [class]="col?'p-0':'col-sm-3'">
+        {{label}}<span *ngIf="validator?.required">*</span>
+    </label>
+    <div [class]="col?'':'col-sm-9'">
         <input [type]="type" class="form-control form-control-sm" [id]="fieldId" [formControl]="control"
-            autocomplete="off" [placeholder]="label" [maxlength]="maxlength" [readonly]="readonly">
+            autocomplete="off" [placeholder]="label" [maxlength]="maxlength" [readonly]="readonly" (change)="onChange($event)">
         <app-reactive-validation [validationErrors]="validationErrors" [name]="label"></app-reactive-validation>
     </div>
 </div>

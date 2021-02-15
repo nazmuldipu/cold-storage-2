@@ -1,29 +1,18 @@
-import {
-  Component,
-  DoCheck,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, DoCheck, Input, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-
 import { LABEL_LIST } from '../constants/reactive-form-labels-list';
 
 @Component({
-  selector: 'reactive-input',
-  templateUrl: './reactive-input.component.html',
-  styleUrls: ['./reactive-input.component.scss'],
+  selector: 'reactive-input-col',
+  templateUrl: './reactive-input-col.component.html',
+  styleUrls: ['./reactive-input-col.component.scss'],
 })
-export class ReactiveInputComponent implements OnInit, DoCheck {
+export class ReactiveInputColComponent implements OnInit, DoCheck {
   @Input() fieldId: string | null = null;
   @Input() control: AbstractControl | null = null;
   @Input() type: string = 'text';
   @Input() maxlength: number = null;
   @Input() readonly: boolean = false;
-  @Input() col: boolean = false;
-
-  @Output() change = new EventEmitter<any>();
 
   label: string = null;
   validator;
@@ -34,17 +23,11 @@ export class ReactiveInputComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-    if (this.control['validator'])
-      this.validator = this.control.validator({} as AbstractControl);
+    this.validator = this.control.validator({} as AbstractControl);
 
     this.validationErrors =
       this.control.touched && this.control.invalid
         ? this.control['errors']
         : null;
-  }
-
-  onChange(event) {
-    console.log(event);
-    this.change.emit(event);
   }
 }

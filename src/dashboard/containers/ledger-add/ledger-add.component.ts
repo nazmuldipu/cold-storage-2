@@ -131,15 +131,12 @@ export class LedgerAddComponent implements OnInit {
     const loan_payable = loan_profit + value.loan_amount;
     this.form.controls.loan_profit.setValue(loan_profit);
     this.form.controls.loan_payable.setValue(loan_payable);
-    console.log(this.form.value)
     this.calculateTotal();
   }
 
   calculateTotal() {
     const value = this.form.value;
     const loan = value.loan_amount ? value.loan_payable : 0;
-    console.log(value);
-    console.log(loan);
     this.form.controls.total_amount.setValue(value.service_amount + value.emptyBag_amount + loan);
   }
 

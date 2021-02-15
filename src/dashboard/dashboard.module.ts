@@ -36,7 +36,6 @@ import { InventoryListComponent } from './containers/inventory-list/inventory-li
 import { InventoryPrintComponent } from './containers/inventory-print/inventory-print.component';
 import { InventoryComponent } from './containers/inventory/inventory.component';
 import { LedgerAddComponent } from './containers/ledger-add/ledger-add.component';
-import { LedgerComponent } from './containers/ledger/ledger.component';
 import { LineComponent } from './containers/line/line.component';
 import { LoanComponent } from './containers/loan/loan.component';
 import { PallotComponent } from './containers/pallot/pallot.component';
@@ -67,7 +66,7 @@ export const ROUTES: Routes = [
       { path: 'inventory', component: InventoryComponent },
       { path: 'inventory-print/:id', component: InventoryPrintComponent },
       { path: 'inventory-list', component: InventoryListComponent },
-      { path: 'ledger', component: LedgerComponent },
+      // { path: 'ledger', component: LedgerComponent },
       { path: 'ledger-add', component: LedgerAddComponent },
       { path: 'ledger-add/:id', component: LedgerAddComponent },
       { path: 'contract/:id', component: ContractComponent },
@@ -116,7 +115,6 @@ export const ROUTES: Routes = [
     PallotFormComponent,
     LoanComponent,
     LoanFormComponent,
-    LedgerComponent,
     LedgerAddComponent,
     ContractComponent,
     DeliveryComponent,

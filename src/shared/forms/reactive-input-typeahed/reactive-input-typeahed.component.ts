@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
@@ -13,6 +13,10 @@ export class ReactiveInputTypeahedComponent implements OnInit {
   @Input() fieldId: string | null = null;
   @Input() control: AbstractControl | null = null;
   @Input() itemList = [];
+  @Input() col: boolean = false;
+  @Input() searchPath: string;
+
+  @Output() select = new EventEmitter<any>();
 
   label: string = null;
   validator;
@@ -27,18 +31,25 @@ export class ReactiveInputTypeahedComponent implements OnInit {
           term.length < 2
             ? []
             : this.itemList
-                .filter((v) => v.phone.indexOf(term.toLowerCase()) > -1)
+                .filter(
+                  (v) => v[this.searchPath].indexOf(term.toLowerCase()) > -1
+                )
                 .slice(0, 10);
         return res;
       })
     );
 
   formatter = (result: string) => {
-    if (result) return result['name'] + '[' + result['phone'] + ']';
+    if (result) return result[this.searchPath];
   };
 
   ngOnInit() {
     this.label = LABEL_LIST[this.fieldId] ? LABEL_LIST[this.fieldId] : '';
+  }
+
+  onSelectItem(event) {
+    console.log(event.item[this.searchPath])
+    this.select.emit(event.item[this.searchPath]);
   }
 
   ngDoCheck() {

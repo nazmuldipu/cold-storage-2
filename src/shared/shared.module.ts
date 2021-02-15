@@ -24,6 +24,7 @@ import { ReactiveTextareaComponent } from './forms/reactive-textarea/reactive-te
 import { BaseFormComponent } from './forms/base-form/base-form.component';
 import { ReactiveDatePickerComponent } from './forms/reactive-date-picker/reactive-date-picker.component';
 import { ReactiveInputTypeahedComponent } from './forms/reactive-input-typeahed/reactive-input-typeahed.component';
+import { ReactiveInputColComponent } from './forms/reactive-input-col/reactive-input-col.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ReactiveInputTypeahedComponent } from './forms/reactive-input-typeahed/
     BaseFormComponent,
     ReactiveDatePickerComponent,
     ReactiveInputTypeahedComponent,
+    ReactiveInputColComponent,
   ],
   imports: [
     CommonModule,
@@ -75,7 +77,8 @@ import { ReactiveInputTypeahedComponent } from './forms/reactive-input-typeahed/
     ReactiveTextareaComponent,
     BaseFormComponent,
     ReactiveDatePickerComponent,
-    ReactiveInputTypeahedComponent
+    ReactiveInputTypeahedComponent,
+    ReactiveInputColComponent,
   ],
 })
 export class SharedModule {}

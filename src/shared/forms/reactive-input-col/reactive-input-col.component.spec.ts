@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LedgerComponent } from './ledger.component';
+import { ReactiveInputColComponent } from './reactive-input-col.component';
 
-describe('LedgerComponent', () => {
-  let component: LedgerComponent;
-  let fixture: ComponentFixture<LedgerComponent>;
+describe('ReactiveInputColComponent', () => {
+  let component: ReactiveInputColComponent;
+  let fixture: ComponentFixture<ReactiveInputColComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LedgerComponent ]
+      declarations: [ ReactiveInputColComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LedgerComponent);
+    fixture = TestBed.createComponent(ReactiveInputColComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

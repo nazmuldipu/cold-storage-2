@@ -123,22 +123,39 @@ export class TestComponent implements OnInit {
     //   // console.log(this.engToBnWord(i) + ', ');
     //   console.log(this.engToBd(i) + ', ');
     // }
-    var numArray = this.numberToArray(123456789);
+    var numArray = this.numberToArray(123456.789);
     console.log(numArray);
-    console.log(this.arrayToTaka(numArray));
+    // console.log(this.arrayToTaka(numArray));
   }
   arrayToTaka(arr: string[]): string {
     arr = arr.reverse();
     let res = '';
     for (let i = 0; i < arr.length; i++) {
-      if (i == 3 || (i > 3 && i%2 == 1)) {
+      if (i == 3 || (i > 3 && i % 2 == 1)) {
         res = ',' + res;
       }
       res = arr[i] + res;
     }
     return res;
   }
-  numberToArray(n: number): string[] {
+  numberToArray(n: number): string {
+    if (n % 1 === 0) {
+      return this.arrayToTaka(this.IntegerToArray(n));
+    } else {
+      let Integer = Math.floor(n - (n % 1));
+      let fraction = (n % 1) * 10000;
+      fraction -= fraction % 1;
+      fraction = Math.round(fraction / 100);
+      let res1 = this.arrayToTaka(this.IntegerToArray(Integer));
+      // res1.push('.');
+      let res2 = this.arrayToTaka(this.IntegerToArray(fraction));
+      let res = res1 + '.' + res2;
+      console.log('Non Integer', Integer, 'fraction', fraction, 'result', res);
+      return res;
+    }
+  }
+  
+  IntegerToArray(n: number): string[] {
     let res: string[] = [];
     let i = n;
     while (i > 0) {

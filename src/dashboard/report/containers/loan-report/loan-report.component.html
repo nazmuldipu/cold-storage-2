@@ -1,61 +1,11 @@
-<div class="page-head d-print-none">
-    <div class="d-flex justify-content-between">
-        <div class="">Loan Report</div>
-        <div class="btn-group" role="group" aria-label="Basic example">
-            <a type="button" class="btn btn-sm" [ngClass]="mode=='day'?'btn-primary':'btn-light'"
-                (click)="onModechange('day')">Day</a>
-            <a type="button" class="btn btn-sm" [ngClass]="mode=='range'?'btn-primary':'btn-light'"
-                (click)="onModechange('range')">Range</a>
-        </div>
-        <div class="">
-        </div>
-    </div>
-</div>
+<report-head [label]="label" (dateRange)="getItemByDateRange($event)"></report-head>
+
 <div class="container">
-    <div class="row d-print-none">
-        <ng-container *ngIf="mode=='day'">
-            <div class="col-auto">
-                <button class="btn btn-sm btn-light" (click)="adjustDay(-1)"><i class="fa fa-chevron-left"></i></button>
-            </div>
-            <div class="col-auto p-0">
-                <div class="input-group input-group-sm">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">Date</div>
-                    </div>
-                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" (click)="rDate.toggle()"
-                        [(ngModel)]="date" (dateSelect)="adjustDay(0)" ngbDatepicker #rDate="ngbDatepicker">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" (click)="rDate.toggle()" type="button">
-                            <i class="fa fa-calendar"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-auto">
-                <button class="btn btn-sm btn-light" (click)="adjustDay(1)"><i class="fa fa-chevron-right"></i></button>
-            </div>
-        </ng-container>
-        <div class="col-auto" *ngIf="mode=='range'">
-            <div class="input-group input-group-sm mb-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Date</div>
-                </div>
-                <input type="text" class="form-control" name="daterangeInput" daterangepicker [options]="options"
-                    (selected)="selectedDate($event)" />
-            </div>
-        </div>
-        <div class="col"></div>
-        <div class="ml-auto col-auto">
-            <a class="btn btn-sm btn-primary" (click)="onPrint()">
-                <i class="fa fa-print"></i> Print
-            </a>
-        </div>
-    </div>
     <div class="row">
-        <div class="col-12" *ngIf="loanList?.length > 0">
-            <h4 class="text-center">Loan Report for {{mode == 'day'?'Date: ' +getDateString() : 'Date range: '
-                + getDateRangeString()}}</h4>
-                <loan-table [loanList]="loanList" [list]="true"></loan-table>
+        <div class="col-12">
+            <div class="d-none d-print-block mb-4"></div>
+            <h4 class="text-center mt-3">{{tableTitle}}</h4>
+            <loan-table [loanList]="loanList" [list]="true"></loan-table>
         </div>
     </div>
 </div>

@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { Component } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { InventoryService } from 'src/service/inventory.service';
 import { UtilService } from 'src/service/util.service';
@@ -10,107 +9,30 @@ import { Inventory } from 'src/shared/model/inventory.model';
   templateUrl: './inventory-report.component.html',
   styleUrls: ['./inventory-report.component.scss'],
 })
-export class InventoryReportComponent implements OnInit {
-  year;
-  total = 0;
-  date: NgbDateStruct;
-  mode: string = 'day';
+export class InventoryReportComponent {
+  label = 'Inventory Report';
+  tableTitle = '';
   inventoryList: Inventory[] = [];
-  filteredInventoryList: Inventory[] = [];
-  public options: any;
-  public daterange: any = {};
 
   constructor(
-    private inventoryService: InventoryService,
-    private util: UtilService
-  ) {
-    this.year = new Date().getFullYear();
-    this.date = this.util.convertJsDateToNgbDate(new Date());
-  }
+    private util: UtilService,
+    private inventoryService: InventoryService
+  ) {}
 
-  ngOnInit(): void {
-    this.setDateRanges();
-    this.onModechange(this.mode);
-  }
-
-  setDateRanges() {
-    this.daterange.endDate = new Date();
-    this.daterange.startDate = new Date();
-    this.daterange.startDate.setDate(this.daterange.startDate.getDate() - 20);
-    const minDate = new Date();
-    minDate.setDate(this.daterange.startDate.getDate() - 90);
-    const maxDate = new Date();
-    maxDate.setDate(this.daterange.startDate.getDate() + 23);
-
-    this.options = {
-      autoApply: true,
-      locale: { format: 'DD MMM,YY' },
-      minDate: minDate,
-      maxDate: maxDate,
-      startDate: this.daterange.startDate,
-      endDate: this.daterange.endDate,
-      alwaysShowCalendars: false,
-    };
-  }
-
-  public selectedDate(value: any) {
-    this.daterange.startDate = value.start._d as Date;
-    this.daterange.endDate = value.end._d as Date;
-    this.getInventoryByDateRange(
-      this.daterange.startDate,
-      this.daterange.endDate
-    );
-  }
-
-  async getInventoryByDateRange(startDate: Date, endDate: Date) {
+  
+  async getItemByDateRange({ start, end, mode }) {
     this.inventoryService.inventorys$.pipe(take(2)).subscribe((data) => {
       this.inventoryList = data.filter(
         (f) =>
-          f.date['seconds'] >= startDate.getTime() / 1000 &&
-          f.date['seconds'] <= endDate.getTime() / 1000
+          f.date['seconds'] >= start.getTime() / 1000 &&
+          f.date['seconds'] <= end.getTime() / 1000
       );
       this.inventoryList.sort(this.util.dynamicSortObject('sr_no'));
+      
+      this.tableTitle =
+        this.label +
+        ' for ' +
+        this.util.getReportDateString({ start, end, mode });
     });
-  }
-
-  adjustDay(day) {
-    let date = new Date(
-      this.date.year,
-      this.date.month - 1,
-      this.date.day + day
-    );
-    this.date = this.util.convertJsDateToNgbDate(date);
-    const start = new Date(this.date.year, this.date.month - 1, this.date.day);
-    start.setHours(0, 0, 0, 0);
-    const end = new Date(this.date.year, this.date.month - 1, this.date.day);
-    end.setHours(23, 59, 59, 999);
-    this.getInventoryByDateRange(start, end);
-  }  
-
-  onModechange(event) {
-    this.mode = event;
-    switch (event) {
-      case 'day':
-        this.adjustDay(0);
-        break;
-      case 'range':
-        this.getInventoryByDateRange(
-          this.daterange.startDate,
-          this.daterange.endDate
-        );
-        break;
-    }
-  }
-
-  getDateString():string{
-    return this.date.day + '/' + this.date.month + '/' + this.date.year
-  }
-
-  getDateRangeString():string{
-    return this.util.getDateStringLocal(this.daterange.startDate) + ' to ' + this.util.getDateStringLocal(this.daterange.endDate);
-  }
-
-  onPrint() {
-    window.print();
   }
 }

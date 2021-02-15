@@ -14,6 +14,7 @@ import { DeliveryReportDateComponent } from './containers/delivery-report-date/d
 import { DeliveryReportSrNoComponent } from './containers/delivery-report-sr-no/delivery-report-sr-no.component';
 import { ProductTableComponent } from './components/product-table/product-table.component';
 import { DeliveryTableComponent } from './components/delivery-table/delivery-table.component';
+import { ReportHeadComponent } from './components/report-head/report-head.component';
 
 export const ROUTES: Routes = [
   { path: 'inventory-report', component: InventoryReportComponent },
@@ -37,6 +38,7 @@ export const ROUTES: Routes = [
     DeliveryReportSrNoComponent,
     ProductTableComponent,
     DeliveryTableComponent,
+    ReportHeadComponent,
   ],
   imports: [SharedModule, Daterangepicker, RouterModule.forChild(ROUTES)],
 })

@@ -102,4 +102,18 @@ export class UtilService {
       date.getFullYear()
     );
   }
+
+  getReportDateString({ start, end, mode }): string {
+    switch (mode) {
+      case 'range':
+        return (
+          'Date range: ' +
+          this.getDateStringLocal(start) +
+          ' to ' +
+          this.getDateStringLocal(end)
+        );
+      case 'day':
+        return 'Date : ' + this.getDateStringLocal(start);
+    }
+  }
 }

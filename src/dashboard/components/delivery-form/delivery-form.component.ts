@@ -1,10 +1,10 @@
-import { Component, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, Input } from '@angular/core';
-import { Delivery, InventoryType } from 'src/shared/model/delivery.model';
-import { FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
-import { Ledger } from 'src/shared/model/ledger.model';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { UtilService } from 'src/service/util.service';
+import { Delivery, InventoryType } from 'src/shared/model/delivery.model';
+import { Ledger } from 'src/shared/model/ledger.model';
 
 @Component({
   selector: 'delivery-form',
@@ -33,9 +33,13 @@ export class DeliveryFormComponent implements OnChanges {
       distinctUntilChanged(),
       map(term => {
         const res = term.length < 2 ? []
-          : this.ledgerList.filter(v => v.sr_no.indexOf(term.toLowerCase()) > -1 && v.year == this.ngDate.year).slice(0, 10)
-        const names = res.map(r => r.sr_no);
-        return names;
+        : this.ledgerList.filter(v => v.sr_no.toString().indexOf(term.toLowerCase()) > -1 && v.year == this.ngDate.year).slice(0, 10)
+      const names = res.map(r => r.sr_no);
+      return names;
+        // const res = term.length < 2 ? []
+        //   : this.ledgerList.filter(v => v.sr_no.toString().indexOf(term.toLowerCase()) > -1 && v.year == this.ngDate.year).slice(0, 10)
+        // const names = res.map(r => r.sr_no);
+        // return names;
       })
     )
 
