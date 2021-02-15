@@ -1,5 +1,5 @@
 <div class="form-group" [class]="col?'':'row'">
-    <label [for]="fieldId" class="d-none d-sm-block col-form-label col-form-label-sm" [class]="col?'':'col-sm-3'">
+    <label *ngIf="showLabel" [for]="fieldId" class="d-none d-sm-block col-form-label col-form-label-sm" [class]="col?'':'col-sm-3'">
         {{label}}<span *ngIf="validator?.required">*</span>
     </label>
     <div [class]="col?'':'col-sm-9'">

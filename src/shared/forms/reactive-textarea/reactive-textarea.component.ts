@@ -12,6 +12,8 @@ export class ReactiveTextareaComponent implements OnInit, DoCheck {
   @Input() fieldId: string | null = null;
   @Input() control: AbstractControl | null = null;
   @Input() row:number = 3;
+  @Input() col: boolean = false;
+  @Input() showLabel:boolean = true;
   
   label: string = null;
   validationErrors: object = null;

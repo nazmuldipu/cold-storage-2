@@ -14,7 +14,8 @@ export class ReactiveInputTypeahedComponent implements OnInit {
   @Input() control: AbstractControl | null = null;
   @Input() itemList = [];
   @Input() col: boolean = false;
-  @Input() searchPath: string;
+  @Input() searchPath: string[];
+  @Input() showLabel: boolean = true;
 
   @Output() select = new EventEmitter<any>();
 
@@ -32,7 +33,7 @@ export class ReactiveInputTypeahedComponent implements OnInit {
             ? []
             : this.itemList
                 .filter(
-                  (v) => v[this.searchPath].indexOf(term.toLowerCase()) > -1
+                  (v) => v[this.searchPath[0]].indexOf(term.toLowerCase()) > -1 || v[this.searchPath[1]].indexOf(term.toLowerCase()) > -1
                 )
                 .slice(0, 10);
         return res;
@@ -40,7 +41,10 @@ export class ReactiveInputTypeahedComponent implements OnInit {
     );
 
   formatter = (result: string) => {
-    if (result) return result[this.searchPath];
+    if (result)
+      return (
+        result[this.searchPath[1]] + '-[' + result[this.searchPath[0]] + ']'
+      );
   };
 
   ngOnInit() {
@@ -48,7 +52,7 @@ export class ReactiveInputTypeahedComponent implements OnInit {
   }
 
   onSelectItem(event) {
-    console.log(event.item[this.searchPath])
+    console.log(event.item[this.searchPath]);
     this.select.emit(event.item[this.searchPath]);
   }
 

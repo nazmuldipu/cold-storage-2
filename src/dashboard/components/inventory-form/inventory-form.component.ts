@@ -6,6 +6,7 @@ import { UtilService } from 'src/service/util.service';
 import { BaseFormComponent } from 'src/shared/forms/base-form/base-form.component';
 import { Agent } from 'src/shared/model/agent.model';
 import { InventoryType } from 'src/shared/model/inventory.model';
+import { PHONE_NUMBER_PATTERN } from 'src/shared/forms/constants/validation-patterns-list';
 
 @Component({
   selector: 'inventory-form',
@@ -17,10 +18,12 @@ export class InventoryFormComponent extends BaseFormComponent {
 
   typeEnum = InventoryType;
   typeList = [];
+  searchPath = [];
   ngDate;
 
   agentList: Agent[] = [];
   customerList: Agent[] = [];
+  existsCustomer = false;
 
   constructor(
     private fb: FormBuilder,
@@ -29,6 +32,7 @@ export class InventoryFormComponent extends BaseFormComponent {
     private util: UtilService
   ) {
     super();
+    this.searchPath = ['phone', 'name'];
     this.ngDate = this.util.convertJsDateToNgbDate(new Date());
     this.typeList = Object.keys(this.typeEnum).map((o) => {
       return { _id: o, name: this.typeEnum[o] };
@@ -48,7 +52,8 @@ export class InventoryFormComponent extends BaseFormComponent {
       this.form.patchValue(value);
     }
     if (changes.vouchar_no && this.vouchar_no != null) {
-      this.form.controls.vouchar_no.setValue(this.vouchar_no + 1);
+      const vouchar_no = this.vouchar_no + 1;
+      this.form.patchValue({ vouchar_no, sr_no: vouchar_no + '/' });
     }
   }
 
@@ -66,6 +71,28 @@ export class InventoryFormComponent extends BaseFormComponent {
     });
   }
 
+  onQuanityChange(event) {
+    console.log('onQuanityChange', event.target.value);
+    this.form.patchValue({
+      sr_no: `${this.vouchar_no + 1}/${event.target.value}`,
+    });
+  }
+
+  onPhoneChange(event) {
+    const phone = event.target.value;
+    const customer = this.customerList.find((cus) => cus.phone === phone);
+    if (customer) {
+      this.existsCustomer = true;
+      const value = {
+        customerName: customer.name,
+        customerFather: customer.father,
+        customerPhone: customer.phone,
+        customerAddress: customer.address,
+      };
+      this.form.patchValue(value);
+    }
+  }
+
   createForm() {
     this.form = this.fb.group({
       inventoryType: ['RECEIVE', Validators.required],
@@ -74,7 +101,14 @@ export class InventoryFormComponent extends BaseFormComponent {
       year: [this.ngDate.year, Validators.required],
       sr_no: ['', Validators.required],
       name: ['Potato', Validators.required],
-      customer: ['', Validators.required],
+      customerName: ['', Validators.required],
+      customerFather: ['', Validators.required],
+      customerPhone: [
+        '',
+        [Validators.required, Validators.pattern(PHONE_NUMBER_PATTERN)],
+      ],
+      customerAddress: ['', Validators.required],
+      // customer: ['', Validators.required],
       agent: [''],
       quantity: ['', Validators.required],
     });
@@ -83,9 +117,23 @@ export class InventoryFormComponent extends BaseFormComponent {
   submit() {
     if (this.form.valid) {
       const fvalue = this.form.value;
-      const dateValue = this.util.convertNgbDateToJsDate(fvalue.date);
-      console.log(dateValue);
-      const value = { ...fvalue, date: dateValue };
+      const date = this.util.convertNgbDateToJsDate(fvalue.date);
+      const customer = {
+        name: fvalue.customerName,
+        father: fvalue.customerFather,
+        phone: fvalue.customerPhone,
+        address: fvalue.customerAddress,
+      };
+      delete fvalue['customerName'];
+      delete fvalue['customerFather'];
+      delete fvalue['customerPhone'];
+      delete fvalue['customerAddress'];
+      if (!this.existsCustomer) {
+        this.customerService
+          .create(customer as Agent)
+          .then(() => console.log('New custome created'));
+      }
+      const value = { ...fvalue, date, customer };
       if (this.exists) {
         this.update.emit(value);
       } else {

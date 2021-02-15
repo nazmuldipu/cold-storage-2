@@ -1,70 +1,4 @@
 <div class="output">
-  <!-- <div class="receipt border-right">
-    <div class="head">
-      <h3 class="text-center">{{company?.name_bd}}</h3>
-      <h5 class="text-center">{{company?.address_bd}}| মোবাইলঃ {{company?.phone_bd}}</h5>
-    </div>
-    <div class="row">
-      <div class="col-12 text-center">
-        <span class="border p-1 strong rounded">অফিস কপি</span>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-6">লট নং - {{inventory?.sr_no}}</div>
-      <div class="col-6 text-right">তারিখ - {{inventory?.date.toMillis() | date:'dd/MM/yyyy'}}</div>
-    </div>
-    <table class="table table-bordered">
-      <tbody>
-        <tr>
-          <td>বস্তার সংখ্যা </td>
-          <td><strong>{{inventory?.quantity}} বস্তা </strong></td>
-        </tr>
-        <tr>
-          <td>আলুর বিবরণ </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td> প্রতি বস্তার ভাড়া (৫০ কেজি) </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>ঋণ প্রদান </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>খালি বস্তা প্রদান </td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="row">
-      <div class="col-auto">মজুতকারীর নামঃ </div>
-      <div class="col p-0"><strong> {{inventory?.customer?.name}}</strong></div>
-      <div class="border-left col-auto">মোবাইলঃ </div>
-      <div class="col-auto pl-0"><strong> {{inventory?.customer?.phone}}</strong></div>
-    </div>
-    <div class="row">
-      <div class="col-auto">পিতার নামঃ </div>
-      <div class="col p-0"><strong> {{inventory?.customer?.father}}</strong></div>
-    </div>
-    <div class="row">
-      <div class="col-auto">ঠিকানাঃ </div>
-      <div class="col p-0"><strong> {{inventory?.customer?.address}}</strong></div>
-    </div>
-    <div class="row mb-3">
-      <div class="col-auto">মারফতঃ </div>
-      <div class="col p-0"><strong>
-          {{inventory?.agent? ''+inventory?.agent?.name+'['+ inventory?.agent?.phone +']' : ''}}</strong></div>
-    </div>
-
-    বিঃ দ্রঃ আলু সংরক্ষণ পত্রে উল্লেখিত লট নং- এর অনুকূলে ঋণ গ্রহণ থাকিতে পারে, তাই অফিসে সঠিক তথ্য জানিয়া উক্ত লটের
-    আলু ক্রয়/বিক্রয় করা যাইতে পারে। অন্যথায় ক্ষতিগ্রস্থ হইলে কোম্পানি কোন প্রকার দ্বায়-দায়িত্ব বহন করিবে না।
-    <div class="row mt-5 pt-5">
-      <div class="col-auto"><span class="border-top">গ্রহণকারীর সাক্ষর</span></div>
-      <div class="col text-center"><span class="border-top"> সুপারভাইজার/হিসাব রক্ষক </span></div>
-      <div class="col-auto text-right"><span class="border-top"> ব্যাবস্থাপক</span></div>
-    </div>
-  </div> -->
   <div class="receipt">
     <div class="head">
       <h3 class="text-center">{{company?.name_bd}}</h3>
@@ -78,7 +12,7 @@
     </div>
     <div class="row">
       <div class="col-6">লট নং - {{inventory?.sr_no}}</div>
-      <div class="col-6 text-right">তারিখ - {{inventory?.date.toMillis() | date:'dd/MM/yyyy'}}</div>
+      <div class="col-6 text-right">তারিখ - {{inventory?.date.toMillis() | date:'dd/MM/yyyy'}}</div>
     </div>
     <table class="table table-bordered">
       <tbody>
@@ -117,7 +51,7 @@
     <div class="row">
       <div class="col-auto">ঠিকানাঃ </div>
       <div class="col p-0"><strong> {{inventory?.customer?.address}}</strong></div>
-    </div>
+    </div>
     <div class="row mb-3">
       <div class="col-auto">মারফতঃ </div>
       <div class="col p-0"><strong>
@@ -132,85 +66,3 @@
     </div>
   </div>
 </div>
-
-<!-- <div class="A4 landscape">
-  <section class="sheet padding-10mm">
-    <div class="row">
-      <div class="col-6 border-right">
-        <div class="head">
-          <h3 class="text-center">{{company?.name_bd}}</h3>
-          <h5 class="text-center">{{company?.address_bd}}| মোবাইলঃ {{company?.phone_bd}}</h5>
-        </div>
-        <div class="row">
-          <div class="col-12 text-center">
-            <span class="border p-1 strong rounded">Office Copy</span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6">লট নং - {{inventory?.sr_no}}</div>
-          <div class="col-6 text-right">তারিখ - {{inventory?.date.toMillis() | date:'dd/MM/yyyy'}}</div>
-        </div>
-        <table class="table table-bordered">
-          <tbody>
-            <tr>
-              <td>বস্তার সংখ্যা </td>
-              <td><strong>{{inventory?.quantity}} বস্তা </strong></td>
-            </tr>
-            <tr>
-              <td>আলুর বিবরণ </td>
-              <td></td>
-            </tr>
-            <tr>
-              <td> প্রতি বস্তার ভাড়া (৫০ কেজি) </td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>ঋণ প্রদান </td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>খালি বস্তা প্রদান </td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="row">
-          <div class="col-auto">মজুতকারীর নামঃ </div>
-          <div class="col p-0"><strong> {{inventory?.customer?.name}}</strong></div>
-          <div class="border-left col-auto">মোবাইলঃ </div>
-          <div class="col-auto pl-0"><strong> {{inventory?.customer?.phone}}</strong></div>
-        </div>
-        <div class="row">
-          <div class="col-auto">পিতার নামঃ </div>
-          <div class="col p-0"><strong> {{inventory?.customer?.father}}</strong></div>
-        </div>
-        <div class="row">
-          <div class="col-auto">ঠিকানাঃ </div>
-          <div class="col p-0"><strong> {{inventory?.customer?.address}}</strong></div>
-        </div>
-        <div class="row mb-3">
-          <div class="col-auto">মারফতঃ </div>
-          <div class="col p-0"><strong>
-              {{inventory?.agent? ''+inventory?.agent?.name+'['+ inventory?.agent?.phone +']' : ''}}</strong></div>
-        </div>
-
-        বিঃ দ্রঃ আলু সংরক্ষণ পত্রে উল্লেখিত লট নং- এর অনুকূলে ঋণ গ্রহণ থাকিতে পারে, তাই অফিসে সঠিক তথ্য জানিয়া উক্ত লটের
-        আলু ক্রয়/বিক্রয় করা যাইতে পারে। অন্যথায় ক্ষতিগ্রস্থ হইলে কোম্পানি কোন প্রকার দ্বায়-দায়িত্ব বহন করিবে না।
-        <div class="row mt-5 pt-5">
-          <div class="col-auto"><span class="border-top">গ্রহণকারীর সাক্ষর</span></div>
-          <div class="col text-center"><span class="border-top"> সুপারভাইজার/হিসাব রক্ষক </span></div>
-          <div class="col-auto text-right"><span class="border-top"> ব্যাবস্থাপক</span></div>
-        </div>
-      </div>
-      <div class="col-6">
-        
-      </div>
-
-    </div>
-
-  </section>
-</div> -->
-
-<!-- <p>inventory-print works!</p>
-{{id}} <br>
-{{inventory | json}} -->

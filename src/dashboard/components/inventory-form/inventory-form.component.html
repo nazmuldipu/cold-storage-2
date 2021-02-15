@@ -8,22 +8,90 @@
 
 <form [formGroup]="form" (ngSubmit)="submit()" class="p-3">
   <!-- Form Elements -->
-  <reactive-input [fieldId]="'vouchar_no'" [control]="form.get('vouchar_no')" [readonly]="true"> </reactive-input>
-  <reactive-input [fieldId]="'name'" [control]="form.get('name')" [readonly]="true"> </reactive-input>
+  <div class="row">
+    <div class="col-md-6">
+      <reactive-input [fieldId]="'year'" [control]="form.get('year')" [type]="'number'" [readonly]="true">
+      </reactive-input>
+      <reactive-input [fieldId]="'vouchar_no'" [control]="form.get('vouchar_no')" [readonly]="true"> </reactive-input>
+    </div>
+    <div class="col-md-6">
+      <reactive-input [fieldId]="'sr_no'" [control]="form.get('sr_no')" [readonly]="true"> </reactive-input>
+      <reactive-date-picker [fieldId]="'date'" [control]="form.get('date')"></reactive-date-picker>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <reactive-input [fieldId]="'quantity'" [control]="form.get('quantity')" [type]="'number'"
+        (onChange)="onQuanityChange($event)">
+      </reactive-input>
+    </div>
+
+  </div>
+
+  <label>মজুতকারীর তথ্য </label>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4 col-form-label col-form-label-sm"> মোবাইলঃ</div>
+        <div class="col-md-8 p-0">
+          <reactive-input [fieldId]="'customerPhone'" [maxlength]="11" [control]="form.get('customerPhone')"
+            [col]="true" [showLabel]="false" (onChange)="onPhoneChange($event)"></reactive-input>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4 col-form-label col-form-label-sm"> নামঃ </div>
+        <div class="col-md-8 p-0">
+          <reactive-input [fieldId]="'customerName'" [control]="form.get('customerName')" [col]="true"
+            [showLabel]="false">
+          </reactive-input>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4 col-form-label col-form-label-sm pr-0"> পিতার নামঃ</div>
+        <div class="col-md-8 pl-0">
+          <reactive-input [fieldId]="'customerFather'" [control]="form.get('customerFather')"
+            [col]="true" [showLabel]="false">
+          </reactive-input>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-2 col-form-label col-form-label-sm">
+      ঠিকানাঃ
+    </div>
+    <div class="col-10 pl-0">
+      <reactive-textarea [fieldId]="'customerAddress'" [control]="form.get('customerAddress')" [col]="true">
+      </reactive-textarea>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2 col-form-label col-form-label-sm">মারফতঃ </div>
+    <div class="col-10 pl-0">
+      <reactive-input-typeahed [fieldId]="'agent'" [control]="form.get('agent')" [itemList]="agentList" [col]="true"
+        [showLabel]="false" [searchPath]="searchPath">
+      </reactive-input-typeahed>
+    </div>
+  </div>
+
+  <!-- <reactive-input [fieldId]="'name'" [control]="form.get('name')" [readonly]="true"> </reactive-input>
   <reactive-select [fieldId]="'inventoryType'" [control]="form.get('inventoryType')" [options]="typeList">
-  </reactive-select>
-  <reactive-input [fieldId]="'year'" [control]="form.get('year')" [type]="'number'"> </reactive-input>
-  <reactive-date-picker [fieldId]="'date'" [control]="form.get('date')"></reactive-date-picker>
-  <reactive-input [fieldId]="'sr_no'" [control]="form.get('sr_no')"> </reactive-input>
-  <reactive-input-typeahed [fieldId]="'customer'" [control]="form.get('customer')" [itemList]="customerList">
-  </reactive-input-typeahed>
-  <reactive-input-typeahed [fieldId]="'agent'" [control]="form.get('agent')" [itemList]="agentList">
-  </reactive-input-typeahed>
-  <reactive-input [fieldId]="'quantity'" [control]="form.get('quantity')" [type]="'number'"> </reactive-input>
+  </reactive-select> -->
+  <!-- <reactive-input-typeahed [fieldId]="'customer'" [control]="form.get('customer')" [itemList]="customerList">
+  </reactive-input-typeahed> -->
+
+
 
   <!-- Buttons -->
   <div class="d-flex flex-row-reverse bd-highlight">
-    <span (mouseenter)="mouseoverShifting = true" (mouseleave)="mouseoverShifting = false" >
+    <span (mouseenter)="mouseoverShifting = true" (mouseleave)="mouseoverShifting = false">
       <button type="submit" class="btn btn-sm btn-light mx-1" [disabled]="!form.valid">{{exists ?
         'Update':'Save'}}</button>
     </span>
@@ -34,5 +102,5 @@
   <!-- Form validation error list -->
   <div *ngIf="mouseoverShifting" class="text-danger">
     <reactive-form-validation [form]="form"></reactive-form-validation>
-  </div>  
+  </div>
 </form>

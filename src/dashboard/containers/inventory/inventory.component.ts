@@ -30,7 +30,6 @@ export class InventoryComponent implements OnInit {
 
   async getInventoryList() {
     this.inventoryService.inventorys$.subscribe((data) => {
-      console.log('Changes', data.length);
       if (this.inventoryList.length != data.length) {
         const value = data
           .filter((f) => f.year == this.year)
@@ -44,7 +43,6 @@ export class InventoryComponent implements OnInit {
     const resp = this.inventoryList.find(
       (f) => f.year == event.year && f.sr_no == event.sr_no
     );
-    console.log(resp);
     if (resp) {
       this.errorMessage = 'এই এস আর নম্বর আগেথেকেই আছে।';
     } else {

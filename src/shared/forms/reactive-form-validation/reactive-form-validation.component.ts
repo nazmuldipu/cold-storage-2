@@ -1,13 +1,11 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, ValidationErrors } from '@angular/forms';
+
 import { LABEL_LIST } from '../constants/reactive-form-labels-list';
-import { REQUIRED_MESSAGE } from '../constants/validation-messages-list';
+import {
+  PATTERN_MESSAGE,
+  REQUIRED_MESSAGE,
+} from '../constants/validation-messages-list';
 
 @Component({
   selector: 'reactive-form-validation',
@@ -33,7 +31,13 @@ export class ReactiveFormValidationComponent implements OnChanges {
         Object.keys(controlErrors).forEach((keyError) => {
           errors +=
             LABEL_LIST[key] +
-            (keyError == 'required' ? REQUIRED_MESSAGE : 'Unknown') +
+            (keyError == 'required'
+              ? REQUIRED_MESSAGE
+              : keyError == 'pattern'
+              ? PATTERN_MESSAGE
+              : keyError == 'maxlength'
+              ? 'Max Length error'
+              : 'Unknown') +
             '; ';
         });
       }

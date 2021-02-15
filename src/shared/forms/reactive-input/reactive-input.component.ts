@@ -1,11 +1,4 @@
-import {
-  Component,
-  DoCheck,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, DoCheck, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
 import { LABEL_LIST } from '../constants/reactive-form-labels-list';
@@ -22,8 +15,9 @@ export class ReactiveInputComponent implements OnInit, DoCheck {
   @Input() maxlength: number = null;
   @Input() readonly: boolean = false;
   @Input() col: boolean = false;
+  @Input() showLabel:boolean = true;
 
-  @Output() change = new EventEmitter<any>();
+  @Output() onChange = new EventEmitter<any>();
 
   label: string = null;
   validator;
@@ -43,8 +37,7 @@ export class ReactiveInputComponent implements OnInit, DoCheck {
         : null;
   }
 
-  onChange(event) {
-    console.log(event);
-    this.change.emit(event);
+  onValueChange(event) {
+    this.onChange.emit(event);
   }
 }
