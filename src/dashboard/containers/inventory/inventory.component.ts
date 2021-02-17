@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { InventoryService } from 'src/service/inventory.service';
 import { UtilService } from 'src/service/util.service';
 import { Inventory } from 'src/shared/model/inventory.model';
@@ -18,7 +19,8 @@ export class InventoryComponent implements OnInit {
 
   constructor(
     private inventoryService: InventoryService,
-    private util: UtilService
+    private util: UtilService,
+    private router: Router
   ) {
     let dd = new Date();
     this.year = dd.getFullYear();
@@ -58,12 +60,22 @@ export class InventoryComponent implements OnInit {
         .create(value)
         .then((ref) => {
           console.log(ref);
+          // this.router.navigate(['/dashboard/inventory-print', ref.id]);
+          this.openInNewTab(this.router, `/dashboard/inventory-print/${ref.id}`)
         })
         .catch((error) => {
           console.log('error', error);
         });
     }
   }
+
+  openInNewTab(router: Router, namedRoute) {
+    let newRelativeUrl = router.createUrlTree([namedRoute]);
+    let baseUrl = window.location.href.replace(router.url, '');
+
+    window.open(baseUrl + newRelativeUrl, '_blank');
+  }
+
   async onUpdate(event: Inventory) {
     this.sendingData = true;
     const value = {

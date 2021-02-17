@@ -12,16 +12,16 @@ export class AgentListComponent {
 
   @Output() edit = new EventEmitter<string>();
 
-  tableName = 'Agent Table';
+  tableName = 'এজেন্ট টেবিল';
   columns = [
     { path: '#', label: '#', className: 'font-weight-bold' },
     {
       path: 'name',
-      label: 'Name',
+      label: 'নাম',
       searchable: true,
     },
-    { path: 'father', label: 'Father' },
-    { path: 'phone', label: 'Phone', searchable: true },
+    { path: 'father', label: 'পিতা' },
+    { path: 'phone', label: 'ফোন', searchable: true },
     {
       key: '_id',
       type: 'button',

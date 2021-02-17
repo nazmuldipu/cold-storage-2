@@ -52,8 +52,7 @@ export class ReactiveInputTypeahedComponent implements OnInit {
   }
 
   onSelectItem(event) {
-    console.log(event.item[this.searchPath]);
-    this.select.emit(event.item[this.searchPath]);
+    this.select.emit(event.item);
   }
 
   ngDoCheck() {

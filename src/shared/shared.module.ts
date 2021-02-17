@@ -25,6 +25,7 @@ import { BaseFormComponent } from './forms/base-form/base-form.component';
 import { ReactiveDatePickerComponent } from './forms/reactive-date-picker/reactive-date-picker.component';
 import { ReactiveInputTypeahedComponent } from './forms/reactive-input-typeahed/reactive-input-typeahed.component';
 import { ReactiveInputColComponent } from './forms/reactive-input-col/reactive-input-col.component';
+import { DashHeadCardComponent } from './components/dash-head-card/dash-head-card.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { ReactiveInputColComponent } from './forms/reactive-input-col/reactive-i
     ReactiveDatePickerComponent,
     ReactiveInputTypeahedComponent,
     ReactiveInputColComponent,
+    DashHeadCardComponent,
   ],
   imports: [
     CommonModule,
@@ -60,6 +62,7 @@ import { ReactiveInputColComponent } from './forms/reactive-input-col/reactive-i
   exports: [
     CommonModule,
     CurrencyBdPipe,
+    DashHeadCardComponent,
     FormsModule,
     InventoryTableComponent,
     LedgerListComponent,

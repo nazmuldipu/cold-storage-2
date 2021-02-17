@@ -11,129 +11,129 @@ export class DashNavComponent implements OnInit {
   user;
   nav_data = [
     {
-      name: 'Dashboard',
+      name: 'ড্যাশবোর্ড',
       link: '/dashboard',
       icon: 'fa-home',
       subnav: [],
     },
 
     {
-      name: 'Inventory Setting',
+      name: 'ইনভেন্টরি সেটিং',
       icon: 'fa-home',
       subnav: [
         {
-          name: 'Add Chamber',
+          name: 'চেম্বার',
           icon: 'fa-plus',
           link: '/dashboard/chamber',
         },
         {
-          name: 'Add Floor',
+          name: 'ফ্লোর',
           icon: 'fa-plus',
           link: '/dashboard/floor',
         },
         {
-          name: 'Add Line',
+          name: 'লাইন',
           icon: 'fa-plus',
           link: '/dashboard/line',
         },
         {
-          name: 'Add Pocket',
+          name: 'পকেট',
           icon: 'fa-plus',
           link: '/dashboard/pocket',
-        }
+        },
       ],
     },
     {
-      name: 'Inventory',
+      name: 'ইনভেন্টরি',
       icon: 'fa-cubes',
       subnav: [
         {
-          name: 'Agent',
+          name: 'এজেন্ট ',
           icon: 'fa-plus',
           link: '/dashboard/agent',
         },
         {
-          name: 'Loading Party',
+          name: 'লোডিং পার্টি',
           icon: 'fa-plus',
           link: '/dashboard/customer',
         },
         {
-          name: 'Inventory',
+          name: 'ইনভেন্টরি',
           icon: 'fa-plus',
           link: '/dashboard/inventory',
         },
         {
-          name: 'Palloting',
+          name: 'প্যালটিং',
           icon: 'fa-plus',
           link: '/dashboard/pallot',
-        }
+        },
       ],
     },
     {
-      name: 'Inventory Report',
+      name: 'ইনভেন্টরি রিপোর্ট',
       icon: 'fa-cubes',
       subnav: [
         {
-          name: 'Inventory list',
+          name: 'ইনভেন্টরি তালিকা',
           icon: 'fa-plus',
           link: '/dashboard/inventory-list',
         },
         {
-          name: 'Inventory report',
+          name: 'ইনভেন্টরি রিপোর্ট',
           icon: 'fa-plus',
           link: '/dashboard/report/inventory-report',
-        }
+        },
       ],
     },
     {
-      name: 'Ledger',
+      name: 'লেজার',
       icon: 'fa-archive',
       link: '/dashboard/ledger-add',
       subnav: [],
     },
     {
-      name: 'Delivery',
+      name: 'ডেলিভারি',
       icon: 'fa-archive',
       link: '/dashboard/delivery',
       subnav: [],
     },
     {
-      name: 'Report',
+      name: 'রিপোর্ট',
       icon: 'fa-cubes',
       subnav: [
         {
-          name: 'Ledger report',
+          name: 'লেজার রিপোর্ট',
           icon: 'fa-plus',
           link: '/dashboard/report/ledger-report',
         },
         {
-          name: 'Loan report',
+          name: 'লোন রিপোর্ট',
           icon: 'fa-plus',
           link: '/dashboard/report/loan-report',
         },
         {
-          name: 'Product report',
+          name: 'প্রোডাক্ট রিপোর্ট',
           icon: 'fa-plus',
           link: '/dashboard/report/product-report',
         },
         {
-          name: 'Delivery report by Date',
+          name: 'ডেলিভারি রিপোর্ট তারিখ অনুসারে',
           icon: 'fa-plus',
           link: '/dashboard/report/delivery-report-date',
         },
         {
-          name: 'Delivery report by SR',
+          name: 'ডেলিভারি রিপোর্ট লট নং অনুসারে',
           icon: 'fa-plus',
           link: '/dashboard/report/delivery-report-sr',
-        }
+        },
       ],
     },
     {
-      name: 'General Setting',
+      name: 'জেনারেল সেটিং',
       icon: 'fa-cog',
       subnav: [
-        { name: 'User', icon: 'fa-user', link: '/dashboard/user' },
-        { name: 'Role', icon: 'fa-shopping-bag', link: '/dashboard/role' },
+        { name: 'ইউজার', icon: 'fa-user', link: '/dashboard/user' },
+        { name: 'রোল', icon: 'fa-shopping-bag', link: '/dashboard/role' },
         // { name: 'Company', icon: 'fa-building', link: '/dashboard/company' },
       ],
     },
@@ -151,7 +151,7 @@ export class DashNavComponent implements OnInit {
     // },
   ];
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService) {}
 
   ngOnInit(): void {
     this.auth.user$.subscribe((data) => {

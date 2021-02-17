@@ -42,8 +42,8 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         const resp = await this.auth.loginWithEmail(this.form.controls.username.value, this.form.controls.password.value);
         this.loading = false;
-        console.log(resp.user);
         if (resp.user.email) {
+          this.router.navigate(['/dashboard']);      
           console.log(resp.user.email);
           this.getUser(resp);
         }
@@ -57,7 +57,6 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     await this.userService.get(data.user.uid).pipe(take(2)).subscribe(data => {
       this.loading = false;
-      this.router.navigate(['/dashboard']);
       console.log(data);
     }, error => {
       this.loading = false;

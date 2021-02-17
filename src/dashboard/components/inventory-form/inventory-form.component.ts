@@ -72,7 +72,6 @@ export class InventoryFormComponent extends BaseFormComponent {
   }
 
   onQuanityChange(event) {
-    console.log('onQuanityChange', event.target.value);
     this.form.patchValue({
       sr_no: `${this.vouchar_no + 1}/${event.target.value}`,
     });

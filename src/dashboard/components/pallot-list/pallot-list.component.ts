@@ -11,7 +11,7 @@ export class PallotListComponent {
 
   @Output() edit = new EventEmitter<any>();
 
-  tableName = 'Inventory Table';
+  tableName = 'Pallot Table';
   columns = [
     { path: '#', label: '#', className: 'font-weight-bold' },
     {

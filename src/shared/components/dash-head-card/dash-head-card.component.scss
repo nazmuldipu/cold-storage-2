@@ -1,0 +1,83 @@
+// .card:last-child {
+//   margin-bottom: 0;
+// }
+
+.widget-overview-box {
+  min-height: 6rem;
+  position: relative;
+  border-left: 4px solid;
+  .overview-icon {
+    display: inline-block;
+    border-radius: 4px;
+    width: 2em;
+    height: 2rem;
+    line-height: 2rem;
+    text-align: center;
+    vertical-align: middle;
+  }
+}
+
+.card {
+  background: #ffffff;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+}
+
+.widget-overview-box.widget-overview-box-1 .widget-overview-box .overview-icon {
+  display: inline-block;
+  border-radius: 4px;
+  width: 2em;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  vertical-align: middle;
+}
+.widget-overview-box .overview-icon i {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.widget-overview-box .overview-title {
+  font-weight: 600;
+  font-size: 1.125rem;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+}
+
+.widget-overview-box .overview-detail {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.widget-overview-box .col-6:first-child {
+  border-right: 1px solid #dee2e6;
+}
+
+.widget-overview-box .overview-detail .p-col-6 {
+  padding: 0.5rem;
+}
+
+.widget-overview-box .overview-number {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.widget-overview-box .overview-subtext {
+  color: #6c757d;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+h4:first-child {
+  margin-top: 0;
+}
+
+.list-group-item {
+  padding: 0.25rem 1.25rem;
+}
+.card > .list-group {
+  border: none;
+}

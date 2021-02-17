@@ -10,23 +10,23 @@ export class InventoryTableComponent {
   @Input() inventoryList: Inventory[];
   @Input() list: boolean;
 
-  tableName = 'Inventory Table';
+  tableName = 'ইনভেন্টরি টেবিল';
   columns = [
     { path: '#', label: '#', className: 'font-weight-bold' },
     {
       path: 'date',
-      label: 'Date',
+      label: 'তারিখ',
       pipe: 'date',
       pipeArgs: 'dd/MM/yyyy',
       totalLabel: true,
     },
-    { path: 'sr_no', label: 'SR No.', searchable: true },
-    { path: 'customer.name', label: 'Customer' },
-    { path: 'customer.phone', label: 'Phone', searchable: true },
-    { path: 'agent.name', label: 'Agent' },
+    { path: 'sr_no', label: 'লট নং.', searchable: true },
+    { path: 'customer.name', label: 'পার্টি' },
+    { path: 'customer.phone', label: 'ফোন', searchable: true },
+    { path: 'agent.name', label: 'মারফত' },
     {
       path: 'quantity',
-      label: 'Quantity',
+      label: 'পরিমাণ',
       pipe: 'currencyBd',
       className: 'text-right',
       total: true,

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Inventory, InventoryType } from 'src/shared/model/inventory.model';
 import { InventoryService } from 'src/service/inventory.service';
 import { CompanyInfo } from 'src/shared/data/company.data';
+import { Inventory } from 'src/shared/model/inventory.model';
 
 @Component({
   selector: 'app-inventory-print',

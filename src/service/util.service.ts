@@ -103,6 +103,16 @@ export class UtilService {
     );
   }
 
+  getStartDate(): Date {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+  getEndDate() {
+    const date = new Date();
+    date.setHours(23, 59, 59, 999);
+    return date;
+  }
   getReportDateString({ start, end, mode }): string {
     switch (mode) {
       case 'range':

@@ -1,5 +1,5 @@
 <div class="form-head">
-  {{exists?'Update': 'New'}} Inventory
+  {{exists?'হালনাগাদ': 'নতুন'}} ইনভেন্টরি
 </div>
 
 <div class="alert alert-danger" *ngIf="errorMessage.length>0">
@@ -55,8 +55,8 @@
       <div class="row">
         <div class="col-md-4 col-form-label col-form-label-sm pr-0"> পিতার নামঃ</div>
         <div class="col-md-8 pl-0">
-          <reactive-input [fieldId]="'customerFather'" [control]="form.get('customerFather')"
-            [col]="true" [showLabel]="false">
+          <reactive-input [fieldId]="'customerFather'" [control]="form.get('customerFather')" [col]="true"
+            [showLabel]="false">
           </reactive-input>
         </div>
       </div>
@@ -80,14 +80,6 @@
       </reactive-input-typeahed>
     </div>
   </div>
-
-  <!-- <reactive-input [fieldId]="'name'" [control]="form.get('name')" [readonly]="true"> </reactive-input>
-  <reactive-select [fieldId]="'inventoryType'" [control]="form.get('inventoryType')" [options]="typeList">
-  </reactive-select> -->
-  <!-- <reactive-input-typeahed [fieldId]="'customer'" [control]="form.get('customer')" [itemList]="customerList">
-  </reactive-input-typeahed> -->
-
-
 
   <!-- Buttons -->
   <div class="d-flex flex-row-reverse bd-highlight">
