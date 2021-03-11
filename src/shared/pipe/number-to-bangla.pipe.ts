@@ -6,10 +6,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class NumberToBanglaPipe implements PipeTransform {
   num_to_bd = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯']
 
-  transform(value: number, args?: any): string {
+  transform(value: any, args?: any): string {
     let v = (value + '').split(".");
     if (v.length == 1) {
-      return this.engToBd(value);
+      return this.engToBd(parseInt(value));
     } else if (v.length == 2) {
       return this.engToBd(parseInt(v[0])) + '.' + this.engToBd(parseInt(v[1]));
     }
