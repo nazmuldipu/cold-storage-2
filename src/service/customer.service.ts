@@ -28,7 +28,7 @@ export class CustomerService {
 
   getAndStoreAll() {
     return this.afs
-      .collection(this.serviceUrl, (ref) => ref.orderBy('slug'))
+      .collection(this.serviceUrl, (ref) => ref.orderBy('name'))
       .snapshotChanges()
       .subscribe((data) => {
         this.customers = [];

@@ -21,7 +21,8 @@ export class InventoryTableComponent {
       totalLabel: true,
     },
     { path: 'sr_no', label: 'লট নং.', searchable: true },
-    { path: 'customer.name', label: 'পার্টি' },
+    { path: 'customer.name', label: 'পার্টি', searchable: true},
+    { path: 'customer.father', label: 'পিতা'},
     { path: 'customer.phone', label: 'ফোন', searchable: true },
     { path: 'agent.name', label: 'মারফত' },
     {

@@ -3,7 +3,14 @@
 
     <!-- Write HTML just like a web page -->
     <article>This is an A4 document (landscape) 0.</article>
-
+    h
+    {{form.value | json}}
+    j
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <input type="number" formControlName="capacity" name="capacity" />
+      <button>Submit</button>
+      
+    </form>
   </section>
 </div>
 <div class="A4 landscape">

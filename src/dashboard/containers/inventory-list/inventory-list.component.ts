@@ -64,8 +64,9 @@ export class InventoryListComponent implements OnInit {
   }
 
   onCustomerClick(customerId) {
+    const customer = this.customerList.find(f=> f._id == customerId);
     this.filteredInventoryList = this.inventoryList.filter(
-      (f) => f.customer._id == customerId
+      (f) => (f.customer._id == customerId) || (f.customer.name === customer.name && f.customer.father == f.customer.father)
     );
     this.calculateTotalQuantity();
   }

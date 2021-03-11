@@ -104,7 +104,7 @@ export class InventoryFormComponent extends BaseFormComponent {
       customerFather: ['', Validators.required],
       customerPhone: [
         '',
-        [Validators.required, Validators.pattern(PHONE_NUMBER_PATTERN)],
+        [Validators.pattern(PHONE_NUMBER_PATTERN)],
       ],
       customerAddress: ['', Validators.required],
       // customer: ['', Validators.required],
