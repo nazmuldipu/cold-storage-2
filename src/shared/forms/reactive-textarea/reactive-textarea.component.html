@@ -1,10 +1,9 @@
 <div class="form-group" [class]="col?'':'row'">
     <label [for]="fieldId" class="d-none d-sm-block col-form-label col-form-label-sm"
-        [class]="col?'p-0':'col-sm-3'">{{label}} </label>
+        [class]="col?'p-0':'col-sm-3'">{{label}} <span *ngIf="validator?.required">*</span> </label>
     <div [class]="col?'':'col-sm-9'">
         <textarea class="form-control form-control-sm" [id]="fieldId" [formControl]="control" [rows]="row"
             [placeholder]="label"></textarea>
-
         <app-reactive-validation [validationErrors]="validationErrors" [name]="label"></app-reactive-validation>
     </div>
 </div>

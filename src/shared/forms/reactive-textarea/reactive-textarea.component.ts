@@ -16,6 +16,7 @@ export class ReactiveTextareaComponent implements OnInit, DoCheck {
   @Input() showLabel:boolean = true;
   
   label: string = null;
+  validator;
   validationErrors: object = null;
 
   ngOnInit() {
@@ -23,6 +24,9 @@ export class ReactiveTextareaComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
+    if (this.control['validator'])
+      this.validator = this.control.validator({} as AbstractControl);
+      
     this.validationErrors =
       this.control.touched && this.control.invalid
         ? this.control['errors']

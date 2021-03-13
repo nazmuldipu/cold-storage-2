@@ -83,6 +83,7 @@ export class InventoryComponent implements OnInit {
       slug: event.name.toLowerCase(),
       createdAt: this.inventory.createdAt,
     };
+    
     await this.inventoryService
       .update(this.inventory._id, value)
       .then(() => {

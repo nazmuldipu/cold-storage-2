@@ -10,73 +10,53 @@
   <!-- Form Elements -->
   <div class="row">
     <div class="col-md-6">
-      <reactive-input [fieldId]="'year'" [control]="form.get('year')" [type]="'number'" [readonly]="true">
+      <reactive-input [fieldId]="'year'" [control]="form.get('year')" [type]="'number'" [readonly]="true" [col]="true">
       </reactive-input>
-      <reactive-input [fieldId]="'vouchar_no'" [control]="form.get('vouchar_no')" [readonly]="true"> </reactive-input>
+      <reactive-input [fieldId]="'vouchar_no'" [control]="form.get('vouchar_no')" [readonly]="true" [col]="true">
+      </reactive-input>
     </div>
     <div class="col-md-6">
-      <reactive-input [fieldId]="'sr_no'" [control]="form.get('sr_no')" [readonly]="true"> </reactive-input>
-      <reactive-date-picker [fieldId]="'date'" [control]="form.get('date')"></reactive-date-picker>
+      <reactive-input [fieldId]="'sr_no'" [control]="form.get('sr_no')" [readonly]="true" [col]="true">
+      </reactive-input>
+      <reactive-date-picker [fieldId]="'date'" [control]="form.get('date')" [col]="true"></reactive-date-picker>
     </div>
   </div>
   <div class="row">
     <div class="col-12">
       <reactive-input [fieldId]="'quantity'" [control]="form.get('quantity')" [type]="'number'"
-        (onChange)="onQuanityChange($event)">
+        (onChange)="onQuanityChange($event)" [col]="true">
       </reactive-input>
     </div>
 
   </div>
 
-  <label>মজুতকারীর তথ্য </label>
+  <div class="pt-2">মজুতকারীর তথ্য </div>
   <div class="row">
     <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4 col-form-label col-form-label-sm"> মোবাইলঃ</div>
-        <div class="col-md-8 p-0">
-          <reactive-input [fieldId]="'customerPhone'" [maxlength]="11" [control]="form.get('customerPhone')"
-            [col]="true" [showLabel]="false" (onChange)="onPhoneChange($event)"></reactive-input>
-        </div>
-      </div>
+      <reactive-input [fieldId]="'customerPhone'" [maxlength]="11" [control]="form.get('customerPhone')" [col]="true"
+        (onChange)="onPhoneChange($event)"></reactive-input>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4 col-form-label col-form-label-sm"> নামঃ </div>
-        <div class="col-md-8 p-0">
-          <reactive-input [fieldId]="'customerName'" [control]="form.get('customerName')" [col]="true"
-            [showLabel]="false">
-          </reactive-input>
-        </div>
-      </div>
+      <reactive-input [fieldId]="'customerName'" [control]="form.get('customerName')" [col]="true">
+      </reactive-input>
     </div>
     <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4 col-form-label col-form-label-sm pr-0"> পিতার নামঃ</div>
-        <div class="col-md-8 pl-0">
-          <reactive-input [fieldId]="'customerFather'" [control]="form.get('customerFather')" [col]="true"
-            [showLabel]="false">
-          </reactive-input>
-        </div>
-      </div>
+      <reactive-input [fieldId]="'customerFather'" [control]="form.get('customerFather')" [col]="true">
+      </reactive-input>
     </div>
 
   </div>
-  <div class="row">
-    <div class="col-2 col-form-label col-form-label-sm">
-      ঠিকানাঃ
-    </div>
-    <div class="col-10 pl-0">
+  <div class="row">    
+    <div class="col-12">
       <reactive-textarea [fieldId]="'customerAddress'" [control]="form.get('customerAddress')" [col]="true">
       </reactive-textarea>
     </div>
   </div>
   <div class="row">
-    <div class="col-2 col-form-label col-form-label-sm">মারফতঃ </div>
-    <div class="col-10 pl-0">
-      <reactive-input-typeahed [fieldId]="'agent'" [control]="form.get('agent')" [itemList]="agentList" [col]="true"
-        [showLabel]="false" [searchPath]="searchPath">
+    <div class="col-12">
+      <reactive-input-typeahed [fieldId]="'agent'" [control]="form.get('agent')" [itemList]="agentList" [col]="true" [searchPath]="searchPath">
       </reactive-input-typeahed>
     </div>
   </div>

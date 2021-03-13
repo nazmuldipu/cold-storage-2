@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AgentService } from 'src/service/agent.service';
 import { CustomerService } from 'src/service/customer.service';
@@ -13,7 +13,9 @@ import { PHONE_NUMBER_PATTERN } from 'src/shared/forms/constants/validation-patt
   templateUrl: './inventory-form.component.html',
   styleUrls: ['./inventory-form.component.scss'],
 })
-export class InventoryFormComponent extends BaseFormComponent {
+export class InventoryFormComponent
+  extends BaseFormComponent
+  implements OnChanges {
   @Input() vouchar_no: number;
 
   typeEnum = InventoryType;
@@ -44,10 +46,18 @@ export class InventoryFormComponent extends BaseFormComponent {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    super.ngOnChanges(changes);
     if (changes.item && this.item != null) {
       this.form.reset();
       const date = this.util.convertFireabaseDateToNgbDate(this.item.date);
-      const value = { ...this.item, date };
+      const value = {
+        ...this.item,
+        date,
+        customerName: this.item.customer.name,
+        customerFather: this.item.customer.father,
+        customerPhone: this.item.customer.phone,
+        customerAddress: this.item.customer.address,
+      };
       this.exists = true;
       this.form.patchValue(value);
     }
@@ -72,8 +82,12 @@ export class InventoryFormComponent extends BaseFormComponent {
   }
 
   onQuanityChange(event) {
+    const sr_no = this.exists
+      ? `${this.item.vouchar_no}/${event.target.value}`
+      : `${this.vouchar_no + 1}/${event.target.value}`;
+
     this.form.patchValue({
-      sr_no: `${this.vouchar_no + 1}/${event.target.value}`,
+      sr_no,
     });
   }
 
@@ -102,10 +116,7 @@ export class InventoryFormComponent extends BaseFormComponent {
       name: ['Potato', Validators.required],
       customerName: ['', Validators.required],
       customerFather: ['', Validators.required],
-      customerPhone: [
-        '',
-        [Validators.pattern(PHONE_NUMBER_PATTERN)],
-      ],
+      customerPhone: ['', [Validators.pattern(PHONE_NUMBER_PATTERN)]],
       customerAddress: ['', Validators.required],
       // customer: ['', Validators.required],
       agent: [''],
@@ -128,13 +139,14 @@ export class InventoryFormComponent extends BaseFormComponent {
       delete fvalue['customerPhone'];
       delete fvalue['customerAddress'];
       if (!this.existsCustomer) {
-        this.customerService
-          .create(customer as Agent)
-          .then(() => console.log('New custome created'));
+        if (!this.exists)
+          this.customerService
+            .create(customer as Agent)
+            .then(() => console.log('New custome created'));        
       }
       const value = { ...fvalue, date, customer };
       if (this.exists) {
-        this.update.emit(value);
+        this.update.emit({ _id: this.item._id, ...value });
       } else {
         this.create.emit(value);
       }

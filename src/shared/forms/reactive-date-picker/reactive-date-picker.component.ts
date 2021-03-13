@@ -11,6 +11,7 @@ export class ReactiveDatePickerComponent implements OnInit, DoCheck {
   @Input() fieldId: string | null = null;
   @Input() control: AbstractControl | null = null;
   @Input() readonly: boolean = false;
+  @Input() col: boolean = false;
 
   label: string = null;
   validator;
