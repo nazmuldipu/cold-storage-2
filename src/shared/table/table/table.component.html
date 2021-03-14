@@ -22,9 +22,7 @@
 </table>
 
 <div class="d-flex justify-content-between p-2 d-print-none" *ngIf="!list">
-  <ngb-pagination [collectionSize]="totalCount" [(page)]="page" [pageSize]="pageSize" size="sm"
-    (pageChange)="refreshData()">
-  </ngb-pagination>
+  <pagination [(page)]="page" [collectionSize]="totalCount" [pageSize]="pageSize" (pageChange)="refreshData()"></pagination>
 
   <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshData()">
     <option [ngValue]="4">৪/পেজ</option>

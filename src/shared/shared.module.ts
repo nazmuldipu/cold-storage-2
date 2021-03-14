@@ -26,6 +26,7 @@ import { ReactiveDatePickerComponent } from './forms/reactive-date-picker/reacti
 import { ReactiveInputTypeahedComponent } from './forms/reactive-input-typeahed/reactive-input-typeahed.component';
 import { ReactiveInputColComponent } from './forms/reactive-input-col/reactive-input-col.component';
 import { DashHeadCardComponent } from './components/dash-head-card/dash-head-card.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { DashHeadCardComponent } from './components/dash-head-card/dash-head-car
     ReactiveInputTypeahedComponent,
     ReactiveInputColComponent,
     DashHeadCardComponent,
+    PaginationComponent,
   ],
   imports: [
     CommonModule,
@@ -71,6 +73,7 @@ import { DashHeadCardComponent } from './components/dash-head-card/dash-head-car
     NumberToBanglaPipe,
     NumberToWordBdPipe,
     NumberToWordsPipe,
+    PaginationComponent,
     ReactiveFormsModule,
     RenderInputComponent,
     ReactiveInputComponent,
