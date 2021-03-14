@@ -22,7 +22,7 @@ export class InventoryTableComponent implements OnChanges {
 
   tableName = 'ইনভেন্টরি টেবিল';
   columns = [
-    { path: '#', label: '#', className: 'font-weight-bold' },
+    { path: 'vouchar_no', label: 'No.', className: 'font-weight-bold' },
     {
       path: 'date',
       label: 'তারিখ',

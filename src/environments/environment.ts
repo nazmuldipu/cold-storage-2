@@ -11,8 +11,6 @@ export const environment = {
     // storageBucket: "cold-storeage-test.appspot.com",
     // messagingSenderId: "400587117160",
     // appId: "1:400587117160:web:878a96ce433f30484be1dd"
-
-
     
     apiKey: 'AIzaSyDM3Ncuoubj-S3EITcKx2g2qKG5gDNMkvQ',
     authDomain: 'cold-storage-2020-913d1.firebaseapp.com',
