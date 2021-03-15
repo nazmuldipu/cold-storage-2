@@ -1,0 +1,12 @@
+<tr>
+    <td [attr.colspan]="columns?.length" class="form-head">
+        {{tableName}}
+    </td>
+</tr>
+<tr>
+    <th *ngFor="let column of columns" [ngClass]="column.className?column.className:''">
+        <span class="clickable" (click)="raiseSort(column.path)">
+            {{column.label}} <i class="fa" [class]="renderSortIcon(column)" aria-hidden="true"></i>
+        </span>
+    </th>
+</tr>

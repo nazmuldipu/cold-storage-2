@@ -1,9 +1,10 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { map, take } from 'rxjs/operators';
-import { User } from 'src/shared/model/user.model';
+import { User, UserPage } from 'src/shared/model/user.model';
 import { RestDataService } from './rest-data.service';
 
 @Injectable({
@@ -46,6 +47,21 @@ export class UserService {
     //     console.log(error);
     //   }
     // );
+  }
+
+  getUserList(
+    page: number = 1,
+    limit: number = 8,
+    sort: string = 'name',
+    order: string = 'asc'
+  ): Observable<UserPage> {
+    let param = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString())
+      .set('sort', sort)
+      .set('order', order);
+
+    return this.dataSource.sendRequest('GET', this.userUrl, null, true, param);
   }
 
   // FIRE ------------------------------------------------------

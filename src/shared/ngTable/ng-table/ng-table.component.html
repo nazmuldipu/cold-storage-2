@@ -1,0 +1,33 @@
+<form *ngIf="searchableArray.length>0" class="d-print-none">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-auto">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fa fa-filter"></i></div>
+                </div>
+                <input type="text" class="form-control form-control-sm" id="search" name="search"
+                    [(ngModel)]="searchQuery" (keyup)="handleSearch()" [placeholder]="getSearchPlaceHolderText()">
+            </div>
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped border table-sm">
+    <thead NgTableHeader [columns]="columns" [tableName]="tableName" [sortColumn]="sortColumn"
+        (onSort)="handleSort($event)"></thead>
+    <tbody NgTableBody [data]="data?.docs" [columns]="columns" (btnEvent)="handleEvent($event)"></tbody>
+    <tfoot NgTableFooter [columns]="columns" [total]="total" *ngIf="total.length"></tfoot>
+</table>
+
+<div class="d-flex justify-content-between p-2 d-print-none">
+    <pagination [page]="data.page" [collectionSize]="data.totalDocs" [pageSize]="data.limit"
+        (pageChange)="handlePagination($event)">
+    </pagination>
+
+    <select class="custom-select" style="width: auto" [ngModel]="data.limit" (ngModelChange)="handlePageSize($event)">
+        <option [ngValue]="4">৪/পেজ</option>
+        <option [ngValue]="8">৮/পেজ</option>
+        <option [ngValue]="16">১৬/পেজ</option>
+    </select>
+</div>

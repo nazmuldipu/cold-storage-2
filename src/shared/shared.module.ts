@@ -27,6 +27,10 @@ import { ReactiveInputTypeahedComponent } from './forms/reactive-input-typeahed/
 import { ReactiveInputColComponent } from './forms/reactive-input-col/reactive-input-col.component';
 import { DashHeadCardComponent } from './components/dash-head-card/dash-head-card.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { NgTableComponent } from './ngTable/ng-table/ng-table.component';
+import { NgTableHeadComponent } from './ngTable/ng-table-head/ng-table-head.component';
+import { NgTableBodyComponent } from './ngTable/ng-table-body/ng-table-body.component';
+import { NgTableFootComponent } from './ngTable/ng-table-foot/ng-table-foot.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +57,10 @@ import { PaginationComponent } from './pagination/pagination.component';
     ReactiveInputColComponent,
     DashHeadCardComponent,
     PaginationComponent,
+    NgTableComponent,
+    NgTableHeadComponent,
+    NgTableBodyComponent,
+    NgTableFootComponent,
   ],
   imports: [
     CommonModule,
@@ -70,6 +78,7 @@ import { PaginationComponent } from './pagination/pagination.component';
     LedgerListComponent,
     LoadingComponent,
     NgbModule,
+    NgTableComponent,
     NumberToBanglaPipe,
     NumberToWordBdPipe,
     NumberToWordsPipe,

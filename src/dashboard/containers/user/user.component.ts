@@ -4,7 +4,7 @@ import { RoleService } from 'src/service/role.service';
 import { UserService } from 'src/service/user.service';
 import { UtilService } from 'src/service/util.service';
 import { Role } from 'src/shared/model/role.model';
-import { User } from 'src/shared/model/user.model';
+import { User, UserPage } from 'src/shared/model/user.model';
 
 @Component({
   selector: 'app-user',
@@ -14,12 +14,13 @@ import { User } from 'src/shared/model/user.model';
 export class UserComponent implements OnInit {
   sendingData = false;
   loadingData = false;
-  userList: User[] = [];
+  // userList: User[] = [];
+  userPage: UserPage;
   roleList: Role[] = [];
   user: User;
   page = 1;
   pageSize = 8;
-  userPage: User[] = [];
+  // userPage: User[] = [];
   errorMessage = '';
 
   constructor(
@@ -41,23 +42,39 @@ export class UserComponent implements OnInit {
     });
   }
 
-  async getUserList() {
-    this.userService.users$.subscribe((data) => {
-      this.userList = data;
-      this.userList.sort(this.util.dynamicSortObject('name'));
-      this.refreshUser();
-    });
+  async getUserList(
+    page: number = 1,
+    limit: number = 8,
+    sort: string = 'name',
+    order: string = 'asc'
+  ) {
+    console.log(page, limit, sort, order);
+    try {
+      this.loadingData = true;
+      this.userPage = await this.userService
+        .getUserList(page, limit, sort, order)
+        .toPromise();
+      this.loadingData = false;
+    } catch (error) {}
+    // this.userService.users$.subscribe((data) => {
+    //   this.userList = data;
+    //   this.userList.sort(this.util.dynamicSortObject('name'));
+    //   this.refreshUser();
+    // });
+  }
+  refreshData({ page, limit, sort, order }) {
+    this.getUserList(page, limit, sort, order);
   }
 
-  refreshUser() {
-    this.userPage = this.userList
-      .map((user, i) => ({ id: i + 1, ...user }))
-      .slice(
-        (this.page - 1) * this.pageSize,
-        (this.page - 1) * this.pageSize + this.pageSize
-      );
-    console.log(this.userPage);
-  }
+  // refreshUser() {
+  //   this.userPage = this.userList
+  //     .map((user, i) => ({ id: i + 1, ...user }))
+  //     .slice(
+  //       (this.page - 1) * this.pageSize,
+  //       (this.page - 1) * this.pageSize + this.pageSize
+  //     );
+  //   console.log(this.userPage);
+  // }
 
   async onCreate(event: User) {
     this.sendingData = true;
@@ -110,10 +127,10 @@ export class UserComponent implements OnInit {
     }
   }
 
-  onEdit(id) {
-    this.user = this.userList.find((cp) => cp._id === id);
-    console.log('onEdit', id);
-  }
+  // onEdit(id) {
+  //   this.user = this.userList.find((cp) => cp._id === id);
+  //   console.log('onEdit', id);
+  // }
 
   clear() {
     this.user = null;

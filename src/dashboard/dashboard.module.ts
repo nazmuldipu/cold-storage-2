@@ -43,6 +43,7 @@ import { PocketComponent } from './containers/pocket/pocket.component';
 import { RoleComponent } from './containers/role/role.component';
 import { UserComponent } from './containers/user/user.component';
 import { DashboardComponent } from './dashboard.component';
+import { UserTableComponent } from './components/user-table/user-table.component';
 
 export const ROUTES: Routes = [
   {
@@ -125,6 +126,7 @@ export const ROUTES: Routes = [
     InventoryListComponent,
     PallotListComponent,
     DeliveryListComponent,
+    UserTableComponent,
   ],
   imports: [SharedModule, Daterangepicker, RouterModule.forChild(ROUTES)],
 })
