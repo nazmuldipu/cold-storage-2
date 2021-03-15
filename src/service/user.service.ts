@@ -53,15 +53,17 @@ export class UserService {
     page: number = 1,
     limit: number = 8,
     sort: string = 'name',
-    order: string = 'asc'
+    order: string = 'asc',
+    param: string = ''
   ): Observable<UserPage> {
-    let param = new HttpParams()
+    let sparam = new HttpParams()
       .set('page', page.toString())
       .set('limit', limit.toString())
       .set('sort', sort)
-      .set('order', order);
+      .set('order', order)
+      .set('param', param);
 
-    return this.dataSource.sendRequest('GET', this.userUrl, null, true, param);
+    return this.dataSource.sendRequest('GET', this.userUrl, null, true, sparam);
   }
 
   // FIRE ------------------------------------------------------

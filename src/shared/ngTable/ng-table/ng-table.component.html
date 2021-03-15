@@ -1,4 +1,4 @@
-<form *ngIf="searchableArray.length>0" class="d-print-none">
+<form *ngIf="searchableArray.length>0" class="d-print-none" (ngSubmit)="onSearchSubmit()">
     <div class="row">
         <div class="col"></div>
         <div class="col-auto">
@@ -7,7 +7,7 @@
                     <div class="input-group-text"><i class="fa fa-filter"></i></div>
                 </div>
                 <input type="text" class="form-control form-control-sm" id="search" name="search"
-                    [(ngModel)]="searchQuery" (keyup)="handleSearch()" [placeholder]="getSearchPlaceHolderText()">
+                    [(ngModel)]="searchQuery" [placeholder]="getSearchPlaceHolderText()">
             </div>
         </div>
     </div>
@@ -20,7 +20,7 @@
     <tfoot NgTableFooter [columns]="columns" [total]="total" *ngIf="total.length"></tfoot>
 </table>
 
-<div class="d-flex justify-content-between p-2 d-print-none">
+<div class="d-flex justify-content-between p-2 d-print-none" *ngIf="data.totalDocs>0">
     <pagination [page]="data.page" [collectionSize]="data.totalDocs" [pageSize]="data.limit"
         (pageChange)="handlePagination($event)">
     </pagination>

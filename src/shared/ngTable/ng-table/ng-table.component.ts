@@ -22,7 +22,6 @@ export class NgTableComponent implements OnChanges {
 
   @Output() btnEvent = new EventEmitter<any>();
   @Output() refresh = new EventEmitter<any>();
-  @Output() search = new EventEmitter<any>();
 
   total = [];
   searchableArray = [];
@@ -59,10 +58,13 @@ export class NgTableComponent implements OnChanges {
     this.refresh.emit({ ...this.sortColumn, limit: event });
   }
 
-  handleSearch() {
+  onSearchSubmit() {
     if (this.searchQuery.length > 2) {
-      this.search.emit(this.searchQuery);
+      this.sortColumn['search'] = this.searchQuery;
+    } else {
+      this.sortColumn['search'] = '';
     }
+    this.refresh.emit(this.sortColumn);
   }
 
   calculateColumnTotal() {

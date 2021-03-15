@@ -14,13 +14,9 @@ import { User, UserPage } from 'src/shared/model/user.model';
 export class UserComponent implements OnInit {
   sendingData = false;
   loadingData = false;
-  // userList: User[] = [];
   userPage: UserPage;
   roleList: Role[] = [];
   user: User;
-  page = 1;
-  pageSize = 8;
-  // userPage: User[] = [];
   errorMessage = '';
 
   constructor(
@@ -46,35 +42,21 @@ export class UserComponent implements OnInit {
     page: number = 1,
     limit: number = 8,
     sort: string = 'name',
-    order: string = 'asc'
+    order: string = 'asc',
+    param: string = ''
   ) {
-    console.log(page, limit, sort, order);
     try {
       this.loadingData = true;
       this.userPage = await this.userService
-        .getUserList(page, limit, sort, order)
+        .getUserList(page, limit, sort, order, param)
         .toPromise();
       this.loadingData = false;
     } catch (error) {}
-    // this.userService.users$.subscribe((data) => {
-    //   this.userList = data;
-    //   this.userList.sort(this.util.dynamicSortObject('name'));
-    //   this.refreshUser();
-    // });
-  }
-  refreshData({ page, limit, sort, order }) {
-    this.getUserList(page, limit, sort, order);
   }
 
-  // refreshUser() {
-  //   this.userPage = this.userList
-  //     .map((user, i) => ({ id: i + 1, ...user }))
-  //     .slice(
-  //       (this.page - 1) * this.pageSize,
-  //       (this.page - 1) * this.pageSize + this.pageSize
-  //     );
-  //   console.log(this.userPage);
-  // }
+  refreshData({ page, limit, sort, order, search }) {
+    this.getUserList(page, limit, sort, order, search);
+  }
 
   async onCreate(event: User) {
     this.sendingData = true;
@@ -91,6 +73,7 @@ export class UserComponent implements OnInit {
         console.log('error', error);
       });
   }
+
   async onUpdate(event: User) {
     this.sendingData = true;
     const value = {

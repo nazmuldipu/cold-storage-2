@@ -19,6 +19,7 @@ export class UserTableComponent implements OnChanges {
 
   @Output() edit = new EventEmitter<string>();
   @Output() refresh = new EventEmitter<any>();
+  // @Output() search = new EventEmitter<any>();
 
   tableName = 'ইউজার টেবিল';
 
@@ -41,19 +42,19 @@ export class UserTableComponent implements OnChanges {
     },
   ];
 
-  sortColumn = { path: 'name', order: 'asc', limit: 8, page: 1 };
+  sortColumn = { path: 'name', order: 'asc', limit: 8, page: 1, search: '' };
 
   buttonEvent(event) {
-    console.log(event);
+    switch (event['key']) {
+      case 'edit':
+        this.edit.emit(event['id']);
+        break;
+    }
   }
 
   onRefresh(event) {
     this.sortColumn = { ...event };
     this.refresh.emit({ sort: event.path, ...event });
-  }
-
-  onSearch(event) {
-    console.log(event);
   }
 
   constructor() {}
