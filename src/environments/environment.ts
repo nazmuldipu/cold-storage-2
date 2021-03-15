@@ -21,9 +21,13 @@ export const environment = {
     measurementId: 'G-1GDFFDC1PE',
     databaseURL: 'https://cold-storage-2020-913d1.firebaseio.com',
   },
+  // PORT: ':3000',
   PROTOCOL: 'http',
-  PORT: ':3000',
-  SERVER: 'localhost',
+  // SERVER: 'localhost',
+
+  PORT: ':8443',
+  // PROTOCOL: 'https',
+  SERVER: '172.104.46.200',
 };
 /*
 ac : ispbhuigor

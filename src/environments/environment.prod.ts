@@ -10,7 +10,8 @@ export const environment = {
     measurementId: 'G-1GDFFDC1PE',
     databaseURL: 'https://cold-storage-2020-913d1.firebaseio.com',
   },
+
   PROTOCOL: 'https',
   PORT: ':8443',
-  SERVER: 'api.wada.com.bd',
+  SERVER: 'coldapi.monerbari.com',
 };
