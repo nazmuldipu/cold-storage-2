@@ -1,2 +1,5 @@
-<AppTable [columns]="columns" [data]="customerList" [tableName]="tableName" [sortColumn]="sortColumn"
-    (btnEvent)="buttonEvent($event)"></AppTable>
+<!-- <AppTable [columns]="columns" [data]="customerList" [tableName]="tableName" [sortColumn]="sortColumn"
+    (btnEvent)="buttonEvent($event)"></AppTable> -->
+
+<ng-table [tableName]="tableName" [columns]="columns" [sortColumn]="sortColumn" [data]="customerPage"
+    (refresh)="onRefresh($event)" (btnEvent)="buttonEvent($event)"></ng-table>

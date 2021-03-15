@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Agent } from 'src/shared/model/agent.model';
+import { Agent, AgentPage } from 'src/shared/model/agent.model';
 
 @Component({
   selector: 'customer-list',
@@ -7,10 +7,9 @@ import { Agent } from 'src/shared/model/agent.model';
   styleUrls: ['./customer-list.component.scss'],
 })
 export class CustomerListComponent {
-  @Input() customerList: Agent[];
-  @Input() short: boolean;
-
+  @Input() customerPage: AgentPage;
   @Output() edit = new EventEmitter<string>();
+  @Output() refresh = new EventEmitter<any>();
 
   tableName = 'লোডিং পার্টি টেবিল';
   columns = [
@@ -35,15 +34,7 @@ export class CustomerListComponent {
     },
   ];
 
-  sortColumn = { path: 'name', order: 'asc' };
-
-  constructor() {
-    Window['customerList'] = this;
-  }
-
-  onEdit(id) {
-    this.edit.emit(id);
-  }
+  sortColumn = { path: 'name', order: 'asc', limit: 8, page: 1, search: '' };
 
   buttonEvent(event) {
     switch (event['key']) {
@@ -51,5 +42,10 @@ export class CustomerListComponent {
         this.edit.emit(event['id']);
         break;
     }
+  }
+
+  onRefresh(event) {
+    this.sortColumn = { ...event };
+    this.refresh.emit({ sort: event.path, ...event });
   }
 }

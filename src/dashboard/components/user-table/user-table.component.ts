@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { UserPage } from 'src/shared/model/user.model';
 
 @Component({
@@ -57,6 +49,4 @@ export class UserTableComponent implements OnChanges {
     this.refresh.emit({ sort: event.path, ...event });
   }
 
-  constructor() {}
-  ngOnChanges(changes: SimpleChanges): void {}
 }

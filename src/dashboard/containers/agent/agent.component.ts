@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AgentService } from 'src/service/agent.service';
 import { UtilService } from 'src/service/util.service';
-import { Agent } from 'src/shared/model/agent.model';
+import { Agent, AgentPage } from 'src/shared/model/agent.model';
 
 @Component({
   selector: 'app-agent',
@@ -11,7 +11,8 @@ import { Agent } from 'src/shared/model/agent.model';
 export class AgentComponent implements OnInit {
   sendingData = false;
   loadingData = false;
-  agentList: Agent[] = [];
+  agentPage: AgentPage;
+  // agentList: Agent[] = [];
   agent: Agent;
 
   errorMessage = '';
@@ -22,65 +23,68 @@ export class AgentComponent implements OnInit {
     this.getAgentList();
   }
 
-  async getAgentList() {
-    this.agentService.agents$.subscribe((data) => {
-      this.agentList = data;
-      this.agentList.sort(this.util.dynamicSortObject('priority'));
-    });
+  async getAgentList(
+    page: number = 1,
+    limit: number = 8,
+    sort: string = 'name',
+    order: string = 'asc',
+    param: string = ''
+  ) {
+    try {
+      this.loadingData = true;
+      this.agentPage = await this.agentService
+        .getAgentList(page, limit, sort, order, param)
+        .toPromise();
+      this.loadingData = false;
+    } catch (error) {}
   }
 
-  async onCreate(event: Agent) {
-    this.sendingData = true;
-    const value = {
-      ...event,
-      slug: this.util.string_to_slug(event.name),
-    } as Agent;
-    await this.agentService
-      .create(value)
-      .then((ref) => {
-        console.log(ref);
-      })
-      .catch((error) => {
-        console.log('error', error);
-      });
-  }
-  async onUpdate(event: Agent) {
-    this.sendingData = true;
-    const value = {
-      ...event,
-      slug: event.name.toLowerCase(),
-      createdAt: this.agent.createdAt,
-    };
-    await this.agentService
-      .update(this.agent._id, value)
-      .then(() => {
-        this.sendingData = false;
-      })
-      .catch((error) => {
-        this.sendingData = false;
-        (this.errorMessage = 'Group Updating ERROR ! '), error;
-      });
-    this.clear();
-  }
-
-  async onDelete(id) {
-    this.sendingData = true;
-    if (confirm('Are you sure to delete')) {
-      await this.agentService
-        .delete(id)
-        .then(() => {
-          this.sendingData = false;
-        })
-        .catch((error) => {
-          this.sendingData = false;
-          (this.errorMessage = 'Agent Deleting ERROR ! '), error;
-        });
-      this.clear();
-    }
+  refreshData({ page, limit, sort, order, search }) {
+    this.getAgentList(page, limit, sort, order, search);
   }
 
   onEdit(id) {
-    this.agent = this.agentList.find((cp) => cp._id === id);
+    this.agent = this.agentPage.docs.find((cp) => cp._id === id);
+  }
+
+  async onCreate(event: Agent) {
+    try {
+      this.sendingData = true;
+      const resp = await this.agentService.create(event).toPromise();
+      console.log(resp);
+      this.agentPage.docs.push(resp);
+      this.sendingData = false;
+    } catch (err) {
+      this.errorMessage = err;
+    }
+  }
+  async onUpdate(event: Agent) {
+    try {
+      this.sendingData = true;
+      this.errorMessage = '';
+      const resp = await this.agentService
+        .update(this.agent._id, event)
+        .toPromise();
+      this.getAgentList();
+      this.sendingData = false;
+    } catch (err) {
+      this.errorMessage = err;
+    }
+  }
+
+  async onDelete(id) {
+    if (confirm('Are you sure to delete')) {
+      try {
+        const resp = await this.agentService.delete(id).toPromise();
+        const index = this.agentPage.docs.findIndex((f) => f._id === id);
+        if (index > -1) {
+          this.agentPage.docs.splice(index, 1);
+        }
+      } catch (err) {
+        this.errorMessage = err;
+      }
+      this.clear();
+    }
   }
 
   clear() {

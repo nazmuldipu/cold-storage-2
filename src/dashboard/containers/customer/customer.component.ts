@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from 'src/service/customer.service';
 import { UtilService } from 'src/service/util.service';
-import { Agent } from 'src/shared/model/agent.model';
+import { Agent, AgentPage } from 'src/shared/model/agent.model';
 
 @Component({
   selector: 'app-customer',
@@ -11,7 +11,8 @@ import { Agent } from 'src/shared/model/agent.model';
 export class CustomerComponent implements OnInit {
   sendingData = false;
   loadingData = false;
-  customerList: Agent[] = [];
+  // customerList: Agent[] = [];
+  customerPage: AgentPage;
   customer: Agent;
 
   errorMessage = '';
@@ -25,65 +26,68 @@ export class CustomerComponent implements OnInit {
     this.getCustomerList();
   }
 
-  async getCustomerList() {
-    this.customerService.customers$.subscribe((data) => {
-      this.customerList = data;
-      this.customerList.sort(this.util.dynamicSortObject('priority'));
-    });
+  async getCustomerList(
+    page: number = 1,
+    limit: number = 8,
+    sort: string = 'name',
+    order: string = 'asc',
+    param: string = ''
+  ) {
+    try {
+      this.loadingData = true;
+      this.customerPage = await this.customerService
+        .getCustomerList(page, limit, sort, order, param)
+        .toPromise();
+      this.loadingData = false;
+    } catch (error) {}
   }
 
-  async onCreate(event: Agent) {
-    this.sendingData = true;
-    const value = {
-      ...event,
-      slug: this.util.string_to_slug(event.name),
-    } as Agent;
-    await this.customerService
-      .create(value)
-      .then((ref) => {
-        console.log(ref);
-      })
-      .catch((error) => {
-        console.log('error', error);
-      });
-  }
-  async onUpdate(event: Agent) {
-    this.sendingData = true;
-    const value = {
-      ...event,
-      slug: event.name.toLowerCase(),
-      createdAt: this.customer.createdAt,
-    };
-    await this.customerService
-      .update(this.customer._id, value)
-      .then(() => {
-        this.sendingData = false;
-      })
-      .catch((error) => {
-        this.sendingData = false;
-        (this.errorMessage = 'Group Updating ERROR ! '), error;
-      });
-    this.clear();
-  }
-
-  async onDelete(id) {
-    this.sendingData = true;
-    if (confirm('Are you sure to delete')) {
-      await this.customerService
-        .delete(id)
-        .then(() => {
-          this.sendingData = false;
-        })
-        .catch((error) => {
-          this.sendingData = false;
-          (this.errorMessage = 'Agent Deleting ERROR ! '), error;
-        });
-      this.clear();
-    }
+  refreshData({ page, limit, sort, order, search }) {
+    this.getCustomerList(page, limit, sort, order, search);
   }
 
   onEdit(id) {
-    this.customer = this.customerList.find((cp) => cp._id === id);
+    this.customer = this.customerPage.docs.find((cp) => cp._id === id);
+  }
+
+  async onCreate(event: Agent) {
+    try {
+      this.sendingData = true;
+      this.errorMessage = '';
+      const resp = await this.customerService.create(event).toPromise();
+      this.customerPage.docs.push(resp);
+      this.sendingData = false;
+    } catch (err) {
+      this.errorMessage = err;
+    }
+  }
+  async onUpdate(event: Agent) {
+    try {
+      this.sendingData = true;
+      this.errorMessage = '';
+      const resp = await this.customerService
+        .update(this.customer._id, event)
+        .toPromise();
+      this.getCustomerList();
+      this.sendingData = false;
+    } catch (err) {
+      this.errorMessage = err;
+    }
+  }
+
+  async onDelete(id) {
+    if (confirm('Are you sure to delete')) {
+      try {
+        const resp = await this.customerService.delete(id).toPromise();
+        const index = this.customerPage.docs.findIndex((f) => f._id === id);
+        if (index > -1) {
+          this.customerPage.docs.splice(index, 1);
+        }
+      } catch (err) {
+        this.errorMessage = err;
+      }
+      this.clear();
+    }
   }
 
   clear() {

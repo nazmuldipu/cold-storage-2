@@ -43,7 +43,9 @@ export class UserComponent implements OnInit {
         .getUserList(page, limit, sort, order, param)
         .toPromise();
       this.loadingData = false;
-    } catch (error) {}
+    } catch (error) {
+      this.errorMessage = error;
+    }
   }
 
   refreshData({ page, limit, sort, order, search }) {

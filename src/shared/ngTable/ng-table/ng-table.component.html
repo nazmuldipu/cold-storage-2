@@ -20,7 +20,7 @@
     <tfoot NgTableFooter [columns]="columns" [total]="total" *ngIf="total.length"></tfoot>
 </table>
 
-<div class="d-flex justify-content-between p-2 d-print-none" *ngIf="data.totalDocs>0">
+<div class="d-flex justify-content-between p-2 d-print-none" *ngIf="data?.totalDocs > 0">
     <pagination [page]="data.page" [collectionSize]="data.totalDocs" [pageSize]="data.limit"
         (pageChange)="handlePagination($event)">
     </pagination>
