@@ -16,7 +16,7 @@ import { UtilService } from './util.service';
 import { PallotService } from './pallot.service';
 import { LedgerService } from './ledger.service';
 import { DeliveryService } from './delivery.service';
-
+import { RestDataService } from './rest-data.service';
 
 @NgModule({
   providers: [
@@ -34,8 +34,9 @@ import { DeliveryService } from './delivery.service';
     PallotService,
     PositionService,
     RoleService,
+    RestDataService,
     UtilService,
     UserService,
   ],
 })
-export class ServiceModule { }
+export class ServiceModule {}

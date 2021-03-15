@@ -16,9 +16,9 @@
       <loading *ngIf="loading"></loading>
 
       <form *ngIf="!loading" class="mx-md-5" [formGroup]="form" (ngSubmit)="submit()">
-        <input type="text" class="form-control" placeholder="User name" formControlName="username" autocomplete="no">
-        <small class="text-danger" *ngIf="form.controls.username.errors && form.controls.username.touched">
-          Username required </small>
+        <input type="text" class="form-control" placeholder="Email" formControlName="email" autocomplete="no">
+        <small class="text-danger" *ngIf="form.controls.email.errors && form.controls.email.touched">
+          Emal required </small>
         <div class="input-group mb-1 mb-sm-0">
           <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Password"
             formControlName="password">

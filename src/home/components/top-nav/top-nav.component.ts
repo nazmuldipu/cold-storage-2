@@ -26,7 +26,7 @@ export class TopNavComponent implements OnInit {
   }
 
   isAuthenticated() {
-    return !!this.user;
+    return this.auth.isAuthenticated();
   }
 
   logout() {

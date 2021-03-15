@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/service/auth.service';
+import { UserService } from 'src/service/user.service';
 
 @Component({
   selector: 'dash-nav',
@@ -151,15 +152,12 @@ export class DashNavComponent implements OnInit {
     // },
   ];
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private userService: UserService) {}
 
   ngOnInit(): void {
-    this.auth.user$.subscribe((data) => {
-      if (data) {
-        this.user = { _id: data.uid, email: data.email };
-      } else {
-        this.user = null;
-      }
+    this.userService.user$.subscribe((data) => {
+      const { _id, email, name } = data;
+      this.user = { _id, email, name };
     });
   }
 
@@ -168,7 +166,7 @@ export class DashNavComponent implements OnInit {
   }
 
   isAuthenticated() {
-    return !!this.user;
+    return this.auth.isAuthenticated();
   }
 
   logout() {

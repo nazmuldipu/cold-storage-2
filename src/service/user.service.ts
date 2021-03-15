@@ -1,23 +1,54 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { map, take } from 'rxjs/operators';
 import { User } from 'src/shared/model/user.model';
+import { RestDataService } from './rest-data.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+  userUrl = 'api/users';
   serviceUrl = 'user';
 
-  private _userSource = new BehaviorSubject<User[]>([]);
-  users$ = this._userSource.asObservable();
-  users: User[] = [];
+  _userSource = new BehaviorSubject<User>({} as User);
+  user$ = this._userSource.asObservable();
+  user: User;
 
-  constructor(private afs: AngularFirestore) {
-    this.getAndStoreAll();
+  constructor(
+    private dataSource: RestDataService,
+    private afs: AngularFirestore
+  ) {
+    // this.getAndStoreAll();
   }
 
+  userRegistration(user: User): Observable<User> {
+    return this.dataSource.sendRequest('POST', this.userUrl, user, false, null);
+  }
+
+  getUserProfile(): Observable<User> {
+    return this.dataSource.sendRequest(
+      'GET',
+      this.userUrl + '/me',
+      null,
+      true,
+      null
+    );
+    // .subscribe(
+    //   (data) => {
+    //     console.log(data);
+    //     this._userSource.next(data);
+    //   },
+    //   (error) => {
+    //     console.log('getUserProfile ERROR');
+    //     console.log(error);
+    //   }
+    // );
+  }
+
+  // FIRE ------------------------------------------------------
   create(object: User) {
     delete object['_id'];
     object.createdAt = new Date();
@@ -32,24 +63,24 @@ export class UserService {
       name: name,
       email: email,
       password: password,
-      role: 'USER'
+      role: 'USER',
     });
   }
 
-  getAndStoreAll() {
-    return this.afs
-      .collection(this.serviceUrl, (ref) => ref.orderBy('email'))
-      .snapshotChanges()
-      .subscribe((data) => {
-        this.users = [];
-        data.forEach((resp) => {
-          let cls = resp.payload.doc.data() as User;
-          cls._id = resp.payload.doc.id;
-          this.users.push(cls);
-        });
-        this._userSource.next(this.users);
-      });
-  }
+  // getAndStoreAll() {
+  //   return this.afs
+  //     .collection(this.serviceUrl, (ref) => ref.orderBy('email'))
+  //     .snapshotChanges()
+  //     .subscribe((data) => {
+  //       this.users = [];
+  //       data.forEach((resp) => {
+  //         let cls = resp.payload.doc.data() as User;
+  //         cls._id = resp.payload.doc.id;
+  //         this.users.push(cls);
+  //       });
+  //       this._userSource.next(this.users);
+  //     });
+  // }
 
   getAll() {
     return this.afs
@@ -71,12 +102,15 @@ export class UserService {
   // }
 
   get(sid: string) {
-    return this.afs.doc(this.serviceUrl + '/' + sid)
+    return this.afs
+      .doc(this.serviceUrl + '/' + sid)
       .valueChanges()
-      .pipe(take(1), map(ref => {
-        const value = { id: sid, ...ref as User };
-        return value;
-      })
+      .pipe(
+        take(1),
+        map((ref) => {
+          const value = { id: sid, ...(ref as User) };
+          return value;
+        })
       );
   }
 

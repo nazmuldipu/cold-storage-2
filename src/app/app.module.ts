@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { BrowserModule } from '@angular/platform-browser';
@@ -38,6 +39,7 @@ export const ROUTES: Routes = [
     BrowserModule,
     NgbModule,
     ServiceModule,
+    HttpClientModule,
     Daterangepicker,
     AngularFireModule.initializeApp(environment.firebase),
     RouterModule.forRoot(ROUTES)

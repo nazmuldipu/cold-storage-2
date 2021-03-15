@@ -23,7 +23,7 @@
       </ul>
       <ul class="navbar-nav mb-2 mb-md-0">
         <li ngbDropdown class="nav-item" *ngIf="isAuthenticated()">
-          <a href (click)="false" class="nav-link" ngbDropdownToggle>{{user.email}}</a>
+          <a href (click)="false" class="nav-link" ngbDropdownToggle>{{user?.email}}</a>
           <div ngbDropdownMenu>
             <button ngbDropdownItem routerLink="/changePassword" (click)="toggleCollapse()">Change
               Password</button>
