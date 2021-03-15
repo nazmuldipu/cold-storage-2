@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InventoryService } from 'src/service/inventory.service';
-import { UtilService } from 'src/service/util.service';
 import { Inventory } from 'src/shared/model/inventory.model';
+import _ from 'lodash';
+
 import { InventoryPage } from './../../../shared/model/inventory.model';
+import { UtilService } from 'src/service/util.service';
 
 @Component({
   selector: 'app-inventory',
@@ -23,6 +25,7 @@ export class InventoryComponent implements OnInit {
 
   constructor(
     private inventoryService: InventoryService,
+    private util: UtilService,
     private router: Router
   ) {
     let dd = new Date();
@@ -121,5 +124,27 @@ export class InventoryComponent implements OnInit {
     this.errorMessage = '';
     this.sendingData = false;
     this.loadingData = false;
+  }
+
+  async onTranferClick() {
+    this.inventoryService.inventorys$.subscribe((data) => {
+      data.forEach(async (d) => {
+        var result = _.omit(d, [
+          '_id',
+          'slug',
+          'createdAt',
+          'version',
+          'agent.createdAt',
+          "agent._id",
+          "agent.slug",
+          'customer.createdAt',
+          "customer._id",
+          "customer.slug",
+        ]);
+        result.date = this.util.convertFireabaseDateToJSDate(result.date);
+        const res = await this.inventoryService.create(result).toPromise();
+        console.log(res);
+      });
+    });
   }
 }

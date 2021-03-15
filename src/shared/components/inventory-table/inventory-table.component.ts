@@ -55,7 +55,13 @@ export class InventoryTableComponent implements OnChanges {
     },
   ];
 
-  sortColumn = { path: 'vouchar_no', order: 'asc', limit: 8, page: 1, search: '' };
+  sortColumn = {
+    path: 'vouchar_no',
+    order: 'asc',
+    limit: 8,
+    page: 1,
+    search: '',
+  };
   pushCol = 0; //sermaphorse
 
   constructor() {}
@@ -74,7 +80,7 @@ export class InventoryTableComponent implements OnChanges {
           };
         },
       };
-      
+
       if (!this.pushCol) {
         this.columns.push(value);
         this.pushCol = 1;

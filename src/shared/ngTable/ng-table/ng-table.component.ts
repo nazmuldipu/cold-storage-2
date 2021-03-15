@@ -31,6 +31,9 @@ export class NgTableComponent implements OnChanges {
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes.data && this.data != null) {
+      this.calculateColumnTotal();
+    }
     if (changes.columns && this.columns != null) {
       this.columns.forEach((element) => {
         if (element.searchable) {

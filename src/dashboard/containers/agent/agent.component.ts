@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AgentService } from 'src/service/agent.service';
 import { UtilService } from 'src/service/util.service';
 import { Agent, AgentPage } from 'src/shared/model/agent.model';
+import _ from 'lodash';
 
 @Component({
   selector: 'app-agent',
@@ -58,6 +59,7 @@ export class AgentComponent implements OnInit {
       this.errorMessage = err;
     }
   }
+
   async onUpdate(event: Agent) {
     try {
       this.sendingData = true;
@@ -92,5 +94,15 @@ export class AgentComponent implements OnInit {
     this.errorMessage = '';
     this.sendingData = false;
     this.loadingData = false;
+  }
+
+  async onTranferClick() {
+    this.agentService.agents$.subscribe((data) => {
+      data.forEach(async (d) => {
+        var result = _.omit(d, ['_id', 'slug', 'createdAt']);
+        const res = await this.agentService.create(result).toPromise();
+        console.log(res);
+      });
+    });
   }
 }

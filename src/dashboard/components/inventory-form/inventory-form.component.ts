@@ -67,20 +67,6 @@ export class InventoryFormComponent
     }
   }
 
-  // async getCustomerList() {
-  //   this.customerService.customers$.subscribe((data) => {
-  //     this.customerList = data;
-  //     this.customerList.sort(this.util.dynamicSortObject('priority'));
-  //   });
-  // }
-
-  // async getAgentList() {
-  //   this.agentService.agents$.subscribe((data) => {
-  //     this.agentList = data;
-  //     this.agentList.sort(this.util.dynamicSortObject('priority'));
-  //   });
-  // }
-
   onQuanityChange(event) {
     const sr_no = this.exists
       ? `${this.item.vouchar_no}/${event.target.value}`

@@ -3,6 +3,7 @@ import { take } from 'rxjs/operators';
 import { InventoryService } from 'src/service/inventory.service';
 import { UtilService } from 'src/service/util.service';
 import { Inventory } from 'src/shared/model/inventory.model';
+import { InventoryPage } from './../../../../shared/model/inventory.model';
 
 @Component({
   selector: 'app-inventory-report',
@@ -10,29 +11,34 @@ import { Inventory } from 'src/shared/model/inventory.model';
   styleUrls: ['./inventory-report.component.scss'],
 })
 export class InventoryReportComponent {
-  label = 'Inventory Report';
+  label = ' ইনভেন্টরি রিপোর্ট,  ';
   tableTitle = '';
-  inventoryList: Inventory[] = [];
+  inventoryPage: InventoryPage;
 
   constructor(
     private util: UtilService,
     private inventoryService: InventoryService
   ) {}
 
-  
   async getItemByDateRange({ start, end, mode }) {
-    this.inventoryService.inventorys$.pipe(take(2)).subscribe((data) => {
-      this.inventoryList = data.filter(
-        (f) =>
-          f.date['seconds'] >= start.getTime() / 1000 &&
-          f.date['seconds'] <= end.getTime() / 1000
-      );
-      this.inventoryList.sort(this.util.dynamicSortObject('sr_no'));
-      
+    try {
+      this.inventoryPage = await this.inventoryService
+        .findByDateRange(start, end)
+        .toPromise();
       this.tableTitle =
-        this.label +
-        ' for ' +
-        this.util.getReportDateString({ start, end, mode });
-    });
+      this.label + this.util.getReportDateString({ start, end, mode }) ;
+    } catch (error) {}
+    // this.inventoryService.inventorys$.pipe(take(2)).subscribe((data) => {
+    //   this.inventoryList = data.filter(
+    //     (f) =>
+    //       f.date['seconds'] >= start.getTime() / 1000 &&
+    //       f.date['seconds'] <= end.getTime() / 1000
+    //   );
+    //   this.inventoryList.sort(this.util.dynamicSortObject('sr_no'));
+    //   this.tableTitle =
+    //     this.label +
+    //     ' for ' +
+    //     this.util.getReportDateString({ start, end, mode });
+    // });
   }
 }

@@ -117,13 +117,13 @@ export class UtilService {
     switch (mode) {
       case 'range':
         return (
-          'Date range: ' +
+          'তারিখঃ ' +
           this.getDateStringLocal(start) +
-          ' to ' +
+          ' হইতে  ' +
           this.getDateStringLocal(end)
         );
       case 'day':
-        return 'Date : ' + this.getDateStringLocal(start);
+        return 'তারিখঃ ' + this.getDateStringLocal(start);
     }
   }
 }

@@ -69,6 +69,17 @@ export class InventoryService {
     );
   }
 
+  findByDateRange(start, end): Observable<InventoryPage> {
+    let sparam = new HttpParams().set('start', start).set('end', end);
+    return this.dtSrc.sendRequest(
+      'GET',
+      this.inventoryUrl + '/daterange',
+      null,
+      true,
+      sparam
+    );
+  }
+
   get(id) {
     return this.dtSrc.sendRequest(
       'GET',
