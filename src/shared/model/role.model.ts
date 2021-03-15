@@ -1,6 +1,6 @@
 export interface Role {
   _id: string;
-  createdAt: Date;
+  createdAt: string;
   slug: string;
   name: string;
   version: number;

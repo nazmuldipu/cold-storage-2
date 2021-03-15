@@ -37,16 +37,6 @@ export class UserService {
       true,
       null
     );
-    // .subscribe(
-    //   (data) => {
-    //     console.log(data);
-    //     this._userSource.next(data);
-    //   },
-    //   (error) => {
-    //     console.log('getUserProfile ERROR');
-    //     console.log(error);
-    //   }
-    // );
   }
 
   getUserList(
@@ -64,6 +54,26 @@ export class UserService {
       .set('param', param);
 
     return this.dataSource.sendRequest('GET', this.userUrl, null, true, sparam);
+  }
+
+  update(id, user: User): Observable<User> {
+    return this.dataSource.sendRequest(
+      'PUT',
+      this.userUrl + `/${id}`,
+      user,
+      true,
+      null
+    );
+  }
+
+  delete(id): Observable<User> {
+    return this.dataSource.sendRequest(
+      'DELETE',
+      this.userUrl + `/${id}`,
+      null,
+      true,
+      null
+    );
   }
 
   // FIRE ------------------------------------------------------
@@ -132,15 +142,15 @@ export class UserService {
       );
   }
 
-  update(id, object: User) {
-    delete object['_id'];
-    object.version = object.version ? object.version + 1 : 1;
-    return this.afs.doc(this.serviceUrl + '/' + id).update({
-      ...object,
-    });
-  }
+  // update(id, object: User) {
+  //   delete object['_id'];
+  //   object.version = object.version ? object.version + 1 : 1;
+  //   return this.afs.doc(this.serviceUrl + '/' + id).update({
+  //     ...object,
+  //   });
+  // }
 
-  delete(id) {
-    return this.afs.doc(this.serviceUrl + '/' + id).delete();
-  }
+  // delete(id) {
+  //   return this.afs.doc(this.serviceUrl + '/' + id).delete();
+  // }
 }

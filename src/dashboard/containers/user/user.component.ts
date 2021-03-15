@@ -5,6 +5,7 @@ import { UserService } from 'src/service/user.service';
 import { UtilService } from 'src/service/util.service';
 import { Role } from 'src/shared/model/role.model';
 import { User, UserPage } from 'src/shared/model/user.model';
+import { RoleList } from './../../../shared/data/role-list.data';
 
 @Component({
   selector: 'app-user',
@@ -15,27 +16,18 @@ export class UserComponent implements OnInit {
   sendingData = false;
   loadingData = false;
   userPage: UserPage;
-  roleList: Role[] = [];
+  roleList: Role[] = RoleList;
   user: User;
   errorMessage = '';
 
   constructor(
     private userService: UserService,
-    private roleService: RoleService,
     private auth: AuthService,
     private util: UtilService
   ) {}
 
   ngOnInit(): void {
     this.getUserList();
-    this.getRoleList();
-  }
-
-  async getRoleList() {
-    this.roleService.roles$.subscribe((data) => {
-      this.roleList = data;
-      this.roleList.sort(this.util.dynamicSortObject('name'));
-    });
   }
 
   async getUserList(
@@ -59,61 +51,43 @@ export class UserComponent implements OnInit {
   }
 
   async onCreate(event: User) {
-    this.sendingData = true;
-    const value = { ...event, slug: event.name.toLowerCase() };
-    await this.userService
-      .create(value)
-      .then((ref) => {
-        console.log(ref);
-        this.auth
-          .register(event.email, event.password)
-          .then((ref) => console.log('User Registration success'));
-      })
-      .catch((error) => {
-        console.log('error', error);
-      });
-  }
-
-  async onUpdate(event: User) {
-    this.sendingData = true;
-    const value = {
-      ...event,
-      slug: this.util.string_to_slug(event.name),
-      createdAt: this.user.createdAt,
-    };
-    await this.userService
-      .update(this.user._id, value)
-      .then(() => {
-        this.sendingData = false;
-      })
-      .catch((error) => {
-        this.sendingData = false;
-        (this.errorMessage = 'Group Updating ERROR ! '), error;
-      });
-    this.clear();
-  }
-
-  async onDelete(id) {
-    this.sendingData = true;
-    if (confirm('Are you sure to delete')) {
-      await this.userService
-        .delete(id)
-        .then(() => {
-          this.sendingData = false;
-          this.user = null;
-        })
-        .catch((error) => {
-          this.sendingData = false;
-          (this.errorMessage = 'User Deleting ERROR ! '), error;
-        });
-      this.clear();
+    try {
+      this.sendingData = true;
+      const resp = await this.userService.userRegistration(event).toPromise();
+      this.sendingData = false;
+    } catch (error) {
+      this.errorMessage = error;
     }
   }
 
-  // onEdit(id) {
-  //   this.user = this.userList.find((cp) => cp._id === id);
-  //   console.log('onEdit', id);
-  // }
+  async onUpdate(event: User) {
+    try {
+      this.sendingData = true;
+      await this.userService.update(this.user._id, event).toPromise();
+      this.sendingData = false;
+    } catch (err) {
+      this.errorMessage = err;
+    }
+  }
+
+  async onDelete(id) {
+    if (confirm('Are you sure to delete')) {
+      try {
+        this.sendingData = true;
+        const resp = await this.userService.delete(id).toPromise();
+        console.log(resp);
+        this.sendingData = false;
+        this.clear();
+      } catch (err) {
+        this.errorMessage = err;
+      }
+    }
+  }
+
+  onEdit(id) {
+    this.user = this.userPage.docs.find((cp) => cp._id === id);
+    console.log('onEdit', id, this.user);
+  }
 
   clear() {
     this.user = null;
