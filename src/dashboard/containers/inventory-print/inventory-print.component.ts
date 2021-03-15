@@ -7,14 +7,17 @@ import { Inventory } from 'src/shared/model/inventory.model';
 @Component({
   selector: 'app-inventory-print',
   templateUrl: './inventory-print.component.html',
-  styleUrls: ['./inventory-print.component.scss']
+  styleUrls: ['./inventory-print.component.scss'],
 })
 export class InventoryPrintComponent implements OnInit {
   id;
   company = CompanyInfo;
   inventory: Inventory;
 
-  constructor(private inventoryService: InventoryService, private activatedRoute: ActivatedRoute) {
+  constructor(
+    private inventoryService: InventoryService,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.id = activatedRoute.snapshot.params['id'];
   }
 
@@ -25,9 +28,10 @@ export class InventoryPrintComponent implements OnInit {
   }
 
   async getInventory(id) {
-    this.inventoryService.inventorys$.subscribe(data => {
-      this.inventory = data.find(inv => inv._id == id);
-    })
+    try {
+      this.inventory = await this.inventoryService.get(id).toPromise();
+    } catch (err) {
+      console.log(err);
+    }
   }
-
 }

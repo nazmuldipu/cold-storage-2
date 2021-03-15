@@ -18,6 +18,7 @@ export class NgTableComponent implements OnChanges {
   @Input() tableName: string; // Name of Table
   @Input() columns; // List of columns for table
   @Input() data: PageInfo; // Table data
+  @Input() short: boolean;// pagination button short or long
   @Input() sortColumn;
 
   @Output() btnEvent = new EventEmitter<any>();

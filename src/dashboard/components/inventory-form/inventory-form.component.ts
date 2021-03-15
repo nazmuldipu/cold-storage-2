@@ -1,12 +1,12 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AgentService } from 'src/service/agent.service';
 import { CustomerService } from 'src/service/customer.service';
 import { UtilService } from 'src/service/util.service';
 import { BaseFormComponent } from 'src/shared/forms/base-form/base-form.component';
+import { PHONE_NUMBER_PATTERN } from 'src/shared/forms/constants/validation-patterns-list';
 import { Agent } from 'src/shared/model/agent.model';
 import { InventoryType } from 'src/shared/model/inventory.model';
-import { PHONE_NUMBER_PATTERN } from 'src/shared/forms/constants/validation-patterns-list';
+import _ from 'lodash';
 
 @Component({
   selector: 'inventory-form',
@@ -30,7 +30,7 @@ export class InventoryFormComponent
   constructor(
     private fb: FormBuilder,
     private customerService: CustomerService,
-    private agentService: AgentService,
+
     private util: UtilService
   ) {
     super();
@@ -41,8 +41,8 @@ export class InventoryFormComponent
     });
 
     this.createForm();
-    this.getCustomerList();
-    this.getAgentList();
+    // this.getCustomerList();
+    // this.getAgentList();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -67,19 +67,19 @@ export class InventoryFormComponent
     }
   }
 
-  async getCustomerList() {
-    this.customerService.customers$.subscribe((data) => {
-      this.customerList = data;
-      this.customerList.sort(this.util.dynamicSortObject('priority'));
-    });
-  }
+  // async getCustomerList() {
+  //   this.customerService.customers$.subscribe((data) => {
+  //     this.customerList = data;
+  //     this.customerList.sort(this.util.dynamicSortObject('priority'));
+  //   });
+  // }
 
-  async getAgentList() {
-    this.agentService.agents$.subscribe((data) => {
-      this.agentList = data;
-      this.agentList.sort(this.util.dynamicSortObject('priority'));
-    });
-  }
+  // async getAgentList() {
+  //   this.agentService.agents$.subscribe((data) => {
+  //     this.agentList = data;
+  //     this.agentList.sort(this.util.dynamicSortObject('priority'));
+  //   });
+  // }
 
   onQuanityChange(event) {
     const sr_no = this.exists
@@ -91,18 +91,27 @@ export class InventoryFormComponent
     });
   }
 
-  onPhoneChange(event) {
+  async onPhoneChange(event) {
     const phone = event.target.value;
-    const customer = this.customerList.find((cus) => cus.phone === phone);
-    if (customer) {
-      this.existsCustomer = true;
-      const value = {
-        customerName: customer.name,
-        customerFather: customer.father,
-        customerPhone: customer.phone,
-        customerAddress: customer.address,
-      };
-      this.form.patchValue(value);
+    if (phone.length == 11) {
+      try {
+        const { docs } = await this.customerService
+          .getCustomerList(1, 10, 'phone', 'asc', phone)
+          .toPromise();
+        if (docs.length) {
+          this.existsCustomer = true;
+          const customer = docs[0];
+          const value = {
+            customerName: customer.name,
+            customerFather: customer.father,
+            customerPhone: customer.phone,
+            customerAddress: customer.address,
+          };
+          this.form.patchValue(value);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
@@ -134,17 +143,16 @@ export class InventoryFormComponent
         phone: fvalue.customerPhone,
         address: fvalue.customerAddress,
       };
-      delete fvalue['customerName'];
-      delete fvalue['customerFather'];
-      delete fvalue['customerPhone'];
-      delete fvalue['customerAddress'];
-      if (!this.existsCustomer) {
-        if (!this.exists)
-          this.customerService
-            .create(customer as Agent)
-            .then(() => console.log('New custome created'));        
-      }
-      const value = { ...fvalue, date, customer };
+      var result = _.omit(fvalue, [
+        'customerName',
+        'customerFather',
+        'customerPhone',
+        'customerAddress',
+      ]);
+      _.unset(result, 'agent._id');
+      const value = { ...result, date, customer };
+      console.log(value);
+
       if (this.exists) {
         this.update.emit({ _id: this.item._id, ...value });
       } else {

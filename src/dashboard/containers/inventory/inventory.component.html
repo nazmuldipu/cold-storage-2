@@ -10,11 +10,12 @@
           {{errorMessage}}
         </div>
         <inventory-form (create)="onCreate($event)" (update)="onUpdate($event)" (delete)="onDelete($event)"
-          [item]="inventory" [vouchar_no]="inventoryList.length"></inventory-form>
+          [item]="inventory" [vouchar_no]="totalCount"></inventory-form>
       </div>
     </div>
-    <div class="col-md-7 mt-2" *ngIf="inventoryList.length > 0">
-      <inventory-table [inventoryList]="inventoryList" [canEdit]="true" (edit)="onEdit($event)"></inventory-table>
+    <div class="col-md-7 mt-2">
+      <inventory-table [inventoryPage]="inventoryPage" (refresh)="refreshData($event)" [canEdit]="true"
+        (edit)="onEdit($event)"></inventory-table>
     </div>
   </div>
 </div>

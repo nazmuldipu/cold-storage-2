@@ -19,12 +19,12 @@ export class RoleService {
   }
 
   create(object: Role) {
-    delete object['_id'];
-    object.createdAt = new Date();
-    object.version = 1;
-    return this.afs.collection(this.serviceUrl).add({
-      ...object,
-    });
+    // delete object['_id'];
+    // object.createdAt = new Date();
+    // object.version = 1;
+    // return this.afs.collection(this.serviceUrl).add({
+    //   ...object,
+    // });
   }
 
   getAndStoreAll() {

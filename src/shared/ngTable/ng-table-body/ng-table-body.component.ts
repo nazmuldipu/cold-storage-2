@@ -26,7 +26,7 @@ export class NgTableBodyComponent{
     if (column.pipe) {
       switch (column.pipe) {
         case 'date':
-          const value = _.get(item, column.path).toMillis();
+          const value = _.get(item, column.path);
           return new DatePipe('en-US').transform(value, column.pipeArgs);
           break;
         case 'numberToBangla':

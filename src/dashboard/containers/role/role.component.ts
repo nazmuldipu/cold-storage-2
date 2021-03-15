@@ -45,16 +45,16 @@ export class RoleComponent implements OnInit {
   }
 
   async onCreate(event: Role) {
-    this.sendingData = true;
-    const value = { ...event, slug: event.name.toLowerCase() };
-    await this.roleService
-      .create(value)
-      .then((ref) => {
-        console.log(ref);
-      })
-      .catch((error) => {
-        console.log('error', error);
-      });
+    // this.sendingData = true;
+    // const value = { ...event, slug: event.name.toLowerCase() };
+    // await this.roleService
+    //   .create(value)
+    //   .then((ref) => {
+    //     console.log(ref);
+    //   })
+    //   .catch((error) => {
+    //     console.log('error', error);
+    //   });
   }
 
   async onUpdate(event: Role) {

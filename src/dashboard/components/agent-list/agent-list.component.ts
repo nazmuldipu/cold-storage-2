@@ -8,7 +8,7 @@ import { AgentPage } from 'src/shared/model/agent.model';
 })
 export class AgentListComponent {
   @Input() agentPage: AgentPage;
-
+  @Input() short: boolean = false;
   @Output() edit = new EventEmitter<string>();
   @Output() refresh = new EventEmitter<any>();
 

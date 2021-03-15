@@ -1,32 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { InventoryService } from 'src/service/inventory.service';
-import { Inventory } from 'src/shared/model/inventory.model';
+import { Component } from '@angular/core';
 import { AgentService } from 'src/service/agent.service';
 import { CustomerService } from 'src/service/customer.service';
+import { InventoryService } from 'src/service/inventory.service';
 import { UtilService } from 'src/service/util.service';
-import { Agent } from 'src/shared/model/agent.model';
-import { take } from 'rxjs/operators';
 import { CompanyInfo } from 'src/shared/data/company.data';
+import { AgentPage } from 'src/shared/model/agent.model';
+import { Inventory } from 'src/shared/model/inventory.model';
 
 @Component({
   selector: 'app-inventory-list',
   templateUrl: './inventory-list.component.html',
   styleUrls: ['./inventory-list.component.scss'],
 })
-export class InventoryListComponent implements OnInit {
+export class InventoryListComponent{
   year;
   company_info = CompanyInfo;
   mode: string = 'agent';
   inventoryList: Inventory[] = [];
-  agentList: Agent[] = [];
-  customerList: Agent[] = [];
-  filteredInventoryList: Inventory[] = [];
+  agentPage: AgentPage;
+  customerPage: AgentPage;
 
   total = 0;
 
   constructor(
     private inventoryService: InventoryService,
-    private util: UtilService,
     private agentService: AgentService,
     private customerService: CustomerService
   ) {
@@ -35,56 +32,76 @@ export class InventoryListComponent implements OnInit {
     this.getCustomerList();
   }
 
-  ngOnInit(): void {
-    this.getInventoryByYear(this.year);
+  async getCustomerList(
+    page: number = 1,
+    limit: number = 8,
+    sort: string = 'name',
+    order: string = 'asc',
+    param: string = ''
+  ) {
+    try {
+      this.customerPage = await this.customerService
+        .getCustomerList(page, limit, sort, order, param)
+        .toPromise();
+    } catch (error) {}
+  }
+  refreshCustomerData({ page, limit, sort, order, search }) {
+    this.getCustomerList(page, limit, sort, order, search);
   }
 
-  async getInventoryByYear(year: number) {
-    this.inventoryService.inventorys$.pipe(take(2)).subscribe((data) => {
-      this.inventoryList = data.filter((f) => f.year == year);
-    });
+  async getAgentList(
+    page: number = 1,
+    limit: number = 8,
+    sort: string = 'name',
+    order: string = 'asc',
+    param: string = ''
+  ) {
+    try {
+      this.agentPage = await this.agentService
+        .getAgentList(page, limit, sort, order, param)
+        .toPromise();
+    } catch (error) {}
   }
 
-  async getCustomerList() {
-    this.customerService.customers$.pipe(take(2)).subscribe((data) => {
-      this.customerList = data;
-      this.customerList.sort(this.util.dynamicSortObject('priority'));
-    });
-  }
-
-  async getAgentList() {
-    this.agentService.agents$.pipe(take(2)).subscribe((data) => {
-      this.agentList = data;
-      this.agentList.sort(this.util.dynamicSortObject('name'));
-    });
+  refreshAgentData({ page, limit, sort, order, search }) {
+    this.getAgentList(page, limit, sort, order, search);
   }
 
   onModechange(event) {
     this.mode = event;
   }
 
-  onCustomerClick(customerId) {
-    const customer = this.customerList.find(f=> f._id == customerId);
-    this.filteredInventoryList = this.inventoryList.filter(
-      (f) => (f.customer._id == customerId) || (f.customer.name === customer.name && f.customer.father == f.customer.father)
-    );
-    this.calculateTotalQuantity();
+  async onCustomerClick(customerId) {
+    console.log(customerId);
+    try {
+      this.inventoryList = await this.inventoryService
+        .findByCustomerId(customerId)
+        .toPromise();
+      this.calculateTotalQuantity();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  onAgentClick(agentId) {
-    this.filteredInventoryList = this.inventoryList.filter(
-      (f) => f.agent != null && f.agent._id == agentId
-    );
-    this.calculateTotalQuantity();
+  async onAgentClick(agentId) {
+    try {
+      this.inventoryList = await this.inventoryService
+        .findByAgentId(agentId)
+        .toPromise();
+      this.calculateTotalQuantity();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   calculateTotalQuantity() {
     let t = 0;
-    this.filteredInventoryList.forEach((f) => {
+    this.inventoryList.forEach((f) => {
       t += parseInt(f.quantity + '');
     });
     this.total = t;
   }
+
   onPrint() {
     window.print();
   }

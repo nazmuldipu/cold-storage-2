@@ -19,10 +19,11 @@
       </div>
 
       <ng-container *ngIf="mode == 'party'">
-        <customer-list [customerList]="customerList" [short]="true" (edit)="onCustomerClick($event)"></customer-list>
+        <customer-list [customerPage]="customerPage" (refresh)="refreshCustomerData($event)" (edit)="onCustomerClick($event)" [short]="true">
+        </customer-list>
       </ng-container>
       <ng-container *ngIf="mode == 'agent'">
-        <agent-list [agentList]="agentList" [short]="true" (edit)="onAgentClick($event)"></agent-list>
+        <agent-list [agentPage]="agentPage" (refresh)="refreshAgentData($event)" (edit)="onAgentClick($event)" [short]="true"></agent-list>
       </ng-container>
     </div>
     <div class="col">
@@ -44,7 +45,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let inventory of filteredInventoryList;let i = index;">
+          <tr *ngFor="let inventory of inventoryList;let i = index;">
             <th scope="row">{{ i+1 | numberToBangla}}</th>
             <td class="text-center"> {{ inventory.sr_no }} </td>
             <td class="text-center"> {{ inventory.quantity | numberToBangla}} </td>

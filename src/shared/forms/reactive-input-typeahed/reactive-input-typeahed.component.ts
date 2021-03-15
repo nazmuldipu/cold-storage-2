@@ -1,7 +1,15 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
+import { AgentService } from 'src/service/agent.service';
 import { LABEL_LIST } from '../constants/reactive-form-labels-list';
 
 @Component({
@@ -22,22 +30,21 @@ export class ReactiveInputTypeahedComponent implements OnInit {
   label: string = null;
   validator;
   validationErrors: object = null;
+  constructor(private agentService: AgentService) {}
 
-  search = (text$: Observable<any>) =>
+  search = (text$: Observable<string>) =>
     text$.pipe(
-      debounceTime(200),
+      debounceTime(300),
       distinctUntilChanged(),
-      map((term) => {
-        const res =
-          term.length < 2
-            ? []
-            : this.itemList
-                .filter(
-                  (v) => v[this.searchPath[0]].indexOf(term.toLowerCase()) > -1 || v[this.searchPath[1]].indexOf(term.toLowerCase()) > -1
-                )
-                .slice(0, 10);
-        return res;
-      })
+      switchMap((term) => {
+        if (term.length < 3) return [];
+        return this.agentService.getAgentList(1, 10, 'phone', 'asc', term).pipe(
+          catchError(() => {
+            return of([]);
+          })
+        );
+      }),
+      map((p) => (p ? p['docs'] : []))
     );
 
   formatter = (result: string) => {

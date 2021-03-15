@@ -6,7 +6,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { Inventory } from 'src/shared/model/inventory.model';
+import { Inventory, InventoryPage } from 'src/shared/model/inventory.model';
 
 @Component({
   selector: 'inventory-table',
@@ -14,11 +14,11 @@ import { Inventory } from 'src/shared/model/inventory.model';
   styleUrls: ['./inventory-table.component.scss'],
 })
 export class InventoryTableComponent implements OnChanges {
-  @Input() inventoryList: Inventory[];
-  @Input() list: boolean;
+  @Input() inventoryPage: InventoryPage;
   @Input() canEdit: boolean;
 
   @Output() edit = new EventEmitter<string>();
+  @Output() refresh = new EventEmitter<any>();
 
   tableName = 'ইনভেন্টরি টেবিল';
   columns = [
@@ -55,16 +55,8 @@ export class InventoryTableComponent implements OnChanges {
     },
   ];
 
-  sortColumn = { path: 'date', order: 'desc' };
-
-  // total = 0;
-  buttonEvent(event) {
-    switch (event['key']) {
-      case 'edit':
-        this.edit.emit(event['id']);
-        break;
-    }
-  }
+  sortColumn = { path: 'vouchar_no', order: 'asc', limit: 8, page: 1, search: '' };
+  pushCol = 0; //sermaphorse
 
   constructor() {}
 
@@ -82,8 +74,24 @@ export class InventoryTableComponent implements OnChanges {
           };
         },
       };
-
-      this.columns.push(value);
+      
+      if (!this.pushCol) {
+        this.columns.push(value);
+        this.pushCol = 1;
+      }
     }
+  }
+
+  buttonEvent(event) {
+    switch (event['key']) {
+      case 'edit':
+        this.edit.emit(event['id']);
+        break;
+    }
+  }
+
+  onRefresh(event) {
+    this.sortColumn = { ...event };
+    this.refresh.emit({ sort: event.path, ...event });
   }
 }

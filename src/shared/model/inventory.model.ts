@@ -30,3 +30,16 @@ interface User {
   address: string;
 }
 
+export interface InventoryPage{
+  docs: Inventory[];
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+  limit: number;
+  nextPage: number;
+  page: number;
+  pagingCounter: number;
+  prevPage: number;
+  totalDocs: number;
+  totalPages: number;
+}
+

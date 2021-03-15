@@ -1,5 +1,5 @@
 <!-- <AppTable [columns]="columns" [data]="agentList" [tableName]="tableName" [sortColumn]="sortColumn"
     (btnEvent)="buttonEvent($event)"></AppTable> -->
     
-<ng-table [tableName]="tableName" [columns]="columns" [sortColumn]="sortColumn" [data]="agentPage"
-    (refresh)="onRefresh($event)" (btnEvent)="buttonEvent($event)"></ng-table>
+<ng-table [tableName]="tableName" [columns]="columns" [sortColumn]="sortColumn" [short]="short" [data]="agentPage"
+    (refresh)="onRefresh($event)" (btnEvent)="buttonEvent($event)" ></ng-table>

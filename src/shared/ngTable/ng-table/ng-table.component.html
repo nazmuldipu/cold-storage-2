@@ -21,7 +21,7 @@
 </table>
 
 <div class="d-flex justify-content-between p-2 d-print-none" *ngIf="data?.totalDocs > 0">
-    <pagination [page]="data.page" [collectionSize]="data.totalDocs" [pageSize]="data.limit"
+    <pagination [page]="data.page" [collectionSize]="data.totalDocs" [pageSize]="data.limit" [short]="short"
         (pageChange)="handlePagination($event)">
     </pagination>
 

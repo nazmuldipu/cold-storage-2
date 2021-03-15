@@ -6,7 +6,7 @@ import { UserPage } from 'src/shared/model/user.model';
   templateUrl: './user-table.component.html',
   styleUrls: ['./user-table.component.scss'],
 })
-export class UserTableComponent implements OnChanges {
+export class UserTableComponent{
   @Input() userPage: UserPage;
 
   @Output() edit = new EventEmitter<string>();
