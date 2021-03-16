@@ -1,4 +1,4 @@
-<div class="output">
+<div class="output" *ngIf="ledger?.quantity > 0">
   <div class="receipt">
     <div class="row">
       <div class="col-12">
@@ -11,7 +11,7 @@
     </div>
     <div class="row">
       <div class="col-6"></div>
-      <div class="col-6 text-right">তারিখঃ _ _ _/ _ _ _/ _ _ _ _ </div>
+      <div class="col-6 text-right">তারিখঃ _ _ _/ _ _ _/ _ _ _ _ </div>
     </div>
     <div class="row" style="font-size: 18px;">
       <div class="col-auto pr-0">মজুতকারীর নামঃ </div>

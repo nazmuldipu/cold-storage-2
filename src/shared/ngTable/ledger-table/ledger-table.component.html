@@ -1,0 +1,68 @@
+<form *ngIf="searchableArray.length > 0" class="d-print-none" (ngSubmit)="onSearchSubmit()">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-auto">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fa fa-filter"></i></div>
+                </div>
+                <input type="text" class="form-control form-control-sm" id="search" name="search"
+                    [(ngModel)]="searchQuery" [placeholder]="getSearchPlaceHolderText()">
+            </div>
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped border table-sm">
+    <thead NgTableHeader [columns]="columns" [tableName]="tableName" [sortColumn]="sortColumn"></thead>
+    <tbody>
+        <tr *ngFor="let ledger of ledgerPage?.docs;let i = index;">
+            <td>{{ledger.sr_no}}</td>
+            <td colspan="4">
+                <table class="table m-0">
+                    <tr>
+                        <td colspan="4">
+                            {{ledger.customer?.name}} [{{ledger.customer?.phone}}],
+                            {{ledger.customer?.father}}, {{ledger.customer?.address}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>লোনঃ </td>
+                        <td> {{ ledger.loan_amount }}</td>
+                        <td> {{ ledger.loan_rate }} </td>
+                        <td class="text-right"> {{ ledger.loan_payable | currencyBd}} </td>
+                    </tr>
+                    <tr>
+                        <td>পন্যঃ </td>
+                        <td>{{ ledger.quantity }} </td>
+                        <td>{{ ledger.rate }} </td>
+                        <td class="text-right">{{ ledger.service_amount | currencyBd}} </td>
+                    </tr>
+                    <tr>
+                        <td>খালি বস্তাঃ </td>
+                        <td>{{ ledger.emptyBag_quantity }} </td>
+                        <td>{{ ledger.emptyBag_rate }} </td>
+                        <td class="text-right">{{ ledger.emptyBag_amount | currencyBd}} </td>
+                    </tr>
+                </table>
+            </td>
+            <th class="text-right" style="vertical-align:middle">{{ ledger.total_amount | currencyBd}}</th>
+            <td class="d-print-none" style="vertical-align:middle"><a
+                    routerLink="/dashboard/contract/{{ledger._id}}">Print</a></td>
+        </tr>
+    </tbody>
+
+    <tfoot NgTableFooter [columns]="columns" [total]="total" *ngIf="total.length"></tfoot>
+</table>
+
+<div class="d-flex justify-content-between p-2 d-print-none" *ngIf="ledgerPage?.totalPages > 1">
+    <pagination [page]="ledgerPage.page" [collectionSize]="ledgerPage.totalDocs" [pageSize]="ledgerPage.limit" [short]="short"
+        (pageChange)="handlePagination($event)">
+    </pagination>
+
+    <select class="custom-select" style="width: auto" [ngModel]="ledgerPage.limit" (ngModelChange)="handlePageSize($event)">
+        <option [ngValue]="4">৪/পেজ</option>
+        <option [ngValue]="8">৮/পেজ</option>
+        <option [ngValue]="16">১৬/পেজ</option>
+    </select>
+</div>

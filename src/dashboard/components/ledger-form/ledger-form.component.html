@@ -1,0 +1,128 @@
+<!-- {{form.value | json}} -->
+<div class="border rounded">
+    <div class="form-head">
+        {{exists ?
+        'আপডেট':'নতুন'}} লেজার 
+    </div>
+    <form [formGroup]="form" (ngSubmit)="submit()" (mouseleave)="mouseoverShifting = false" class="p-3">
+        <h4 *ngIf="exists" class="text-danger">Edit Ledger</h4>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="sr_no" class="d-none d-sm-block col-form-label col-form-label-sm p-0">SR #*</label>
+                <input id="sr_no" type="text" class="form-control form-control-sm"
+                    [ngbTypeahead]="searchInventory" [resultFormatter]="formatter" [inputFormatter]="formatter"
+                    [editable]='false' (selectItem)="onSelectSRNo($event)" />
+                <small class="form-text text-danger"
+                    *ngIf="form.controls.sr_no.errors && form.controls.sr_no.touched">SR No
+                    Required</small>
+            </div>
+            <div class="col-md-6">
+                <reactive-input [fieldId]="'year'" [control]="form.get('year')" [type]="'number'" [readonly]="true"
+                    [col]="true">
+                </reactive-input>
+            </div>
+        </div>
+        <ng-container *ngIf="form.value.quantity > 0">
+            <div class="row border-top my-2">
+                <label class="col-12 m-0">পার্টির তথ্য</label>
+                <div class="col-6 col-md-4">
+                    <div class="form-group">
+                        <label class="d-none d-sm-block col-form-label col-form-label-sm p-0">নাম</label>
+                        <label class="form-control form-control-sm">{{form.value.customer.name}}</label>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="form-group">
+                        <label class="d-none d-sm-block col-form-label col-form-label-sm p-0">ফোন</label>
+                        <label class="form-control form-control-sm">{{form.value.customer.phone}}</label>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="form-group">
+                        <label class="d-none d-sm-block col-form-label col-form-label-sm p-0">মারফত</label>
+                        <label class="form-control form-control-sm">{{form.value.agent?.name}}</label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="d-none d-sm-block col-form-label col-form-label-sm p-0">ঠিকানা</label>
+                        <label class="form-control form-control-sm">{{form.value.customer.address}}</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row border-top my-2">
+                <label class="col-12 m-0">লোনের তথ্য</label>
+                <div class="col-4">
+                    <reactive-input [fieldId]="'loan_amount'" [control]="form.get('loan_amount')" [type]="'number'"
+                        [col]="true" (onChange)="onLoanChange()"> </reactive-input>
+                </div>
+                <div class="col-4">
+                    <reactive-input [fieldId]="'loan_rate'" [control]="form.get('loan_rate')" [type]="'number'"
+                        [col]="true" (onChange)="onLoanChange()"> </reactive-input>
+                    <reactive-input [fieldId]="'loan_profit'" [control]="form.get('loan_profit')" [type]="'number'"
+                        [col]="true" [readonly]="true"> </reactive-input>
+                </div>
+                <div class="col-4">
+                    <reactive-input [fieldId]="'loan_payable'" [control]="form.get('loan_payable')" [type]="'number'"
+                        [col]="true" [readonly]="true">
+                    </reactive-input>
+                </div>
+            </div>
+
+            <div class="row border-top my-2">
+                <label class="col-12 m-0">পণ্যর বিবরণ</label>
+                <div class="col-4">
+                    <reactive-input [fieldId]="'quantity'" [control]="form.get('quantity')" [type]="'number'"
+                        [col]="true" [readonly]="true"> </reactive-input>
+                </div>
+                <div class="col-4">
+                    <reactive-input [fieldId]="'rate'" [control]="form.get('rate')" [type]="'number'"
+                        (onChange)="onQuantityChange()" [col]="true"> </reactive-input>
+                </div>
+                <div class="col-4">
+                    <reactive-input [fieldId]="'service_amount'" [control]="form.get('service_amount')"
+                        [type]="'number'" [col]="true" [readonly]="true"> </reactive-input>
+                </div>
+            </div>
+            <div class="row border-top my-2">
+                <label class="col-12 m-0">খালি বস্তার বিবরণ</label>
+                <div class="col-4">
+                    <reactive-input [fieldId]="'emptyBag_quantity'" [control]="form.get('emptyBag_quantity')"
+                        [type]="'number'" [col]="true" (onChange)="onEmptybagChange()"> </reactive-input>
+                </div>
+                <div class="col-4">
+                    <reactive-input [fieldId]="'emptyBag_rate'" [control]="form.get('emptyBag_rate')" [type]="'number'"
+                        [col]="true" (onChange)="onEmptybagChange()"> </reactive-input>
+                </div>
+                <div class="col-4">
+                    <reactive-input [fieldId]="'emptyBag_amount'" [control]="form.get('emptyBag_amount')"
+                        [type]="'number'" [col]="true" [readonly]="true"> </reactive-input>
+                </div>
+            </div>
+            <div class="row border-top my-2">
+                <div class="col-8"></div>
+                <div class="col-4">
+                    <reactive-input [fieldId]="'total_amount'" [control]="form.get('total_amount')" [type]="'number'"
+                        [col]="true" [readonly]="true"> </reactive-input>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex flex-row-reverse bd-highlight">
+                <span (mouseenter)="mouseoverShifting = true" (mouseleave)="mouseoverShifting = false">
+                    <button type="submit" class="btn btn-sm btn-light mx-1" [disabled]="!form.valid">{{exists ?
+                        'আপডেট':'সেভ'}}</button>
+                </span>
+                <!-- <button type="button" *ngIf="exists" class="btn btn-sm btn-light mx-1" (click)="onDelete()">Delete</button> -->
+                <button type="button" class="btn btn-sm btn-light mx-1" (click)="clean()">ক্লিয়ার</button>
+            </div>
+
+            <!-- Form validation error list -->
+            <div *ngIf="mouseoverShifting" class="text-danger">
+                <reactive-form-validation [form]="form"></reactive-form-validation>
+            </div>
+        </ng-container>
+    </form>
+</div>

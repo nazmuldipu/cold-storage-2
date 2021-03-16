@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { LedgerService } from 'src/service/ledger.service';
 import { UtilService } from 'src/service/util.service';
-import { Ledger } from 'src/shared/model/ledger.model';
+import { Ledger, LedgerPage } from 'src/shared/model/ledger.model';
 
 @Component({
   selector: 'app-ledger-report',
@@ -10,9 +10,9 @@ import { Ledger } from 'src/shared/model/ledger.model';
   styleUrls: ['./ledger-report.component.scss'],
 })
 export class LedgerReportComponent {
-  label = 'Ledger Report';
+  label = 'লেজার রিপোর্ট ';
   tableTitle = '';
-  ledgerList: Ledger[] = [];
+  ledgerPage: LedgerPage;
 
   constructor(
     private ledgerService: LedgerService,
@@ -20,17 +20,12 @@ export class LedgerReportComponent {
   ) {}
 
   async getItemByDateRange({ start, end, mode }) {
-    this.ledgerService.ledgers$.pipe(take(2)).subscribe((data) => {
-      this.ledgerList = data.filter(
-        (f) =>
-          f.createdAt['seconds'] >= start.getTime() / 1000 &&
-          f.createdAt['seconds'] <= end.getTime() / 1000
-      );
-      this.ledgerList.sort(this.util.dynamicSortObject('createdAt'));
+    try {
+      this.ledgerPage = await this.ledgerService
+        .findByDateRange(start, end)
+        .toPromise();
       this.tableTitle =
-        this.label +
-        ' for ' +
-        this.util.getReportDateString({ start, end, mode });
-    });
+        this.label + this.util.getReportDateString({ start, end, mode });
+    } catch (error) {}
   }
 }

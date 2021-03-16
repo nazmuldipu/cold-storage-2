@@ -22,12 +22,12 @@ export const environment = {
     databaseURL: 'https://cold-storage-2020-913d1.firebaseio.com',
   },
   // PORT: ':3000',
-  // PROTOCOL: 'http',
-  // SERVER: 'localhost',
+  PROTOCOL: 'http',
+  SERVER: 'localhost',
 
   PORT: ':2096',
-  PROTOCOL: 'https',
-  SERVER: 'api.hotelswave.com',
+  // PROTOCOL: 'https',
+  // SERVER: 'api.hotelswave.com',
 };
 /*
 ac : ispbhuigor

@@ -44,6 +44,7 @@ import { RoleComponent } from './containers/role/role.component';
 import { UserComponent } from './containers/user/user.component';
 import { DashboardComponent } from './dashboard.component';
 import { UserTableComponent } from './components/user-table/user-table.component';
+import { LedgerFormComponent } from './components/ledger-form/ledger-form.component';
 
 export const ROUTES: Routes = [
   {
@@ -127,6 +128,7 @@ export const ROUTES: Routes = [
     PallotListComponent,
     DeliveryListComponent,
     UserTableComponent,
+    LedgerFormComponent,
   ],
   imports: [SharedModule, Daterangepicker, RouterModule.forChild(ROUTES)],
 })

@@ -3,17 +3,26 @@
 </div>
 
 <div class="container">
-  <div class="col-12 p-md-0 mt-2">
+  <div class="row">
+    <div class="col-md-6">
+      <ledger-form (create)="onCreate($event)" (update)="onUpdate($event)"></ledger-form>
+    </div>
+    <div class="col-md-6 p-md-0">
+      <!-- <ledger-list [ledgerPage]="ledgerPage"></ledger-list> -->
+      <ledger-table [ledgerPage]="ledgerPage" (refresh)="refreshData($event)"></ledger-table>
+    </div>
+  </div>
+  <!-- <div class="col-12 p-md-0 mt-2">
     <div class="border rounded">
       <div class="form-head">
         New Ledger
-      </div>
-      <form [formGroup]="form" (ngSubmit)="submit()" (mouseleave)="mouseoverShifting = false" class="p-3">
+      </div> -->
+  <!-- <form [formGroup]="form" (ngSubmit)="submit()" (mouseleave)="mouseoverShifting = false" class="p-3">
         <h4 *ngIf="exists" class="text-danger">Edit Ledger</h4>
         <div class="form-group row">
           <div class="col-auto">
             <label for="sr_no" class="d-none d-sm-block">SR No*</label>
-            <input id="sr_no" type="text" class="form-control form-control-sm" formControlName="sr_no"
+            <input id="sr_noa" type="text" class="form-control form-control-sm" formControlName="sr_no"
               [ngbTypeahead]="searchInventory" [editable]='false' (selectItem)="onSelectSRNo($event)" />
             <small class="form-text text-danger" *ngIf="form.controls.sr_no.errors && form.controls.sr_no.touched">SR No
               Required</small>
@@ -108,11 +117,9 @@
         <div *ngIf="mouseoverShifting" class="text-danger">
           {{ getFormValidationErrors() }}
         </div>
-      </form>
-    </div>
-  </div>
+      </form> -->
+  <!-- </div>
+  </div> -->
 
-  <div class="col-12 p-md-0 mt-2">
-    <ledger-list [ledgerList]="ledgerList"></ledger-list>
-  </div>
+
 </div>

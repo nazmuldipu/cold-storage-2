@@ -31,6 +31,7 @@ import { NgTableComponent } from './ngTable/ng-table/ng-table.component';
 import { NgTableHeadComponent } from './ngTable/ng-table-head/ng-table-head.component';
 import { NgTableBodyComponent } from './ngTable/ng-table-body/ng-table-body.component';
 import { NgTableFootComponent } from './ngTable/ng-table-foot/ng-table-foot.component';
+import { LedgerTableComponent } from './ngTable/ledger-table/ledger-table.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { NgTableFootComponent } from './ngTable/ng-table-foot/ng-table-foot.comp
     NgTableHeadComponent,
     NgTableBodyComponent,
     NgTableFootComponent,
+    LedgerTableComponent,
   ],
   imports: [
     CommonModule,
@@ -76,6 +78,7 @@ import { NgTableFootComponent } from './ngTable/ng-table-foot/ng-table-foot.comp
     FormsModule,
     InventoryTableComponent,
     LedgerListComponent,
+    LedgerTableComponent,
     LoadingComponent,
     NgbModule,
     NgTableComponent,

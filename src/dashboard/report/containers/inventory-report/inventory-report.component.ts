@@ -28,17 +28,5 @@ export class InventoryReportComponent {
       this.tableTitle =
       this.label + this.util.getReportDateString({ start, end, mode }) ;
     } catch (error) {}
-    // this.inventoryService.inventorys$.pipe(take(2)).subscribe((data) => {
-    //   this.inventoryList = data.filter(
-    //     (f) =>
-    //       f.date['seconds'] >= start.getTime() / 1000 &&
-    //       f.date['seconds'] <= end.getTime() / 1000
-    //   );
-    //   this.inventoryList.sort(this.util.dynamicSortObject('sr_no'));
-    //   this.tableTitle =
-    //     this.label +
-    //     ' for ' +
-    //     this.util.getReportDateString({ start, end, mode });
-    // });
   }
 }

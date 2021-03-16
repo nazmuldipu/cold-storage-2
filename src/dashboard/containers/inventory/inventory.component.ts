@@ -74,7 +74,6 @@ export class InventoryComponent implements OnInit {
     try {
       this.sendingData = true;
       const resp = await this.inventoryService.create(event).toPromise();
-      console.log(resp);
       this.inventoryPage.docs.push(resp);
       this.getTotalDocumentSize();
       this.openInNewTab(this.router, `/dashboard/inventory-print/${resp._id}`);

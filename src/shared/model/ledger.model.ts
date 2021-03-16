@@ -48,3 +48,16 @@ interface Loan {
   payable: number;
   profit: number;
 }
+
+export interface LedgerPage{
+  docs: Ledger[];
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+  limit: number;
+  nextPage: number;
+  page: number;
+  pagingCounter: number;
+  prevPage: number;
+  totalDocs: number;
+  totalPages: number;
+}
