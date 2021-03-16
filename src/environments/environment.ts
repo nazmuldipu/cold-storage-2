@@ -25,9 +25,9 @@ export const environment = {
   // PROTOCOL: 'http',
   // SERVER: 'localhost',
 
-  PORT: ':8443',
+  PORT: ':2096',
   PROTOCOL: 'https',
-  SERVER: 'coldapi.monerbari.com',
+  SERVER: 'api.hotelswave.com',
 };
 /*
 ac : ispbhuigor

@@ -11,7 +11,7 @@ export const environment = {
     databaseURL: 'https://cold-storage-2020-913d1.firebaseio.com',
   },
 
+  PORT: ':2096',
   PROTOCOL: 'https',
-  PORT: ':8443',
-  SERVER: 'coldapi.monerbari.com',
+  SERVER: 'api.hotelswave.com',
 };
