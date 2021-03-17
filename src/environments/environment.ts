@@ -27,7 +27,7 @@ export const environment = {
 
   PORT: ':2096',
   PROTOCOL: 'https',
-  SERVER: 'api.hotelswave.com',
+  SERVER: 'coldapi.monerbari.com',
 };
 /*
 ac : ispbhuigor
